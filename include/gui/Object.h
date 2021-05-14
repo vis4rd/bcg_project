@@ -7,9 +7,9 @@ class Object
 public:
 	Object();
 
-	virtual void update(const float deltaTime) = 0;
-	virtual void render(sf::RenderTarget *target) = 0;
+	//virtual void update(const float deltaTime, sf::Event event) = 0;
+	virtual void render(sf::RenderTarget *target);
 
 private:
-	std::unique_ptr<sf::RectangleShape> m_shape;
+	sf::RectangleShape *m_shape;
 };

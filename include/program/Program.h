@@ -24,4 +24,5 @@ private:
 
 	sf::Clock m_dtClock;
 	float m_deltaTime;
+
 };

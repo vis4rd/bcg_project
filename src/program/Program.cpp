@@ -15,7 +15,7 @@ Program::Program()
 
 Program::~Program()
 {
-	delete m_window;
+	
 }
 
 void Program::endApp()
