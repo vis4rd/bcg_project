@@ -32,7 +32,7 @@ find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED QUIET)
 
 if(SFML_FOUND)
 	message(STATUS "[INFO] SFML found with config file in ${SFML_DIR}")
-	add_executable(${PROGRAM_NAME} main.cpp)
+	add_executable(${PROGRAM_NAME} ${SOURCES} main.cpp)
 	target_link_libraries(${PROGRAM_NAME} PUBLIC sfml-system sfml-window sfml-graphics)
 else()
 	message(STATUS "[INFO] SFML was not found, aborting...")
