@@ -23,19 +23,32 @@ set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2.5 COMPONENTS system window graphics QUIET)
 
 if(NOT SFML_FOUND) #if SFML wasnt found then we search in config
-	message(STATUS "[INFO] SFML not found in project tree...")
 	include("config.cmake")
+	find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED QUIET)
+	set(FOUND_WITH_CONFIG True)
+else()
+	set(FOUND_IN_PROJECT_TREE True)
 endif()
-find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED QUIET)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows") #for compatibility with linux os
+	set(LIBS "opengl32")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+	set(LIBS "GL")
+endif()
+
+if(FOUND_IN_PROJECT_TREE)
+	message(STATUS "[INFO] SFML found in project tree!")
+elseif(FOUND_WITH_CONFIG)
+	message(STATUS "[INFO] SFML found with config file in ${SFML_DIR}")
+else()
+	message(STATUS "[INFO] SFML was not found, aborting...")
+endif()
 
 ###################################################################################################
 
 if(SFML_FOUND)
-	message(STATUS "[INFO] SFML found with config file in ${SFML_DIR}")
 	add_executable(${PROGRAM_NAME} ${SOURCES} main.cpp)
-	target_link_libraries(${PROGRAM_NAME} PUBLIC sfml-system sfml-window sfml-graphics)
-else()
-	message(STATUS "[INFO] SFML was not found, aborting...")
+	target_link_libraries(${PROGRAM_NAME} PUBLIC sfml-system sfml-window sfml-graphics ${LIBS})
 endif()
 
 ###################################################################################################
