@@ -37,3 +37,5 @@ cmake/
 
 # Development help
 dev/
+libs/
+build/
