@@ -11,6 +11,11 @@ Program::Program()
 	m_window = new sf::RenderWindow(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
 	m_window->setFramerateLimit(fps_limit);
 	m_window->setVerticalSyncEnabled(vertical_sync_enabled);
+
+    
+
+
+    
 }
 
 Program::~Program()
@@ -65,9 +70,12 @@ void Program::render()
 {
    m_window->clear();
 
+   
    //here there will be panels rendered
 
    m_window->display();
+
+
 }
 
 void Program::run()
