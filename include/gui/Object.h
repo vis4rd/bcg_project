@@ -9,15 +9,12 @@ public:
 	Object(const sf::Vector2f &pos = sf::Vector2f(0.f, 0.f), const sf::Vector2f &size = sf::Vector2f(0.f, 0.f));
 	Object(const Object &copy);
 	Object(Object &&source);
-	virtual ~Object();
-	//virtual void update(const float deltaTime, sf::Event event) = 0;
-	
+	virtual ~Object() = default;
 
 	//getters/setters/checkers
 	const sf::Vector2f &getPosition() const;
 	const sf::Vector2f &getSize() const;
-	const sf::RectangleShape getShape() const;
-	const unsigned short &getCode() const;
+	const sf::RectangleShape &getShape() const;
 
 
 	void setPosition(const sf::Vector2f &pos);
@@ -30,7 +27,7 @@ public:
 
 protected:
 	sf::RectangleShape m_shape;
-	unsigned short stateCode;
+
 private:
 
 };
