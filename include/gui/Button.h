@@ -4,7 +4,7 @@
 //virtual class with interface for all buttons obcjets
 class Button: public Object
 {
-    public:
+public:
     enum state
     {
     	IDLE = 0,
@@ -18,17 +18,17 @@ class Button: public Object
     ~Button() =  default;
 
     //getters
-    const unsigned short getState();
+    const unsigned short getState() const;
 
     //setters
-    void setState(const unsigned short state);
+    void setState(const unsigned short new_state);
 
     //check and update methods
-    bool isPressed();
+    bool isPressed() const;
     void update(sf::Vector2i mousePos) override;
     void render(sf::RenderTarget *target) override;
 
-    protected:
+protected:
     unsigned short m_state;
 
 };
