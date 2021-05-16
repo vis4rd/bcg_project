@@ -28,7 +28,7 @@ const sf::Vector2f &Object::getSize() const
 	return this->m_shape.getSize();
 }
 
-const sf::RectangleShape &Object::getShape() const 
+sf::RectangleShape &Object::getShape() 
 {
 	return this->m_shape;
 }

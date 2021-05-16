@@ -25,7 +25,7 @@ public:
 
     //check and update methods
     bool isPressed() const;
-    void update(sf::Vector2i mousePos) override;
+    void update(sf::Vector2i mousePos, sf::Event &event) override;
     void render(sf::RenderTarget *target) override;
 
 protected:
