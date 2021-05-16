@@ -39,7 +39,7 @@
         return (m_state == Button::state::ACTIVE);
     }
 
-    void Button::update(sf::Vector2i mousePos)
+    void Button::update(sf::Vector2i mousePos, sf::Event &event)
     {
         if(m_shape.getGlobalBounds().contains(mousePos.x, mousePos.y))
         {
