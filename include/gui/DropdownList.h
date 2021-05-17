@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Button.h"
+#include "TextButton.h"
 
-class DropdownList final : public Button
+class DropdownList final : public TextButton
 {
 public:
 	/**
@@ -30,11 +30,13 @@ public:
 	 *
 	 * @param pos The position of the main button
 	 * @param size The size of the main button
+	 * @param font The font diplayed in TextButton's label
+	 * @param label String displayed on a TextButton
 	 * 
 	 * Subbuttons in the dropdown have the same size as the main button.
-	 * Every another appended Button is positioned under the main button.
+	 * Every another appended TextButton is positioned under the main button.
 	 */
-	explicit DropdownList(const sf::Vector2f &pos, const sf::Vector2f &size);
+	explicit DropdownList(const sf::Vector2f &pos, const sf::Vector2f &size, std::shared_ptr<sf::Font> font, const sf::String &label = sf::String());
 
 	/**
 	 * @brief Default Destructor
@@ -44,34 +46,36 @@ public:
 	virtual ~DropdownList() = default;
 
 	/**
-	 * @brief Appends a new Button to the dropdown.
+	 * @brief Appends a new TextButton to the dropdown.
 	 *
-	 * @param new_choice Unique pointer to the Button instance
+	 * @param new_choice Unique pointer to the TextButton instance
 	 * 
 	 * If new_choice is the first one to be appended (dropdown is empty),
 	 *   it is positioned right under the main button. 
 	 * 
-	 * Every another Button goes under the last one.
+	 * Every another TextButton goes under the last one.
 	 * 
 	 * new_choice's size is exactly the same as the size of the main button.
 	 */
-	void addChoice(std::unique_ptr<Button> new_choice);
+	void addChoice(std::unique_ptr<TextButton> new_choice);
 
 	/**
-	 * @brief Appends created in-place Button to the dropdown.
+	 * @brief Appends created in-place TextButton to the dropdown.
+	 * 
+	 * @param String which will be visible on the TextButton
 	 * 
 	 * This method is provided for convenience.
 	 */
-	void addChoice();
+	void addChoice(const sf::String &label);
 
 	/**
-	 * @brief Appends a new Button to the dropdown.
+	 * @brief Appends a new TextButton to the dropdown.
 	 *
 	 * @param new_choice Unique pointer to the Button instance.
 	 * 
 	 * This method is provided for convenience.
 	 */
-	void operator+=(std::unique_ptr<Button> new_choice);
+	void operator+=(std::unique_ptr<TextButton> new_choice);
 
 	/**
 	 * @brief Getter to the background of buttons in the dropdown.
@@ -132,6 +136,6 @@ public:
 private:
 	sf::RectangleShape m_background;
 	unsigned short m_dropStatus;
-	std::vector<std::unique_ptr<Button>> m_choices;
+	std::vector<std::unique_ptr<TextButton>> m_choices;
 	unsigned short m_currentChoice;
 };

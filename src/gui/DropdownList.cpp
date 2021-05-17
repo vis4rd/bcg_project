@@ -2,7 +2,7 @@
 
 DropdownList::DropdownList()
 :
-Button(),
+TextButton(),
 m_background(sf::RectangleShape(sf::Vector2f(m_shape.getSize().x, m_shape.getSize().y / 2))),
 m_dropStatus(DropdownList::DropStatus::HIDDEN),
 m_currentChoice(0u)
@@ -18,10 +18,12 @@ m_currentChoice(0u)
 
 DropdownList::DropdownList(
 	const sf::Vector2f &pos, 
-	const sf::Vector2f &size
+	const sf::Vector2f &size,
+	std::shared_ptr<sf::Font> font,
+	const sf::String &label
 	)
 :
-Button(pos, size),
+TextButton(pos, size, font, label),
 m_background(sf::RectangleShape(sf::Vector2f(size.x, size.y / 2.f))),
 m_dropStatus(DropdownList::DropStatus::HIDDEN),
 m_currentChoice(0u)
@@ -35,9 +37,9 @@ m_currentChoice(0u)
 	m_background.setFillColor(sf::Color(255, 255, 255, 80));
 }
 
-void DropdownList::addChoice(std::unique_ptr<Button> new_choice)
+void DropdownList::addChoice(std::unique_ptr<TextButton> new_choice)
 {
-	sf::Vector2f relative_pos = m_background.getPosition();
+	sf::Vector2f relative_pos = m_background.getPosition() + sf::Vector2f(0.f, 3.f);
 	if(!m_choices.empty())
 	{
 		relative_pos = m_choices.back()->getPosition();//set to position of last element
@@ -59,12 +61,12 @@ void DropdownList::addChoice(std::unique_ptr<Button> new_choice)
 	);
 }
 
-void DropdownList::addChoice()
+void DropdownList::addChoice(const sf::String &label)
 {
-	this->addChoice(std::make_unique<Button>(sf::Vector2f(0.f, 0.f), sf::Vector2f(0.f, 0.f)));
+	this->addChoice(std::make_unique<TextButton>(sf::Vector2f(0.f, 0.f), m_shape.getSize(), m_font, label));
 }
 
-void DropdownList::operator+=(std::unique_ptr<Button> new_choice)
+void DropdownList::operator+=(std::unique_ptr<TextButton> new_choice)
 {
 	this->addChoice(std::move(new_choice));
 }
@@ -96,7 +98,7 @@ void DropdownList::setBackgroundColor(const sf::Color &new_color)
 
 void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 {
-	Button::update(mousePos, event);
+	TextButton::update(mousePos, event);
 	if(m_dropStatus == DropdownList::DropStatus::DROPPED)
 	{
 		unsigned short count = 0u;
@@ -113,7 +115,7 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 	}
 
 	if(m_shape.getGlobalBounds().contains(mousePos.x, mousePos.y)
-		&& (event.type == sf::Event::MouseButtonPressed)
+		&& (event.type == sf::Event::MouseButtonReleased)
 		&& (event.mouseButton.button == sf::Mouse::Left))
 	{
 		if(m_dropStatus == DropdownList::DropStatus::HIDDEN)
@@ -129,7 +131,7 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 
 void DropdownList::render(sf::RenderTarget *target)
 {
-	Button::render(target);
+	TextButton::render(target);
 	if(m_dropStatus == DropdownList::DropStatus::DROPPED)
 	{
 		target->draw(m_background);
