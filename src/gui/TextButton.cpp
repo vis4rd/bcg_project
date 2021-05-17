@@ -25,10 +25,9 @@ m_label(sf::Text())
 	
 	if(m_font->getInfo().family.empty())//if font was given, but without loading actual font
 	{
-		std::cout << "font nie byl zaladowany" << std::endl;
 		if(!m_font->loadFromFile("../res/fonts/Noir_regular.otf"))
 		{
-			throw std::runtime_error("Could not load \"res/fonts/Noir_regular.otf\" font.");
+			throw std::runtime_error("TextButton: Could not load \"res/fonts/Noir_regular.otf\" font.");
 		}
 	}
 
@@ -69,6 +68,45 @@ void TextButton::setLabel(const sf::String &new_label)
 void TextButton::setSize(const sf::Vector2f &new_size)
 {
 	Button::setSize(new_size);
+	this->centerText();
+}
+
+void TextButton::setPosition(const sf::Vector2f &new_pos)
+{
+	Button::setPosition(new_size);
+	this->centerText();
+}
+
+void TextButton::setFont(std::shared_ptr<sf::Font> new_font)
+{
+	if(new_font == nullptr)//if font wasn't given as parameter
+	{
+		throw std::runtime_error("TextButton: Cannot set the font to nullptr.");
+	}
+	else
+	{
+		if(new_font->getInfo().family.empty())//if font was given, but without loading actual font
+		{
+			m_font = new_font;
+			if(!m_font->loadFromFile("../res/fonts/Noir_regular.otf"))
+			{
+				throw std::runtime_error("TextButton: Could not load \"res/fonts/Noir_regular.otf\" font.");
+			}
+			this->centerText();
+		}
+	}
+}
+
+void TextButton::setFontSize(const unsigned int &pixels)
+{
+	if(pixels > static_cast<unsigned int>(this->getSize().y))
+	{
+		m_label.setCharacterSize(static_cast<unsigned int>(this->getSize().y) - 3u);
+	}
+	else
+	{
+		m_label.setCharacterSize(pixels);
+	}
 	this->centerText();
 }
 
