@@ -12,13 +12,13 @@ public:
 	virtual ~Object() = default;
 
 	//getters/setters/checkers
-	const sf::Vector2f &getPosition() const;
-	const sf::Vector2f &getSize() const;
-	sf::RectangleShape &getShape();
+	virtual const sf::Vector2f &getPosition() const;
+	virtual const sf::Vector2f &getSize() const;
+	virtual sf::RectangleShape &getShape();
 
 
-	void setPosition(const sf::Vector2f &pos);
-	void setSize(const sf::Vector2f &size);
+	virtual void setPosition(const sf::Vector2f &pos);
+	virtual void setSize(const sf::Vector2f &size);
 
 
 	virtual void render(sf::RenderTarget *target) = 0;
