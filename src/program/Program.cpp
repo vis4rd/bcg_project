@@ -11,11 +11,7 @@ Program::Program()
 	m_window = new sf::RenderWindow(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
 	m_window->setFramerateLimit(fps_limit);
 	m_window->setVerticalSyncEnabled(vertical_sync_enabled);
-
-    
-
-
-    
+    m_window->setKeyRepeatEnabled(false);
 }
 
 Program::~Program()
@@ -47,15 +43,15 @@ void Program::updateSFMLEvents()
     		}
     		default: break;
     	}//switch
+        this->update(sf::Mouse::getPosition(*m_window), m_event);
     }//while
 }
 
-void Program::update()
+void Program::update(sf::Vector2i mousePos, sf::Event &event)
 {    
     if(m_window->isOpen())
     {
 		this->updateDeltaTime();
-		this->updateSFMLEvents();
 
 		//here there will be panels updated
 
@@ -70,19 +66,16 @@ void Program::render()
 {
    m_window->clear();
 
-   
    //here there will be panels rendered
 
    m_window->display();
-
-
 }
 
 void Program::run()
 {
     while(m_window->isOpen())
     {
-       this->update();
+       this->updateSFMLEvents();
        this->render();
     }
 }
