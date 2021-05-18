@@ -73,7 +73,7 @@ void TextButton::setSize(const sf::Vector2f &new_size)
 
 void TextButton::setPosition(const sf::Vector2f &new_pos)
 {
-	Button::setPosition(new_size);
+	Button::setPosition(new_pos);
 	this->centerText();
 }
 
