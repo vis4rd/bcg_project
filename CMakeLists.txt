@@ -17,7 +17,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/include)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
 ###################################################################################################
-
+# SFML
 set(SFML_DIR "${PROJECT_SOURCE_DIR}/libs/SFML/lib/cmake/SFML") #firstly we are searching for SFML in our dir tree
 set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2.5 COMPONENTS system window graphics QUIET)
@@ -31,7 +31,7 @@ else()
 endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows") #for compatibility with linux os
-	set(LIBS "opengl32")
+	set(LIBS "opengl32" "comdlg32" "ole32")
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 	set(LIBS "GL")
 endif()
@@ -43,6 +43,11 @@ elseif(FOUND_WITH_CONFIG)
 else()
 	message(STATUS "[INFO] SFML was not found, aborting...")
 endif()
+###################################################################################################
+# tinyfiledialogs
+
+include_directories("${PROJECT_SOURCE_DIR}/dep/tinyfiledialogs")
+list(APPEND SOURCES "${PROJECT_SOURCE_DIR}/dep/tinyfiledialogs/tinyfiledialogs.cpp")
 
 ###################################################################################################
 
