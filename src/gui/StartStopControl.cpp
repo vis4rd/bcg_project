@@ -4,7 +4,7 @@ StartStopControl::StartStopControl()
 :
 AnimControlButton()
 {
-	m_texture.loadFromFile("../res/gfk/play_button.png");
+	m_texture.loadFromFile("../res/images/play_button.png");
 } 
 
 
@@ -12,7 +12,7 @@ StartStopControl::StartStopControl(const sf::Vector2f &pos)
 :
 AnimControlButton(pos)
 {
-	m_texture.loadFromFile("../res/gfk/play_button.png");
+	m_texture.loadFromFile("../res/images/play_button.png");
 	m_sprite.setTexture(m_texture);
 } 
 
@@ -26,7 +26,7 @@ bool StartStopControl::isPlay() const
 void StartStopControl::Play()
 {
 	m_isPlay = true;
-	m_texture.loadFromFile("../res/gfk/pause_button.png");
+	m_texture.loadFromFile("../res/images/pause_button.png");
 	m_sprite.setTexture(m_texture);
 }
 
@@ -34,7 +34,7 @@ void StartStopControl::Play()
 void StartStopControl::Pause()
 {
 	m_isPlay = false;
-	m_texture.loadFromFile("../res/gfk/play_button.png");
+	m_texture.loadFromFile("../res/images/play_button.png");
 	m_sprite.setTexture(m_texture);
 }
 
