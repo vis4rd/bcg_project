@@ -1,8 +1,8 @@
 #include "../../include/gui/AnimControlButton.h"
 
 bool AnimControlButton::m_isAnimationActive = false;
-unsigned int AnimControlButton::m_x = 50;
-unsigned int AnimControlButton::m_y = 50;
+const unsigned int AnimControlButton::m_x = 50;
+const unsigned int AnimControlButton::m_y = 50;
 
 AnimControlButton::AnimControlButton()
 :
