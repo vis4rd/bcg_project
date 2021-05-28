@@ -32,6 +32,7 @@ void Program::updateDeltaTime()
 
 void Program::updateSFMLEvents()
 {
+    this->updateDeltaTime();
     while(m_window->pollEvent(m_event))
     {
     	switch(m_event.type)
@@ -51,7 +52,6 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
 {    
     if(m_window->isOpen())
     {
-		this->updateDeltaTime();
 
 		//here there will be panels updated
 
