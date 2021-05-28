@@ -38,6 +38,7 @@ namespace em
 		Matrix4<T> &rotateY(const float &angle);
 		Matrix4<T> &rotateZ(const float &angle);
 		Matrix4<T> &scale(const sf::Vector3<T> &scale);
+		Matrix4<T> &mirror(const bool xAxis, const bool yAxis, const bool zAxis);
 
 		const sf::Vector3<T> toPosition() const;
 		// void print(const std::string &prefix) const;
@@ -435,6 +436,27 @@ namespace em
 								0, scale.y, 0, 0, 
 								0, 0, scale.z, 0,
 								0, 0, 0, 1);
+		return *this;
+	}
+
+	template <typename T>
+	Matrix4<T> &Matrix4<T>::mirror(const bool xAxis, const bool yAxis, const bool zAxis)
+	{
+		Matrix4<T> mirrorMatrix;
+		if(xAxis)
+		{
+			mirrorMatrix[0][0] = -1;
+		}
+		if(yAxis)
+		{
+			mirrorMatrix[1][1] = -1;
+		}
+		if(zAxis)
+		{
+			mirrorMatrix[2][2] = -1;
+		}
+		
+		(*this) *= mirrorMatrix;
 		return *this;
 	}
 
