@@ -31,17 +31,23 @@ public:
 	 *
 	 * @return (x, y, z) position.
 	 * 
+	 * If there is not given any initial position while constructing the object,
+	 *   the returned position will be (0, 0, 0).
+	 * 
 	 * Usually z-coordinate will not be of much use, but in very
 	 *   rare cases, which SFML does not cover, it might come in handy.
 	 */
 	const sf::Vector3f getPosition() const;
 
 	/**
-	 * @brief Setter of the position of the AnimatedImage relative to window
+	 * @brief Getter to the size of the texture in pixels
 	 *
-	 * @param new_position New position of the object
+	 * @return The size of the texture
+	 * 
+	 * If the texture is not given by constructor, the size returned here
+	 *   will be (0, 0).
 	 */
-	void setPosition(const sf::Vector3f &new_position);
+	const sf::Vector2f &getSize() const;
 
 	/**
 	 * @brief Update the transformation matrix of the AnimatedImage
@@ -61,30 +67,35 @@ public:
 	void render(sf::RenderTarget *target);
 
 private:
-	sf::VertexArray m_verticies; ///> Verticies which follow the transformation data
-	std::array<sf::Vector3f, 4u> m_position; ///> The position of every vertex.
-	em::Matrix4f m_transform; ///> 4x4 matrix containing current transformations of the object
-	std::unique_ptr<sf::Texture> m_texture; ///> Unique pointer to texture applied to verticies
+	void setToInitPosition();
+	const sf::Vector3f getVertexPosition(const int &index) const;
+	const sf::Vector2f toV2f(const sf::Vector3f &origin) const;
+	const sf::Vector3f toV3f(const sf::Vector2f &origin) const;
+
+	sf::Vector2f m_initSize; ///> Size of the texture set at object definition
+	sf::Vector2f m_initPosition; ///> Position of the top-left corner of the texture set at definition
+	sf::VertexArray m_verticies; ///> Verticies which transformations are appleid to
+	std::unique_ptr<sf::Texture> m_texture; ///> Unique pointer to texture imprinted on verticies
 };
 
 inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 {
 	if(transform != em::Matrix4f())
 	{
-		m_position[0] = (m_transform * transform * (-m_transform) * m_position[0]);
-		m_position[1] = (m_transform * transform * (-m_transform) * m_position[1]);
-		m_position[2] = (m_transform * transform * (-m_transform) * m_position[2]);
-		m_position[3] = (m_transform * transform * (-m_transform) * m_position[3]);
+		this->setToInitPosition();
+		em::Matrix4f current = em::Matrix4f().translate(toV3f(m_initPosition));
+		sf::Vector3f temp_pos;
 
-		m_verticies[0].position.x = m_position[0].x;
-		m_verticies[0].position.y = m_position[0].y;
-		m_verticies[1].position.x = m_position[1].x;
-		m_verticies[1].position.y = m_position[1].y;
-		m_verticies[2].position.x = m_position[2].x;
-		m_verticies[2].position.y = m_position[2].y;
-		m_verticies[3].position.x = m_position[3].x;
-		m_verticies[3].position.y = m_position[3].y;
+		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(0));
+		m_verticies[0].position = toV2f(temp_pos);
 
-		m_transform = em::Matrix4f().translate(m_position[0]);	
+		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(1));
+		m_verticies[1].position = toV2f(temp_pos);
+
+		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(2));
+		m_verticies[2].position = toV2f(temp_pos);
+
+		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(3));
+		m_verticies[3].position = toV2f(temp_pos);
 	}
 }
