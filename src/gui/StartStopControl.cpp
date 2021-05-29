@@ -23,7 +23,7 @@ bool StartStopControl::isPlay() const
 }
 
 
-void StartStopControl::Play()
+void StartStopControl::play()
 {
 	m_isPlay = true;
 	m_texture.loadFromFile("../res/images/pause_button.png");
@@ -31,7 +31,7 @@ void StartStopControl::Play()
 }
 
 
-void StartStopControl::Pause()
+void StartStopControl::pause()
 {
 	m_isPlay = false;
 	m_texture.loadFromFile("../res/images/play_button.png");
@@ -54,13 +54,13 @@ void StartStopControl::update(sf::Vector2i mousePos, sf::Event &event)
 				{
 					m_state = Button::state::ACTIVE;
 					m_sprite.setColor( sf::Color(100,100,100) );
-					this->Pause();
+					this->pause();
 				}
 				else
 				{
 					m_state = Button::state::ACTIVE;
 					m_sprite.setColor( sf::Color(100,100,100) );
-					this->Play();
+					this->play();
 				}
 			}
 
@@ -98,4 +98,9 @@ void StartStopControl::update(sf::Vector2i mousePos, sf::Event &event)
 void StartStopControl::render(sf::RenderTarget *target) 
 {
 	AnimControlButton::render(target);
+}
+
+void StartStopControl::ON_OFF()
+{
+	m_isPlay = !m_isPlay;
 }

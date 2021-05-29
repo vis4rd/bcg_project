@@ -1,6 +1,6 @@
 #include "../../include/gui/AnimControlButton.h"
 
-bool AnimControlButton::m_isAnimationActive = false;
+bool AnimControlButton::m_isAnimationActive = true;
 const unsigned int AnimControlButton::m_x = 50;
 const unsigned int AnimControlButton::m_y = 50;
 
@@ -27,10 +27,9 @@ bool AnimControlButton::isAnimationActive() const
 	return m_isAnimationActive;
 }
 
-
-void AnimControlButton::setAnimationActivity(const bool isActive)
+void AnimControlButton::setAnimationActive(bool is_Active)
 {
-	m_isAnimationActive = isActive;
+	m_isAnimationActive = is_Active;
 }
 
 void AnimControlButton::render(sf::RenderTarget *target) 
@@ -39,9 +38,7 @@ void AnimControlButton::render(sf::RenderTarget *target)
 	target->draw(this->m_sprite);
 }	
 
-
 void AnimControlButton::update(sf::Vector2i mousePos, sf::Event &event) 
 {
-
 	Button::update(mousePos, event);
 }

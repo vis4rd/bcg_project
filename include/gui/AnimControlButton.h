@@ -60,7 +60,7 @@ public:
      *
      * @param isActive The boolean information of state of animation  
      */
-	static void setAnimationActivity(const bool isActive);
+	static void setAnimationActive(bool isActive);
 
 protected:
 	sf::Texture m_texture;

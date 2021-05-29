@@ -20,8 +20,9 @@ public:
     bool isPlay() const;
 
     //control buttons
-    void Play();
-    void Pause();
+    void play();
+    void pause();
+    void ON_OFF();
 
 private:
 	bool m_isPlay = false;
