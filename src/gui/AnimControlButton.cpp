@@ -1,8 +1,8 @@
 #include "../../include/gui/AnimControlButton.h"
 
 bool AnimControlButton::m_isAnimationActive = true;
-const unsigned int AnimControlButton::m_x = 50;
-const unsigned int AnimControlButton::m_y = 50;
+const unsigned int AnimControlButton::m_x = 40;
+const unsigned int AnimControlButton::m_y = 40;
 
 AnimControlButton::AnimControlButton()
 :
@@ -17,7 +17,7 @@ Button(pos, sf::Vector2f(static_cast<float>(m_x), static_cast<float>(m_y)) )
 {
     m_shape.setOutlineThickness(0);
 	m_texture.loadFromFile("../res/images/play_button.png");
-	m_sprite.setColor( sf::Color(200,200,200) );
+	m_sprite.setColor( sf::Color(250,250,250) );
 	m_sprite.setTexture(m_texture);
 	m_sprite.setPosition(pos);
 }

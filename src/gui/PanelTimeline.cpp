@@ -13,8 +13,8 @@ Panel(pos, size)
 	float tempX = size.x/2.f;
 	float tempY = size.y/14.f;
 	m_control = new StartStopControl( pos + sf::Vector2f(tempX,tempY) );
-	m_next = NextFrameControl::makeNextFrameButton( pos+sf::Vector2f(tempX+50.f,tempY) );
-	m_prev = NextFrameControl::makePreviousFrameButton( pos+sf::Vector2f(tempX-50.f, tempY) );
+	m_next = NextFrameControl::makeNextFrameButton( pos+sf::Vector2f(tempX+55.f, tempY + 3.f ) );
+	m_prev = NextFrameControl::makePreviousFrameButton( pos+sf::Vector2f(tempX-55.f, tempY + 3.f ) );
 	m_timeline = new Timeline( (pos+sf::Vector2f(size.x/16.f, tempY+65.f)) , sf::Vector2f( 14.f*size.x/16.f  , 1.f));
 }
 

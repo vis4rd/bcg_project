@@ -19,20 +19,22 @@ Button(pos,size)
 {
     m_length = size.x;
     m_body = new sf::VertexArray(sf::Quads);
-    m_cursor = sf::CircleShape(10);
-    m_cursor.setFillColor(sf::Color(20,70,150));
+
+    m_cursor = sf::CircleShape(8);
+    m_cursor.setFillColor(sf::Color(220,220,80));
     m_cursor.setPosition(pos + sf::Vector2f(-5.f , - 9.f) ); 
-    m_cursor.setOutlineColor( sf::Color(100,100,100) );
-    m_cursor.setOutlineThickness(5.f);
+    m_cursor.setOutlineColor( sf::Color(20,20,20) );
+    m_cursor.setOutlineThickness(3.f);
+
     m_covered.setPosition( pos + sf::Vector2f( -3.f, -3.f) );
-    m_covered.setFillColor( sf::Color(80,150,220) );
-    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 6.f) );
+    m_covered.setFillColor( sf::Color(200,220,60) );
+    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
 
     m_box.setPosition(pos);
     m_box.setSize(size);
     m_box.setFillColor(sf::Color::Black);
     m_box.setOutlineColor(sf::Color(120,120,120));
-    m_box.setOutlineThickness(6.f);
+    m_box.setOutlineThickness(4.f);
 }
 
 bool Timeline::isPlay() const
