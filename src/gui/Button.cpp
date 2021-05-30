@@ -11,6 +11,7 @@
     :Object(pos, size), m_state(Button::state::IDLE)
     {
     	m_shape.setOutlineThickness(5);
+        m_shape.setOutlineColor(sf::Color::Black);
     }
     
     //getters
