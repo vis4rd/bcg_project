@@ -80,9 +80,9 @@ private:
 
 inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 {
+	this->setToInitPosition();
 	if(transform != em::Matrix4f())
 	{
-		this->setToInitPosition();
 		em::Matrix4f current = em::Matrix4f().translate(toV3f(m_initPosition));
 		sf::Vector3f temp_pos;
 
