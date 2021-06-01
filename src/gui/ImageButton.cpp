@@ -9,7 +9,7 @@ ImageButton::ImageButton(const sf::Vector2f &pos, const sf::Vector2f &size,const
     :Button(pos, size)
     {
         m_shape.setOutlineThickness(5);
-        m_shape.setOutlineColor(sf::Color::Green);
+        m_shape.setOutlineColor(sf::Color(220,220,80));
         if(number == 1)
         {
 
