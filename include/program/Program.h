@@ -1,5 +1,14 @@
 #pragma once
 
+#include "../gui/DropdownList.h"
+#include "../gui/StartStopControl.h"
+#include "../gui/NextFrameControl.h"
+#include "../gui/Timeline.h"
+#include "../gui/PanelTimeline.h"
+#include "../gui/PanelButtons.h"
+#include "../animation/PixelAnimation.h"
+#include "../animation/ObjectAnimation.h"
+#include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 
 class Program
@@ -24,5 +33,8 @@ private:
 
 	sf::Clock m_dtClock;
 	float m_deltaTime;
+
+	PanelTimeline *timePanel;
+	PanelButton *buttonPanel;
 
 };
