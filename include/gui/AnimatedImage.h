@@ -60,6 +60,13 @@ public:
 	inline void transformUpdate(const em::Matrix4f &transform = em::Matrix4f());
 
 	/**
+	 * @brief Update texture pixels of the AnimatedImage
+	 *
+	 * @param pixels vector of RGBA values of the texture
+	 */
+	inline void AnimatedImage::pixelUpdate(std::vector<unsigned char> pixels = {});
+
+	/**
 	 * @brief Renders contents of the AnimatedImage to the target
 	 *
 	 * @param target Rendering target (ex. window)
@@ -97,5 +104,15 @@ inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 
 		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(3));
 		m_verticies[3].position = toV2f(temp_pos);
+	}
+}
+
+inline void AnimatedImage::pixelUpdate(std::vector<unsigned char> pixels)
+{
+	if(m_texture)
+	{
+		sf::Vector2u size = m_texture->getSize();
+		pixels.resize(size.x * size.y * 4);
+		m_texture->update(pixels.data(), size.x, size.y, 0.f, 0.f);
 	}
 }
