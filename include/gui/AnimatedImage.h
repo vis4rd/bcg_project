@@ -64,7 +64,7 @@ public:
 	 *
 	 * @param pixels vector of RGBA values of the texture
 	 */
-	inline void AnimatedImage::pixelUpdate(std::vector<unsigned char> pixels = {});
+	inline void pixelUpdate(std::vector<unsigned char> pixels = {});
 
 	/**
 	 * @brief Renders contents of the AnimatedImage to the target
@@ -109,7 +109,7 @@ inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 
 inline void AnimatedImage::pixelUpdate(std::vector<unsigned char> pixels)
 {
-	if(m_texture)
+	if(m_texture && (pixels.getSize() > 0))
 	{
 		sf::Vector2u size = m_texture->getSize();
 		pixels.resize(size.x * size.y * 4);
