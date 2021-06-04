@@ -40,7 +40,7 @@ Animation(animation_length, animation_speed)
 	{
 		const sf::Image &temp = texture1.copyToImage();
 		const sf::Uint8 *pix = temp.getPixelsPtr();
-		unsigned size = texture1.getSize().x * texture1.getSize().y * 3;
+		unsigned size = texture1.getSize().x * texture1.getSize().y * 4;
 		for(unsigned i = 0; i < size; i++)
 		{
 			m_pixels1.push_back(pix[i]);
@@ -54,12 +54,12 @@ Animation(animation_length, animation_speed)
 
 	if(texture2.getSize() != sf::Vector2u(0u, 0u))
 	{
-		const sf::Image &temp = texture1.copyToImage();
+		const sf::Image &temp = texture2.copyToImage();
 		const sf::Uint8 *pix = temp.getPixelsPtr();
-		unsigned size = texture2.getSize().x * texture2.getSize().y * 3;
+		unsigned size = texture2.getSize().x * texture2.getSize().y * 4;
 		for(unsigned i = 0; i < size; i++)
 		{
-			m_pixels1.push_back(pix[i]);
+			m_pixels2.push_back(pix[i]);
 		}
 	}
 	else
