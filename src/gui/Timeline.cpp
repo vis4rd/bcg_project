@@ -20,21 +20,21 @@ Button(pos,size)
     m_length = size.x;
     m_body = new sf::VertexArray(sf::Quads);
 
-    m_cursor = sf::CircleShape(8);
-    m_cursor.setFillColor(sf::Color(220,220,80));
-    m_cursor.setPosition(pos + sf::Vector2f(-5.f , - 9.f) ); 
+    m_cursor = sf::CircleShape(6);
+    m_cursor.setFillColor(sf::Color(80,220,80));
+    m_cursor.setPosition(pos + sf::Vector2f(-5.f , - 7.f) ); 
     m_cursor.setOutlineColor( sf::Color(20,20,20) );
-    m_cursor.setOutlineThickness(3.f);
+    m_cursor.setOutlineThickness(-1.f);
 
-    m_covered.setPosition( pos + sf::Vector2f( -3.f, -3.f) );
-    m_covered.setFillColor( sf::Color(200,220,60) );
+    m_covered.setPosition( pos + sf::Vector2f( -2.f, -2.f) );
+    m_covered.setFillColor( sf::Color(60,220,60) );
     m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
 
     m_box.setPosition(pos);
     m_box.setSize(size);
     m_box.setFillColor(sf::Color::Black);
     m_box.setOutlineColor(sf::Color(120,120,120));
-    m_box.setOutlineThickness(4.f);
+    m_box.setOutlineThickness(2.f);
 }
 
 bool Timeline::isPlay() const
@@ -70,7 +70,7 @@ void Timeline::render(sf::RenderTarget *target)
     if ( this->isFinished() == false && this->isPlay() )
     {
         this->m_cursor.setPosition( m_cursor.getPosition() + sf::Vector2f(2.f, 0)  );
-        m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 8.f) );
+        m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
 
     }
 
@@ -82,8 +82,8 @@ void Timeline::render(sf::RenderTarget *target)
 
 void Timeline::setCursorPosition(float localX)
 {
-    m_cursor.setPosition( this->getPosition() + sf::Vector2f(localX, -9.f) );
-    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 8.f) );
+    m_cursor.setPosition( this->getPosition() + sf::Vector2f(localX, -7.f) );
+    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
 }
 
 void Timeline::ON_OFF()

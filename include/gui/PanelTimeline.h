@@ -22,6 +22,13 @@ class PanelTimeline : public Panel
 	void ON_OFF();
 	bool isFinished(); 
 
+
+	const float& getAnimTime();
+	const NextFrameControl* getNext();
+	const NextFrameControl* getPrev();
+	const StartStopControl* getControl();
+	const Timeline* getTimeline();
+
 	/*
 	*	void next(AnimatedImage* anim) i void previous(AnimatedImage* anim);
 	*	- methods to set next animation and time that animation takes (m_animTime)

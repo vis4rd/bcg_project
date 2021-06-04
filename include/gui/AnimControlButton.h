@@ -65,8 +65,6 @@ public:
 protected:
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
-	static const unsigned int m_x;
-	static const unsigned int m_y;
 
 private:
 	static bool m_isAnimationActive;

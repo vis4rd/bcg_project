@@ -76,3 +76,28 @@ bool PanelTimeline::isFinished()
 {
 	return m_timeline->isFinished();
 } 
+
+const float& PanelTimeline::getAnimTime()
+{
+	return m_animTime;
+}
+
+const NextFrameControl* PanelTimeline::getNext()
+{
+	return m_next;
+}
+
+const NextFrameControl* PanelTimeline::getPrev()
+{
+	return m_prev;
+}
+
+const StartStopControl* PanelTimeline::getControl()
+{
+	return m_control;
+}
+
+const Timeline* PanelTimeline::getTimeline()
+{
+	return m_timeline;
+}

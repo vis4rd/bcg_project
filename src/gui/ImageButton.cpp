@@ -9,7 +9,7 @@ ImageButton::ImageButton(const sf::Vector2f &pos, const sf::Vector2f &size,const
     :Button(pos, size)
     {
         m_shape.setOutlineThickness(5);
-        m_shape.setOutlineColor(sf::Color(220,220,80));
+        m_shape.setOutlineColor(sf::Color(80,220,80));
         if(number == 1)
         {
 
@@ -68,7 +68,7 @@ void ImageButton::update(sf::Vector2i mousePos, sf::Event &event)
             char const * lFilterPatterns[3] = { "*.png", "*.jpg","*.bmp"};
             
 
-            char const * selection = tinyfd_openFileDialog("Select file", "C:\\", 3, lFilterPatterns, NULL, 0 );
+            char const * selection = tinyfd_openFileDialog("Select file", NULL, 3, lFilterPatterns, NULL, 0 );
             if(selection != nullptr)
             {
 

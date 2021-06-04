@@ -11,7 +11,7 @@ Panel::Panel(const sf::Vector2f &pos, const sf::Vector2f &size)
 Object(pos, size)
 {
 	m_shape.setFillColor( sf::Color(40,40,40) );
-	m_shape.setOutlineThickness(3.f);
+	m_shape.setOutlineThickness(-3.f);
 	m_shape.setOutlineColor(sf::Color(90,90,90) );
 }
 

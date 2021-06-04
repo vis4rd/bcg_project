@@ -20,8 +20,8 @@ public:
 
 	virtual ~PixelAnimation() = default;
 
-	inline virtual const std::vector<unsigned char> &getTexture1Frame(const float &current_time) const = 0;
-	inline virtual const std::vector<unsigned char> &getTexture2Frame(const float &current_time) const = 0;
+	inline virtual const std::vector<unsigned char> getTexture1Frame(const float &current_time) const = 0;
+	inline virtual const std::vector<unsigned char> getTexture2Frame(const float &current_time) const = 0;
 	
 	std::vector<unsigned char> getPixels1() const;
 	std::vector<unsigned char> getPixels2() const;
