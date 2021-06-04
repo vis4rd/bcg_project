@@ -13,7 +13,7 @@ m_currentChoice(0u)
 			m_shape.getPosition().y + m_shape.getSize().y
 			)//right below the main button
 	);
-	m_background.setFillColor(sf::Color(255, 255, 255, 80));
+	m_background.setFillColor(sf::Color(210, 210, 210));
 }
 
 DropdownList::DropdownList(
@@ -34,7 +34,7 @@ m_currentChoice(0u)
 			m_shape.getPosition().y + m_shape.getSize().y
 		)//right below the main button
 	);
-	m_background.setFillColor(sf::Color(255, 255, 255, 80));
+	m_background.setFillColor(sf::Color(210, 210, 210));
 }
 
 void DropdownList::addChoice(std::unique_ptr<TextButton> new_choice)
@@ -101,7 +101,7 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 	TextButton::update(mousePos, event);
 	if(m_dropStatus == DropdownList::DropStatus::DROPPED)
 	{
-		unsigned short count = 0u;
+		unsigned short count = 1u;
 		for(auto &it : m_choices)
 		{
 			it->update(mousePos, event);
@@ -109,6 +109,7 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 			{
 				m_dropStatus = DropdownList::DropStatus::HIDDEN;
 				m_currentChoice = count;
+				this->setLabel(it->getLabel());
 			}
 			count++;
 		}
