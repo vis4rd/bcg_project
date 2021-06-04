@@ -148,6 +148,11 @@ void Canvas::setTotalAnimationTime(const float &seconds)
 	}
 }
 
+void Canvas::setAnimationPlayOn(const bool status)
+{
+	m_isAnimPlaying = status;
+}
+
 void Canvas::setSize(const sf::Vector2f &new_size)
 {
 	m_plane.clear();

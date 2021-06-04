@@ -18,6 +18,7 @@ public:
 
 	void setCurrentAnimationTime(const float &current_time);
 	void setTotalAnimationTime(const float &seconds);
+	void setAnimationPlayOn(const bool status);
 	void setSize(const sf::Vector2f &new_size);
 	void setPosition(const sf::Vector2f &new_position);
 
