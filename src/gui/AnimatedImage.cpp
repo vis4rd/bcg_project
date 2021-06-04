@@ -55,11 +55,12 @@ const sf::Vector2f &AnimatedImage::getSize() const
 std::vector<unsigned char> AnimatedImage::getRGB() const
 {
 	std::vector<unsigned char> result;
-	const unsigned char *ptr = m_texture->copyToImage().getPixelsPtr();
-	unsigned size = static_cast<unsigned>(this->getSize().x * this->getSize().y * 4);
+	const sf::Image &temp = (*(m_texture.get())).copyToImage();
+	const sf::Uint8 *pix = temp.getPixelsPtr();
+	unsigned size = static_cast<unsigned>(temp.getSize().x * temp.getSize().y * 4);
 	for(unsigned i = 0; i < size; i++)
 	{
-		result.push_back(ptr[i]);
+		result.push_back(pix[i]);
 	}
 	return result;
 }
