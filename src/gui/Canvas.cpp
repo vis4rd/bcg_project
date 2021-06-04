@@ -56,9 +56,10 @@ void Canvas::setAnimation(std::unique_ptr<PixelAnimation> new_animation)
 	m_animType = Canvas::AnimationType::PIX_ANIM;
 	this->clearAnimation();
 	m_pixAnim = std::move(new_animation);
-	if(m_startingImage && m_pixelImage)//TODO: set pixels according to animation time
+	if(m_startingImage)
 	{
 		m_pixelImage = std::make_unique<AnimatedImage>(*(m_startingImage.get()));
+		m_pixAnim->setPixels1(m_pixelImage->getRGB());
 		m_pixelImage->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
 	}
 }

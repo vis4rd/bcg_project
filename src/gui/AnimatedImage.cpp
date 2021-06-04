@@ -52,6 +52,18 @@ const sf::Vector2f &AnimatedImage::getSize() const
 	return m_initSize;
 }
 
+std::vector<unsigned char> AnimatedImage::getRGB() const
+{
+	std::vector<unsigned char> result;
+	const unsigned char *ptr = m_texture->copyToImage().getPixelsPtr();
+	unsigned size = static_cast<unsigned>(this->getSize().x * this->getSize().y * 4);
+	for(unsigned i = 0; i < size; i++)
+	{
+		result.push_back(ptr[i]);
+	}
+	return result;
+}
+
 void AnimatedImage::render(sf::RenderTarget *target)
 {
 	sf::RenderStates states(m_texture.get());

@@ -59,6 +59,13 @@ public:
 	const sf::Vector2f &getSize() const;
 
 	/**
+	 * @brief Get the vector of RGB values of the texture
+	 *
+	 * @return The vector filled with RGB values
+	 */
+	std::vector<unsigned char> getRGB() const;
+
+	/**
 	 * @brief Update the transformation matrix of the AnimatedImage
 	 *
 	 * @param transform 4x4 transform matrix
