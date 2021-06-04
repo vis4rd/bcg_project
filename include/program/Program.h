@@ -10,6 +10,7 @@
 #include "../animation/ObjectAnimation.h"
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
+#include "../gui/Canvas.h"
 
 class Program
 {
@@ -34,7 +35,7 @@ private:
 	sf::Clock m_dtClock;
 	float m_deltaTime;
 
-	PanelTimeline *timePanel;
-	PanelButton *buttonPanel;
-
+	PanelTimeline *m_timePanel;
+	PanelButton *m_buttonPanel;
+	Canvas *m_canvas;
 };
