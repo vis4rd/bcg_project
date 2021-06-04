@@ -14,7 +14,7 @@ m_speedFactor(animation_speed)
 
 const float &Animation::getAnimationLength() const
 {
-	return (m_totalTime/1000.f);
+	return m_totalTime;
 }
 
 const float &Animation::getAnimationSpeed() const
@@ -30,7 +30,7 @@ void Animation::setAnimationLength(const float &seconds)
 	}
 	else
 	{
-		m_totalTime = seconds * 1000.f;
+		m_totalTime = seconds;
 	}
 }
 

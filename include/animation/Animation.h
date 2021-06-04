@@ -16,7 +16,7 @@ public:
 	virtual void setAnimationSpeed(const float &speed_factor);
 
 protected:
-	float m_totalTime; //in ms
+	float m_totalTime; //in seconds
 	float m_currentTime; // interval [ 0 ; 1 ]
 	float m_speedFactor; // x < 1 : slower, x > 1 faster
 	
