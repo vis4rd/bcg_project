@@ -10,19 +10,36 @@ m_texture(nullptr)
 
 }
 
-AnimatedImage::AnimatedImage(const sf::Vector3f &position, std::unique_ptr<sf::Texture> texture)
+AnimatedImage::AnimatedImage(const sf::Vector3f &position, std::unique_ptr<sf::Texture> texture, const sf::Vector2f &independent_size)
 :
 m_initPosition(toV2f(position)),
 m_verticies(sf::VertexArray(sf::Quads, 4)),
 m_texture(std::move(texture))
 {
-	m_initSize = static_cast<sf::Vector2f>(m_texture->getSize());
+	if(independent_size != sf::Vector2f())
+	{
+		m_initSize = independent_size;
+	}
+	else
+	{
+		m_initSize = static_cast<sf::Vector2f>(m_texture->getSize());
+	}
 
 	this->setToInitPosition();
 	m_verticies[0].texCoords = sf::Vector2f(0.f, 0.f);
-	m_verticies[1].texCoords = sf::Vector2f(m_initSize.x, 0.f);
-	m_verticies[2].texCoords = m_initSize;
-	m_verticies[3].texCoords = sf::Vector2f(0.f, m_initSize.y);
+	m_verticies[1].texCoords = sf::Vector2f(m_texture->getSize().x, 0.f);
+	m_verticies[2].texCoords = static_cast<sf::Vector2f>(m_texture->getSize());
+	m_verticies[3].texCoords = sf::Vector2f(0.f, m_texture->getSize().y);
+}
+
+AnimatedImage::AnimatedImage(const AnimatedImage &copy)
+:
+m_initSize(copy.m_initSize),
+m_initPosition(copy.m_initPosition),
+m_verticies(copy.m_verticies),
+m_texture(std::make_unique<sf::Texture>(*(copy.m_texture.get())))
+{
+
 }
 
 const sf::Vector3f AnimatedImage::getPosition() const

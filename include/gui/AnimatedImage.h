@@ -21,10 +21,19 @@ public:
 	 *
 	 * @param position The position of an image
 	 * @param texture Texture of an image, to which the transformations will be applied
+	 * @param independent_size Size that is not dependent on texture's size
 	 */
 	explicit AnimatedImage(
 		const sf::Vector3f &position, 
-		std::unique_ptr<sf::Texture> texture);
+		std::unique_ptr<sf::Texture> texture,
+		const sf::Vector2f &independent_size = sf::Vector2f());
+
+	/**
+	 * @brief Copy constructor
+	 *
+	 * @param copy Copied object
+	 */
+	explicit AnimatedImage(const AnimatedImage &copy);
 
 	/**
 	 * @brief Getter to the position of the AnimatedImage relative to window
@@ -109,7 +118,7 @@ inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 
 inline void AnimatedImage::pixelUpdate(std::vector<unsigned char> pixels)
 {
-	if(m_texture && (pixels.getSize() > 0))
+	if(m_texture && (pixels.size() > 0))
 	{
 		sf::Vector2u size = m_texture->getSize();
 		pixels.resize(size.x * size.y * 4);
