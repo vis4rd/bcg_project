@@ -9,7 +9,8 @@ m_pixAnim(nullptr),
 m_animType(Canvas::AnimationType::NONE),
 m_startingImage(nullptr),
 m_endingImage(nullptr),
-m_pixelImage(nullptr),
+m_pixelImageIn(nullptr),
+m_pixelImageOut(nullptr),
 m_isAnimPlaying(false),
 m_currentAnimTime(0.f),
 m_totalAnimTime(0.f)
@@ -26,7 +27,8 @@ m_pixAnim(nullptr),
 m_animType(Canvas::AnimationType::NONE),
 m_startingImage(nullptr),
 m_endingImage(nullptr),
-m_pixelImage(nullptr),
+m_pixelImageIn(nullptr),
+m_pixelImageOut(nullptr),
 m_isAnimPlaying(false),
 m_currentAnimTime(0.f),
 m_totalAnimTime(0.f)
@@ -56,16 +58,33 @@ void Canvas::setAnimation(std::unique_ptr<PixelAnimation> new_animation)
 	m_animType = Canvas::AnimationType::PIX_ANIM;
 	this->clearAnimation();
 	m_pixAnim = std::move(new_animation);
-	if(m_startingImage)
-	{
-		m_pixelImage = std::make_unique<AnimatedImage>(*(m_startingImage.get()));
-		m_pixAnim->setPixels1(m_pixelImage->getRGB());
-		m_pixelImage->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
+
+	if(m_pixAnim == nullptr)
+	{	
+		std::cout<<"w setAnimation m_pixAnim jest nullptr"<<std::endl;
 	}
+
+	if(m_startingImage)
+	{	std::cout<<"czy istnieje?"<<std::endl;
+		m_pixelImageIn = std::make_unique<AnimatedImage>(*(m_startingImage.get()));
+		m_pixelImageOut = std::make_unique<AnimatedImage>(*(m_endingImage.get()));
+		if(m_pixelImageIn == nullptr || m_pixelImageOut == nullptr )
+	{	
+		std::cout<<"w setAnimation m_pixelImage jest nullptr"<<std::endl;
+	}
+
+		m_pixAnim->setPixels1(m_startingImage->getRGB());
+		m_pixAnim->setPixels2(m_endingImage->getRGB());
+		m_pixelImageIn->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
+		m_pixelImageOut->pixelUpdate(m_pixAnim->getTexture2Frame(m_currentAnimTime));
+
+	}
+
 }
 
 void Canvas::setStartingImage(const sf::String &directory_path)
 {
+	std::cout << "Pixel Anim active" << std::endl;
 	this->clearStartingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
@@ -85,11 +104,13 @@ void Canvas::setStartingImage(const sf::String &directory_path)
 	{
 		if(m_pixAnim)
 		{
-			m_pixelImage->pixelUpdate(m_pixAnim->getPixels1());
+			m_pixelImageIn->pixelUpdate(m_pixAnim->getPixels1());
+			m_pixelImageOut->pixelUpdate(m_pixAnim->getPixels2());
 		}
 		else
 		{
-			m_pixelImage->pixelUpdate();
+			m_pixelImageIn->pixelUpdate();
+			m_pixelImageOut->pixelUpdate();
 		}
 	}
 }
@@ -99,7 +120,7 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 	this->clearEndingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
-	m_endingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex));
+	m_endingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane.getSize()));
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
 		if(m_objAnim)
@@ -115,11 +136,14 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 	{
 		if(m_pixAnim)
 		{
-			m_pixelImage->pixelUpdate(m_pixAnim->getPixels2());
+			std::cout << "Ending Anim active" << std::endl;
+			m_pixelImageIn->pixelUpdate(m_pixAnim->getPixels1());
+			m_pixelImageOut->pixelUpdate(m_pixAnim->getPixels2());
 		}
 		else
 		{
-			m_pixelImage->pixelUpdate();
+			m_pixelImageIn->pixelUpdate();
+			m_pixelImageOut->pixelUpdate();
 		}
 	}
 }
@@ -180,9 +204,10 @@ void Canvas::update(sf::Vector2i mousePos, sf::Event &event)
 				m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime));
 			}
 		}
-		else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImage)
+		else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImageIn && m_pixelImageOut)
 		{
-			m_pixelImage->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
+			m_pixelImageIn->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
+			m_pixelImageOut->pixelUpdate(m_pixAnim->getTexture2Frame(m_currentAnimTime));
 		}
 	}
 }
@@ -207,9 +232,10 @@ void Canvas::render(sf::RenderTarget *target)
 			m_startingImage->render(&m_plane);
 		}
 	}
-	else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImage)
+	else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImageIn && m_pixelImageOut)
 	{
-		m_pixelImage->render(&m_plane);
+		m_pixelImageOut->render(&m_plane);
+		m_pixelImageIn->render(&m_plane);
 	}
 
 	m_plane.display();

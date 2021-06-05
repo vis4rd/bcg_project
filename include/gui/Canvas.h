@@ -46,7 +46,8 @@ private:
 	unsigned short m_animType;
 	std::unique_ptr<AnimatedImage> m_startingImage;
 	std::unique_ptr<AnimatedImage> m_endingImage;
-	std::unique_ptr<AnimatedImage> m_pixelImage;
+	std::unique_ptr<AnimatedImage> m_pixelImageIn;
+	std::unique_ptr<AnimatedImage> m_pixelImageOut;
 
 	bool m_isAnimPlaying;
 	float m_currentAnimTime; //in seconds

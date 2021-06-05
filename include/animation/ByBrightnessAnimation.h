@@ -27,38 +27,38 @@ class ByBrightnessAnimation : public PixelAnimation
 	{
 		std::vector<unsigned char> temp = m_pixels2;
 		std::vector<unsigned char> out = m_pixels1;
-		unsigned char brightnes = 0 , darknest = 255;
+		unsigned char brightness = 0 , darkest = 255;
 		float key = (m_totalTime-current_time)/m_totalTime;
 
 		// searching brightest pixel
 		for(unsigned i=0; i<temp.size(); i+=4)
 		{
-			if( (temp[i] + temp[i+1] + temp[i+2])/3 > brightnes )
+			if( (temp[i] + temp[i+1] + temp[i+2])/3 > brightness )
 			{
-				brightnes = (temp[i] + temp[i+1] + temp[i+2])/3;
+				brightness = (temp[i] + temp[i+1] + temp[i+2])/3;
 			}
+			
 		}
 
 		// searching darkest pixel
 		for(unsigned i=0; i<temp.size(); i+=4)
 		{
-			if( (temp[i] + temp[i+1] + temp[i+2])/3 < darknest )
+			if( (temp[i] + temp[i+1] + temp[i+2])/3 < darkest )
 			{
-				darknest = (temp[i] + temp[i+1] + temp[i+2])/3;
+				darkest = (temp[i] + temp[i+1] + temp[i+2])/3;
 			}
+		
 		}
 
-		key = key * (brightnes - darknest);
-		std::cout << key << std::endl;
-		std::cout << static_cast<unsigned char>(key) << std::endl;
-
+		key = ( key * (brightness - darkest + 1) + darkest ) ;
 
 		for(unsigned i=0; i<temp.size(); i+=4)
 		{
-			if(	 (temp[i] + temp[i+1] + temp[i+2])/3 > static_cast<unsigned char>(key) )
+			if(	 (temp[i] + temp[i+1] + temp[i+2])/3 >= static_cast<unsigned char>(key))
 			{
 				out[i+3] = 0;
-			}   		
+			}   	
+
 		}
 	
 		return out;
