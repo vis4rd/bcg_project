@@ -4,9 +4,7 @@
 
 class StartStopControl : public AnimControlButton
 {
-
 public:
-
     // constructors and destructors
 	StartStopControl(); 
 	StartStopControl(const sf::Vector2f &pos);
@@ -25,6 +23,5 @@ public:
     void ON_OFF();
 
 private:
-	bool m_isPlay = false;
-
+	bool m_isPlay;
 };
