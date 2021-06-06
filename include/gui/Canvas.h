@@ -17,6 +17,7 @@ public:
 	void setEndingImage(const sf::String &directory_path);
 
 	void setCurrentAnimationTime(const float &current_time);
+	void setCurrentAnimationProgress(const float &current_progress);
 	void setTotalAnimationTime(const float &seconds);
 	void setAnimationPlayOn(const bool status);
 	void setSize(const sf::Vector2f &new_size);
@@ -24,6 +25,8 @@ public:
 
 	void update(sf::Vector2i mousePos, sf::Event &event);
 	void render(sf::RenderTarget *target);
+
+	const float& getTotalTime();  
 	
 protected:
 

@@ -4,6 +4,8 @@
 #include "StartStopControl.h"
 #include "NextFrameControl.h"
 #include "Timeline.h"
+#include "Canvas.h"
+
 
 
 class PanelTimeline : public Panel
@@ -14,7 +16,7 @@ class PanelTimeline : public Panel
 	PanelTimeline(const sf::Vector2f &pos, const sf::Vector2f &size);
 	~PanelTimeline();
 
-	void update(sf::Vector2i mousePos, sf::Event &event) override;
+	void update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime);
 	void render(sf::RenderTarget *target) override;
 
 	void play();
@@ -23,11 +25,11 @@ class PanelTimeline : public Panel
 	bool isFinished(); 
 
 
-	const float& getAnimTime();
-	const NextFrameControl* getNext();
-	const NextFrameControl* getPrev();
-	const StartStopControl* getControl();
-	const Timeline* getTimeline();
+	NextFrameControl* getNext();
+	NextFrameControl* getPrev();
+	StartStopControl* getControl();
+	Timeline* getTimeline();
+	Canvas* getCanvas();
 
 	/*
 	*	void next(AnimatedImage* anim) i void previous(AnimatedImage* anim);
@@ -39,7 +41,6 @@ class PanelTimeline : public Panel
 	StartStopControl* m_control;
 	NextFrameControl* m_next;
 	NextFrameControl* m_prev;
+	Canvas* m_canvas;
 	Timeline* m_timeline;
-	float m_animTime;
-
 }; 

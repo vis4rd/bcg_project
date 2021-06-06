@@ -84,7 +84,6 @@ void Canvas::setAnimation(std::unique_ptr<PixelAnimation> new_animation)
 
 void Canvas::setStartingImage(const sf::String &directory_path)
 {
-	std::cout << "Pixel Anim active" << std::endl;
 	this->clearStartingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
@@ -136,7 +135,6 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 	{
 		if(m_pixAnim)
 		{
-			std::cout << "Ending Anim active" << std::endl;
 			m_pixelImageIn->pixelUpdate(m_pixAnim->getPixels1());
 			m_pixelImageOut->pixelUpdate(m_pixAnim->getPixels2());
 		}
@@ -155,6 +153,13 @@ void Canvas::setCurrentAnimationTime(const float &current_time)
 		m_currentAnimTime = current_time;
 	}
 }
+
+void Canvas::setCurrentAnimationProgress(const float &current_progress)
+{
+	m_currentAnimTime = current_progress * m_totalAnimTime;
+	/*std::cout << m_currentAnimTime << std::endl;*/
+}
+
 
 void Canvas::setTotalAnimationTime(const float &seconds)
 {
@@ -271,3 +276,9 @@ void Canvas::clearEndingImage()
 		m_endingImage.reset();
 	}
 }
+
+
+const float& Canvas::getTotalTime()
+{
+	return m_totalAnimTime;
+}  
