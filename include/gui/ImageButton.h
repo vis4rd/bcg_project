@@ -12,8 +12,13 @@ public:
 	ImageButton(ImageButton &&source);
 	void render(sf::RenderTarget *target) override;
 	void update(sf::Vector2i mousePos, sf::Event &event) override;
+	std::string getPath();
+	bool isChanged();
+	void ChangeReaded();
 
 private:
 	sf::Sprite m_spr;
 	sf::Texture m_texture;
+	std::string m_path;
+	bool m_isChanged;
 };	

@@ -31,11 +31,6 @@ class PanelTimeline : public Panel
 	Timeline* getTimeline();
 	Canvas* getCanvas();
 
-	/*
-	*	void next(AnimatedImage* anim) i void previous(AnimatedImage* anim);
-	*	- methods to set next animation and time that animation takes (m_animTime)
-	*	  
-	*/
 
 	protected:
 	StartStopControl* m_control;

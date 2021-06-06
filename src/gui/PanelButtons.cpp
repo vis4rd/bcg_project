@@ -8,7 +8,7 @@ PanelButton::PanelButton(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
 Panel(pos,size)
 {
-	m_imageUp = new ImageButton(sf::Vector2f(pos.x + 10,pos.y + 10 ), sf::Vector2f(size.x - 20,size.y/4), 1);
+    m_imageUp = new ImageButton(sf::Vector2f(pos.x + 10,pos.y + 10 ), sf::Vector2f(size.x - 20,size.y/4), 1);
     m_imageDown = new ImageButton(sf::Vector2f(pos.x + 10 , pos.y + 30 + size.y/4.f), sf::Vector2f(size.x - 20,size.y/4), 2);
 
     font = std::make_shared<sf::Font>();
@@ -29,26 +29,38 @@ Panel(pos,size)
 
 PanelButton::~PanelButton()
 {
-	delete m_imageUp;
-	delete m_imageDown;
-	//delete tbutton;
-	delete m_dropdownUp;
+    delete m_imageUp;
+    delete m_imageDown;
+    //delete tbutton;
+    delete m_dropdownUp;
     delete m_dropdownDown;
 }
 
 void PanelButton::update(sf::Vector2i mousePos, sf::Event &event)
-{	
-	m_imageUp->update(mousePos, event);
+{   
+    m_imageUp->update(mousePos, event);
     m_imageDown->update(mousePos, event);
     m_dropdownDown->update(mousePos, event);
     m_dropdownUp->update(mousePos, event);
 }
 
 void PanelButton::render(sf::RenderTarget *target) 
-{	
-	this->Panel::render(target);
-	m_imageUp->render(target);
-   	m_imageDown->render(target);
-   	m_dropdownDown->render(target);
+{   
+    this->Panel::render(target);
+    m_imageUp->render(target);
+    m_imageDown->render(target);
+    m_dropdownDown->render(target);
     m_dropdownUp->render(target);
 }
+
+ImageButton* PanelButton::getImageUp()
+{
+    return m_imageUp;
+}
+
+ImageButton* PanelButton::getImageDown()
+{
+    return m_imageDown;
+}
+
+

@@ -16,6 +16,10 @@ public:
 	void update(sf::Vector2i mousePos, sf::Event &event) override;
 	void render(sf::RenderTarget *target) override;
 
+	ImageButton* getImageUp();
+	ImageButton* getImageDown();
+
+
 protected:
 
 	ImageButton *m_imageUp;
@@ -26,6 +30,4 @@ protected:
 	
 	std::shared_ptr<sf::Font> font;
 
-
-	//jakiś wskaźnik żeby przekazac aktualne zdjęcie do animacji?
 };

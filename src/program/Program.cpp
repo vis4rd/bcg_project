@@ -44,7 +44,7 @@ void Program::updateDeltaTime()
 void Program::updateSFMLEvents()
 {
     this->updateDeltaTime();
-    while(m_window->pollEvent(m_event))
+    if(m_window->pollEvent(m_event))
     {
         switch(m_event.type)
         {
@@ -55,9 +55,8 @@ void Program::updateSFMLEvents()
             }
             default: break;
         }//switch
-        
-    }//while
-    this->update(sf::Mouse::getPosition(*m_window), m_event);
+    }//if
+    this->update(sf::Mouse::getPosition(*m_window), m_event);        
 }
 
 void Program::update(sf::Vector2i mousePos, sf::Event &event)
@@ -71,6 +70,33 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
     {
         this->endApp();
     }
+
+
+    Settings* sets = Settings::getInstance();
+
+    if( m_buttonPanel->getImageUp()->isChanged() )
+    {
+        sets->setPath1( m_buttonPanel->getImageUp()->getPath() );
+        m_timePanel->getCanvas()->setStartingImage( sets->getPath1() );
+        m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
+        m_timePanel->getTimeline()->setTotalTime(10.f);
+        m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
+        m_buttonPanel->getImageUp()->ChangeReaded();
+    }
+    if ( m_buttonPanel->getImageDown()->isChanged() )
+    {
+        sets->setPath2( m_buttonPanel->getImageDown()->getPath() );
+        m_timePanel->getCanvas()->setEndingImage( sets->getPath2() );
+        m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
+        m_timePanel->getTimeline()->setTotalTime(10.f);
+        m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
+        m_buttonPanel->getImageDown()->ChangeReaded();
+
+    }
+
+    
+
+
 }
 
 void Program::render()

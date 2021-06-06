@@ -12,6 +12,7 @@
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 #include "../gui/Canvas.h"
+#include "../gui/Settings.h"
 
 class Program
 {
@@ -38,5 +39,4 @@ private:
 
 	PanelTimeline *m_timePanel;
 	PanelButton *m_buttonPanel;
-	Canvas *m_canvas;
 };

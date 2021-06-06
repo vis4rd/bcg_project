@@ -1,7 +1,5 @@
 #include "../../include/gui/Timeline.h"
 
-
-
 Timeline::Timeline()
 :
 Button(),
@@ -117,6 +115,12 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
     if(this->getPlayStatus()) //animation is being played
     {
         m_currentTime += deltaTime;
+
+        if( m_currentTime >= m_totalTime )
+        {
+            m_currentTime = m_totalTime - 0.0001;
+        }
+
         if(!this->isFinished()) //animation hasn't ended yet
         {
             //adjust cursor's position

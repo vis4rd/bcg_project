@@ -59,19 +59,13 @@ void Canvas::setAnimation(std::unique_ptr<PixelAnimation> new_animation)
 	this->clearAnimation();
 	m_pixAnim = std::move(new_animation);
 
-	if(m_pixAnim == nullptr)
-	{	
-		std::cout<<"w setAnimation m_pixAnim jest nullptr"<<std::endl;
-	}
+
 
 	if(m_startingImage)
-	{	std::cout<<"czy istnieje?"<<std::endl;
+	{
 		m_pixelImageIn = std::make_unique<AnimatedImage>(*(m_startingImage.get()));
 		m_pixelImageOut = std::make_unique<AnimatedImage>(*(m_endingImage.get()));
-		if(m_pixelImageIn == nullptr || m_pixelImageOut == nullptr )
-	{	
-		std::cout<<"w setAnimation m_pixelImage jest nullptr"<<std::endl;
-	}
+	
 
 		m_pixAnim->setPixels1(m_startingImage->getRGB());
 		m_pixAnim->setPixels2(m_endingImage->getRGB());
