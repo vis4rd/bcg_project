@@ -13,13 +13,14 @@ Program::Program()
     m_window->setVerticalSyncEnabled(vertical_sync_enabled);
     m_window->setKeyRepeatEnabled(false);
     
-    m_timePanel = new PanelTimeline(sf::Vector2f(10.f, 620.f), sf::Vector2f(960.f, 90.f) );
+    m_timePanel = new PanelTimeline(sf::Vector2f(10.f, 10.f), sf::Vector2f(960.f, 680.f) );
     m_buttonPanel = new PanelButton(sf::Vector2f(980.f, 10.f), sf::Vector2f(290.f, 700.f));
 
-    m_canvas = new Canvas(sf::Vector2f(10.f, 10.f), sf::Vector2f(960.f, 600.f));
-    m_canvas->setStartingImage("../res/images/3.png");
-    m_canvas->setEndingImage("../res/images/dragon.jpg");
-    m_canvas->setTotalAnimationTime(5.f);
+    m_timePanel->getCanvas()->setStartingImage("../res/images/example1.jpg");
+    m_timePanel->getCanvas()->setEndingImage("../res/images/example2.jpg");
+    m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
+    m_timePanel->getTimeline()->setTotalTime(10.f);
+    m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
 }
 
 Program::~Program()
@@ -27,7 +28,6 @@ Program::~Program()
     delete m_window;
     delete m_timePanel;
     delete m_buttonPanel;
-    delete m_canvas;
 }
 
 void Program::endApp()
@@ -63,10 +63,8 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
 {    
     if(m_window->isOpen())
     {
-        m_timePanel->update(mousePos, event);
+        m_timePanel->update(mousePos, event, m_deltaTime);
         m_buttonPanel->update(mousePos, event);
-        // m_canvas->setCurrentAnimationTime(/*time from timeline*/);
-        m_canvas->update(mousePos, event);
     }
     else//Applications end
     {
@@ -80,7 +78,6 @@ void Program::render()
 
    m_timePanel->render(m_window);
    m_buttonPanel->render(m_window);
-   m_canvas->render(m_window);
 
    m_window->display();
 }
