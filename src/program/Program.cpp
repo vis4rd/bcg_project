@@ -55,8 +55,9 @@ void Program::updateSFMLEvents()
             }
             default: break;
         }//switch
-        this->update(sf::Mouse::getPosition(*m_window), m_event);
+        
     }//while
+    this->update(sf::Mouse::getPosition(*m_window), m_event);
 }
 
 void Program::update(sf::Vector2i mousePos, sf::Event &event)

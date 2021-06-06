@@ -41,7 +41,7 @@ void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float 
     {
     	/*m_timeline->setTotalTime( m_canvas->getTotalTime() );*/
         m_timeline->setPlayStatusON_OFF();
-        m_control->ON_OFF();
+        
     }
 
     // ---------------IMPORTANT!-------------------
