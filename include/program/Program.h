@@ -8,6 +8,7 @@
 #include "../gui/PanelButtons.h"
 #include "../animation/PixelAnimation.h"
 #include "../animation/ObjectAnimation.h"
+#include "../animation/DimmingAnimation.h"
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 #include "../gui/Canvas.h"
