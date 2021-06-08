@@ -12,6 +12,7 @@
 #include "../animation/AlfaAnimation.h"
 #include "../animation/ByBrightnessAnimation.h"
 #include "../animation/SlideAnimation.h"
+#include "../animation/ScaleAnimation.h"
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 #include "../gui/Canvas.h"

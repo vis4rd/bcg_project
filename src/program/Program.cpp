@@ -62,6 +62,10 @@ void Program::setAnimationFromSettings(Settings* settings)
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<SlideAnimation>() );
             break;}
+        case(5u):
+        {
+            m_timePanel->getCanvas()->setAnimation( std::make_unique<ScaleAnimation>() );
+            break;}
     }
     //m_timePanel->getTimeline()->setTotalTime(10.f);
     m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
