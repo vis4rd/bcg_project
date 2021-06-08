@@ -23,7 +23,7 @@ public:
 	DropdownList* getFramesChoice();
 
 	const bool isChanged() const;
-	void changesReaded();
+	void changesRead();
 
 protected:
 	ImageButton *m_imageUp;

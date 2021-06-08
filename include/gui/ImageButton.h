@@ -14,7 +14,7 @@ public:
 	void update(sf::Vector2i mousePos, sf::Event &event) override;
 	std::string getPath();
 	const bool isChanged() const;
-	void changeReaded();
+	void changeRead();
 
 private:
 	sf::Sprite m_spr;

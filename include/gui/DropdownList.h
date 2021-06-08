@@ -135,7 +135,7 @@ public:
 
 	const bool isChanged() const;
 
-	void changeReaded();
+	void changeRead();
 
 private:
 	sf::RectangleShape m_background;

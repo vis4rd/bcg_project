@@ -153,7 +153,7 @@ const bool DropdownList::isChanged() const
 	return m_isChanged;
 }
 
-void DropdownList::changeReaded()
+void DropdownList::changeRead()
 {
 	m_isChanged = false;
 }

@@ -17,8 +17,8 @@ public:
 
 	virtual ~ObjectAnimation() = default;
 
-	inline virtual const em::Matrix4f &getImage1Frame(const float &current_time) const = 0;
-	inline virtual const em::Matrix4f &getImage2Frame(const float &current_time) const = 0;
+	inline virtual const em::Matrix4f getImage1Frame(const float &current_time) const = 0;
+	inline virtual const em::Matrix4f getImage2Frame(const float &current_time) const = 0;
 
 	const em::Matrix4f &getStartingTransform1() const;
 	const em::Matrix4f &getStartingTransform2() const;

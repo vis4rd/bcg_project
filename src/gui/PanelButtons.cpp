@@ -17,6 +17,7 @@ Panel(pos,size)
     m_animationChoice->addChoice("Dimming");
     m_animationChoice->addChoice("Fading");
     m_animationChoice->addChoice("Pixels Brightness");
+    m_animationChoice->addChoice("Slide Left to Right");
 
     m_framesChoice = new DropdownList(sf::Vector2f(pos.x + 20, pos.y + size.y/14 + size.y/2 +70), sf::Vector2f(size.x - 40, size.y/14), font, sf::String("60 fps"));
     m_framesChoice->addChoice("15 fps");
@@ -77,10 +78,10 @@ const bool PanelButton::isChanged() const
             || m_animationChoice->isChanged() || m_framesChoice->isChanged();
 }
 
-void PanelButton::changesReaded()
+void PanelButton::changesRead()
 {
-    m_imageUp -> changeReaded();
-    m_imageDown -> changeReaded();
-    m_animationChoice -> changeReaded();
-    m_framesChoice -> changeReaded();
+    m_imageUp -> changeRead();
+    m_imageDown -> changeRead();
+    m_animationChoice -> changeRead();
+    m_framesChoice -> changeRead();
 }

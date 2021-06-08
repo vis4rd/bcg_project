@@ -11,6 +11,7 @@
 #include "../animation/DimmingAnimation.h"
 #include "../animation/AlfaAnimation.h"
 #include "../animation/ByBrightnessAnimation.h"
+#include "../animation/SlideAnimation.h"
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 #include "../gui/Canvas.h"

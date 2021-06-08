@@ -85,7 +85,7 @@ const bool ImageButton::isChanged() const
     return m_isChanged;
 }
 
-void ImageButton::changeReaded()
+void ImageButton::changeRead()
 {
     m_isChanged = false;
 }
