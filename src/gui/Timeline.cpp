@@ -69,9 +69,9 @@ void Timeline::setCursorPosition(float localX)
     m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
 }
 
-void Timeline::setPlayStatusON_OFF()
+void Timeline::setPlayStatusON_OFF(const bool on)
 {
-    m_playStatus = !m_playStatus;
+    m_playStatus = on;
 }
 
 const bool Timeline::isFinished() const
@@ -112,32 +112,24 @@ const float Timeline::getCurrentTime() const
 
 void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime)
 {   
-    if(this->getPlayStatus()) //animation is being played
+    if(this->isFinished())
+    {
+        this->pause();
+    }
+    else if(m_playStatus && !this->isFinished()) //animation is being played
     {
         m_currentTime += deltaTime;
-
-        if( m_currentTime >= m_totalTime )
+        if(m_currentTime > m_totalTime)
         {
-            m_currentTime = m_totalTime - 0.0001;
+            m_currentTime = m_totalTime - 0.0001f;
         }
-
-        if(!this->isFinished()) //animation hasn't ended yet
-        {
-            //adjust cursor's position
-            this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
-            //color the path behind the cursor
-            m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
-        }
-        else //animation has ended
-        {
-            //set cursor to the end of the timeline
-            this->setCursorPosition(m_timelineLength);
-            //pause the play
-            this->pause();
-        }
+        //adjust cursor's position
+        this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
+        //color the path behind the cursor
+        m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
     }
 
-    if(this->m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
+    if(m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
     {
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
@@ -146,6 +138,40 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
             this->setCurrentTime((m_cursor.getPosition() - this->getPosition()).x / m_timelineLength * m_totalTime);
         }
     }
+    // if(this->getPlayStatus()) //animation is being played
+    // {
+    //     m_currentTime += deltaTime;
+
+    //     if( m_currentTime >= m_totalTime )
+    //     {
+    //         m_currentTime = m_totalTime - 0.0001;
+    //     }
+
+    //     if(!this->isFinished()) //animation hasn't ended yet
+    //     {
+    //         //adjust cursor's position
+    //         this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
+    //         //color the path behind the cursor
+    //         m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
+    //     }
+    //     else //animation has ended
+    //     {
+    //         //set cursor to the end of the timeline
+    //         this->setCursorPosition(m_timelineLength);
+    //         //pause the play
+    //         this->pause();
+    //     }
+    // }
+
+    // if(this->m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
+    // {
+    //     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    //     {
+    //         this->pause();
+    //         this->setCursorPosition(mousePos.x - m_box.getPosition().x);
+    //         this->setCurrentTime((m_cursor.getPosition() - this->getPosition()).x / m_timelineLength * m_totalTime);
+    //     }
+    // }
 }
 
 void Timeline::render(sf::RenderTarget *target) 

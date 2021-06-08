@@ -1,4 +1,5 @@
 #include "../../include/gui/Canvas.h"
+#include "../../include/program/Program.h"
 
 Canvas::Canvas()
 :
@@ -35,7 +36,6 @@ m_totalAnimTime(0.f)
 {
 	m_plane.create(size.x, size.y);
 	m_planeBody.setPosition(position);
-	//m_planeBody.setScale(size);
 }
 
 void Canvas::setAnimation(std::unique_ptr<ObjectAnimation> new_animation)
@@ -59,21 +59,16 @@ void Canvas::setAnimation(std::unique_ptr<PixelAnimation> new_animation)
 	this->clearAnimation();
 	m_pixAnim = std::move(new_animation);
 
-
-
 	if(m_startingImage)
 	{
 		m_pixelImageIn = std::make_unique<AnimatedImage>(*(m_startingImage.get()));
 		m_pixelImageOut = std::make_unique<AnimatedImage>(*(m_endingImage.get()));
 	
-
 		m_pixAnim->setPixels1(m_startingImage->getRGB());
 		m_pixAnim->setPixels2(m_endingImage->getRGB());
 		m_pixelImageIn->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
 		m_pixelImageOut->pixelUpdate(m_pixAnim->getTexture2Frame(m_currentAnimTime));
-
 	}
-
 }
 
 void Canvas::setStartingImage(const sf::String &directory_path)
@@ -151,7 +146,6 @@ void Canvas::setCurrentAnimationTime(const float &current_time)
 void Canvas::setCurrentAnimationProgress(const float &current_progress)
 {
 	m_currentAnimTime = current_progress * m_totalAnimTime;
-	/*std::cout << m_currentAnimTime << std::endl;*/
 }
 
 
@@ -190,24 +184,30 @@ void Canvas::setPosition(const sf::Vector2f &new_position)
 
 void Canvas::update(sf::Vector2i mousePos, sf::Event &event)
 {
+	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
+	{
+		if(m_startingImage)
+		{
+			m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime));
+		}
+		if(m_endingImage)
+		{
+			m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime));
+		}
+	}
+	else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImageIn && m_pixelImageOut)
+	{
+		m_pixelImageIn->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
+		m_pixelImageOut->pixelUpdate(m_pixAnim->getTexture2Frame(m_currentAnimTime));
+	}
+
 	if(m_isAnimPlaying)
 	{
-		if(m_animType == Canvas::AnimationType::OBJ_ANIM)
-		{
-			if(m_startingImage)
-			{
-				m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime));
-			}
-			if(m_endingImage)
-			{
-				m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime));
-			}
-		}
-		else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImageIn && m_pixelImageOut)
-		{
-			m_pixelImageIn->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
-			m_pixelImageOut->pixelUpdate(m_pixAnim->getTexture2Frame(m_currentAnimTime));
-		}
+		Program::requestUpdate();
+	}
+	else
+	{
+		Program::expireRequestUpdate();
 	}
 }
 
@@ -270,7 +270,6 @@ void Canvas::clearEndingImage()
 		m_endingImage.reset();
 	}
 }
-
 
 const float& Canvas::getTotalTime()
 {

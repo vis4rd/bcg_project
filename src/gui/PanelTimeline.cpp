@@ -1,9 +1,13 @@
 #include "../../include/gui/PanelTimeline.h"
 
-
 PanelTimeline::PanelTimeline()
 :
-Panel()
+Panel(),
+m_control(nullptr),
+m_next(nullptr),
+m_prev(nullptr),
+m_canvas(nullptr),
+m_timeline(nullptr)
 {
 	m_canvas = new Canvas();
 }
@@ -28,65 +32,6 @@ PanelTimeline::~PanelTimeline()
 	delete m_prev;
 	delete m_control;
 	delete m_canvas;
-}
-
-void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime)
-{
-	m_control->update(mousePos, event);
-    m_next->update(mousePos, event);
-    m_prev->update(mousePos, event);
-    m_timeline->update(mousePos, event, deltaTime);
-
-    if(m_control->isPressed()) //if start pressed, play/pause the timeline cursor
-    {
-    	/*m_timeline->setTotalTime( m_canvas->getTotalTime() );*/
-        m_timeline->setPlayStatusON_OFF();
-        
-    }
-
-    // ---------------IMPORTANT!-------------------
-    if( !m_timeline->getPlayStatus() ) //this condition should not be necessary, but somehow its required for start button proper behaviour
-   	{	//some mistake in ON_OFF() of m_control?
-    	m_control->pause();
-   	}
-
-    /*if(m_timeline->getPlayStatus())
-    {
-	    m_canvas->setCurrentAnimationProgress( m_timeline->getCursorProgress() );
-	}*/
-	//Timeline decides whether the time should be the same (paused) or progressed (played)
-	m_canvas->setAnimationPlayOn(m_control->isPlay());
-	m_canvas->setCurrentAnimationTime(m_timeline->getCurrentTime());
-	m_canvas->update(mousePos, event);
-}
-
-void PanelTimeline::render(sf::RenderTarget *target)
-{
-	this->Panel::render(target);
-	m_control->render(target);
-   	m_next->render(target);
-   	m_prev->render(target);
-   	m_timeline->render(target);
-   	m_canvas->render(target);
-}
-
-void PanelTimeline::play()
-{
-	m_control->play();
-	m_timeline->play();
-
-}
-
-void PanelTimeline::pause()
-{
-	m_control->pause();
-	m_timeline->pause();
-}
-
-void PanelTimeline::ON_OFF()
-{
-	m_control->ON_OFF();
-	m_timeline->setPlayStatusON_OFF();
 }
 
 bool PanelTimeline::isFinished()
@@ -117,4 +62,32 @@ Timeline* PanelTimeline::getTimeline()
 Canvas* PanelTimeline::getCanvas()
 {
 	return m_canvas;
+}
+
+void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime)
+{
+	m_control->update(mousePos, event);
+
+    m_timeline->setPlayStatusON_OFF(m_control->isPlay());
+    m_canvas->setAnimationPlayOn(m_control->isPlay());
+    
+    m_timeline->update(mousePos, event, deltaTime);
+    if(m_control->isPlay() && !m_timeline->getPlayStatus())//it is necessary in case user clicked on the timeline
+    {
+    	m_control->pause();
+    }
+    m_next->update(mousePos, event);
+    m_prev->update(mousePos, event);
+    m_canvas->setCurrentAnimationTime(m_timeline->getCurrentTime());
+	m_canvas->update(mousePos, event);
+}
+
+void PanelTimeline::render(sf::RenderTarget *target)
+{
+	this->Panel::render(target);
+	m_control->render(target);
+   	m_next->render(target);
+   	m_prev->render(target);
+   	m_timeline->render(target);
+   	m_canvas->render(target);
 }

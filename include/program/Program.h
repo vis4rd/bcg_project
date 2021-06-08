@@ -9,6 +9,8 @@
 #include "../animation/PixelAnimation.h"
 #include "../animation/ObjectAnimation.h"
 #include "../animation/DimmingAnimation.h"
+#include "../animation/AlfaAnimation.h"
+#include "../animation/ByBrightnessAnimation.h"
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 #include "../gui/Canvas.h"
@@ -21,13 +23,15 @@ public:
 	~Program();
 
 	void endApp();
+	void setAnimationFromSettings(Settings* settings);
+	
+	static void requestUpdate();
+	static void expireRequestUpdate();
 
 	void updateDeltaTime();
 	void updateSFMLEvents();
 	void update(sf::Vector2i mousePos, sf::Event &event);
-
 	void render();
-
 	void run();
 
 private:
@@ -39,4 +43,6 @@ private:
 
 	PanelTimeline *m_timePanel;
 	PanelButton *m_buttonPanel;
+
+	static bool requestedUpdate;
 };

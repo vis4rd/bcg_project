@@ -8,7 +8,6 @@ m_isPlay(false)
 	m_texture.loadFromFile("../res/images/play_button.png");
 } 
 
-
 StartStopControl::StartStopControl(const sf::Vector2f &pos)
 :
 AnimControlButton(pos),
@@ -18,12 +17,10 @@ m_isPlay(false)
 	m_sprite.setTexture(m_texture);
 } 
 
-
 bool StartStopControl::isPlay() const
 {
 	return m_isPlay;
 }
-
 
 void StartStopControl::play()
 {
@@ -32,14 +29,12 @@ void StartStopControl::play()
 	m_sprite.setTexture(m_texture);
 }
 
-
 void StartStopControl::pause()
 {
 	m_isPlay = false;
 	m_texture.loadFromFile("../res/images/play_button.png");
 	m_sprite.setTexture(m_texture);
 }
-
 
 void StartStopControl::update(sf::Vector2i mousePos, sf::Event &event) 
 {
@@ -66,7 +61,6 @@ void StartStopControl::update(sf::Vector2i mousePos, sf::Event &event)
 		default: m_sprite.setColor(sf::Color(255,255,255));
 	}
 }
-
 
 void StartStopControl::render(sf::RenderTarget *target) 
 {

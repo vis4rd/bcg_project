@@ -1,5 +1,7 @@
 #include "../../include/program/Program.h"
 
+bool Program::requestedUpdate = false;
+
 Program::Program()
 {
     std::string title = "BCG - SlidesAnimations";
@@ -21,6 +23,11 @@ Program::Program()
     m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
     m_timePanel->getTimeline()->setTotalTime(10.f);
     m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
+
+    Settings* sets = Settings::getInstance();
+    sets->setPath1("../res/images/example1.jpg");
+    sets->setPath2("../res/images/example2.jpg");
+    sets->setCurrentAnim(1u);
 }
 
 Program::~Program()
@@ -33,6 +40,38 @@ Program::~Program()
 void Program::endApp()
 {
     std::cout << "Ending Application" << std::endl;
+}
+
+void Program::setAnimationFromSettings(Settings* settings)
+{
+    switch( settings->getCurrentAnim() )
+    {
+        case(1u):
+        {
+            m_timePanel->getCanvas()->setAnimation( std::make_unique<DimmingAnimation>() );
+            break;}
+        case(2u):
+        {
+            m_timePanel->getCanvas()->setAnimation( std::make_unique<AlfaAnimation>() );
+            break;}
+        case(3u):
+        {
+            m_timePanel->getCanvas()->setAnimation( std::make_unique<ByBrightnessAnimation>() );
+            break;}
+    }
+    //m_timePanel->getTimeline()->setTotalTime(10.f);
+    m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
+    m_buttonPanel->getAnimationChoice()->changeReaded();
+}
+
+void Program::requestUpdate()
+{
+    requestedUpdate = true;
+}
+
+void Program::expireRequestUpdate()
+{
+    requestedUpdate = false;
 }
 
 void Program::updateDeltaTime()
@@ -53,10 +92,18 @@ void Program::updateSFMLEvents()
                 m_window->close();
                 break;
             }
-            default: break;
+            default: 
+            {
+                this->update(sf::Mouse::getPosition(*m_window), m_event);
+                break;
+            }
         }//switch
-    }//if
-    this->update(sf::Mouse::getPosition(*m_window), m_event);        
+    }
+    else if(requestedUpdate)
+    {
+        m_event = sf::Event();
+        this->update(sf::Mouse::getPosition(*m_window), m_event);
+    }
 }
 
 void Program::update(sf::Vector2i mousePos, sf::Event &event)
@@ -71,32 +118,31 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
         this->endApp();
     }
 
-
     Settings* sets = Settings::getInstance();
 
     if( m_buttonPanel->getImageUp()->isChanged() )
     {
         sets->setPath1( m_buttonPanel->getImageUp()->getPath() );
+        //std::cout << sets->getPath1() <<std::endl;
         m_timePanel->getCanvas()->setStartingImage( sets->getPath1() );
-        m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
-        m_timePanel->getTimeline()->setTotalTime(10.f);
-        m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
-        m_buttonPanel->getImageUp()->ChangeReaded();
+        this->setAnimationFromSettings(sets);
+        m_buttonPanel->getImageUp()->changeReaded();
     }
+
     if ( m_buttonPanel->getImageDown()->isChanged() )
     {
         sets->setPath2( m_buttonPanel->getImageDown()->getPath() );
+        //std::cout << sets->getPath2() <<std::endl;
         m_timePanel->getCanvas()->setEndingImage( sets->getPath2() );
-        m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
-        m_timePanel->getTimeline()->setTotalTime(10.f);
-        m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
-        m_buttonPanel->getImageDown()->ChangeReaded();
-
+        this->setAnimationFromSettings(sets);
+        m_buttonPanel->getImageDown()->changeReaded();
     }
 
-    
-
-
+    if ( m_buttonPanel->getAnimationChoice()->isChanged() )
+    {
+        sets->setCurrentAnim( m_buttonPanel->getAnimationChoice()->getCurrentChoice() );
+        this->setAnimationFromSettings(sets);
+    }
 }
 
 void Program::render()

@@ -11,7 +11,7 @@ public:
     void play();
     void pause();
 
-    void setPlayStatusON_OFF();
+    void setPlayStatusON_OFF(const bool on = false);
     void setCursorPosition(float localY);
     void setTotalTime(const float totalTime);
     const float getCursorProgress() const; // <0, 1>
