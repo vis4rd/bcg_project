@@ -10,7 +10,7 @@ std::string Settings::getPath2() const
 {
 	return m_path2;
 }
-Animation* Settings::getCurrentAnim() const
+unsigned short Settings::getCurrentAnim() const
 {
 	return m_anim;
 }
@@ -23,7 +23,7 @@ void Settings::setPath2(const std::string &path2)
 {
 	m_path2 = path2;
 }
-void Settings::setCurrentAnim(Animation* anim)
+void Settings::setCurrentAnim(unsigned short anim)
 {
 	m_anim = anim;
 }

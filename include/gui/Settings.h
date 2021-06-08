@@ -14,17 +14,17 @@ public:
 	
 	std::string getPath1() const;
 	std::string getPath2() const;
-	Animation* getCurrentAnim() const;
+	unsigned short getCurrentAnim() const;
 
 	void setPath1(const std::string &path1);
 	void setPath2(const std::string &path2);
-	void setCurrentAnim(Animation* anim);
+	void setCurrentAnim(unsigned short anim);
 
 private:
 	Settings() = default;
 	std::string m_path1;
 	std::string m_path2;
-	Animation* m_anim;
+	unsigned short m_anim;
 	static Settings* setting;
 
 };

@@ -14,6 +14,7 @@ m_currentChoice(0u)
 			)//right below the main button
 	);
 	m_background.setFillColor(sf::Color(210, 210, 210));
+	m_isChanged = false;
 }
 
 DropdownList::DropdownList(
@@ -35,6 +36,7 @@ m_currentChoice(0u)
 		)//right below the main button
 	);
 	m_background.setFillColor(sf::Color(210, 210, 210));
+	m_isChanged = false;
 }
 
 void DropdownList::addChoice(std::unique_ptr<TextButton> new_choice)
@@ -95,6 +97,19 @@ void DropdownList::setBackgroundColor(const sf::Color &new_color)
 {
 	m_background.setFillColor(new_color);
 }
+
+
+const bool DropdownList::isChanged() const
+{
+	return m_isChanged;
+}
+
+void DropdownList::changeRead()
+{
+	m_isChanged = false;
+}
+
+
 
 void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 {

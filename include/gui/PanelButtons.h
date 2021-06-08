@@ -19,14 +19,18 @@ public:
 	ImageButton* getImageUp();
 	ImageButton* getImageDown();
 
+	DropdownList* getAnimationChoice();
+	DropdownList* getFramesChoice();
+
+	const bool isChanged() const;
+	void changesRead();
 
 protected:
-
 	ImageButton *m_imageUp;
 	ImageButton *m_imageDown;
 
-	DropdownList *m_dropdownUp;
-	DropdownList *m_dropdownDown;
+	DropdownList *m_animationChoice;
+	DropdownList *m_framesChoice;
 	
 	std::shared_ptr<sf::Font> font;
 

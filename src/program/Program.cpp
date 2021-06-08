@@ -61,7 +61,7 @@ void Program::setAnimationFromSettings(Settings* settings)
     }
     //m_timePanel->getTimeline()->setTotalTime(10.f);
     m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
-    m_buttonPanel->getAnimationChoice()->changeReaded();
+    m_buttonPanel->getAnimationChoice()->changeRead();
 }
 
 void Program::requestUpdate()
@@ -126,7 +126,7 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
         //std::cout << sets->getPath1() <<std::endl;
         m_timePanel->getCanvas()->setStartingImage( sets->getPath1() );
         this->setAnimationFromSettings(sets);
-        m_buttonPanel->getImageUp()->changeReaded();
+        m_buttonPanel->getImageUp()->changeRead();
     }
 
     if ( m_buttonPanel->getImageDown()->isChanged() )
@@ -135,7 +135,7 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
         //std::cout << sets->getPath2() <<std::endl;
         m_timePanel->getCanvas()->setEndingImage( sets->getPath2() );
         this->setAnimationFromSettings(sets);
-        m_buttonPanel->getImageDown()->changeReaded();
+        m_buttonPanel->getImageDown()->changeRead();
     }
 
     if ( m_buttonPanel->getAnimationChoice()->isChanged() )

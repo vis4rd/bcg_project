@@ -133,9 +133,14 @@ public:
 	 */
 	void render(sf::RenderTarget *target) override;
 
+	const bool isChanged() const;
+
+	void changeRead();
+
 private:
 	sf::RectangleShape m_background;
 	unsigned short m_dropStatus;
 	std::vector<std::unique_ptr<TextButton>> m_choices;
 	unsigned short m_currentChoice;
+	bool m_isChanged;
 };

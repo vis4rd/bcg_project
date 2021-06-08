@@ -85,7 +85,7 @@ bool ImageButton::isChanged()
     return m_isChanged;
 }
 
-void ImageButton::ChangeReaded()
+void ImageButton::changeRead()
 {
     m_isChanged = false;
 }
