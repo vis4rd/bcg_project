@@ -14,6 +14,7 @@ m_currentChoice(0u)
 			)//right below the main button
 	);
 	m_background.setFillColor(sf::Color(210, 210, 210));
+
 	m_isChanged = false;
 }
 
@@ -36,6 +37,7 @@ m_currentChoice(0u)
 		)//right below the main button
 	);
 	m_background.setFillColor(sf::Color(210, 210, 210));
+
 	m_isChanged = false;
 }
 
@@ -98,19 +100,6 @@ void DropdownList::setBackgroundColor(const sf::Color &new_color)
 	m_background.setFillColor(new_color);
 }
 
-
-const bool DropdownList::isChanged() const
-{
-	return m_isChanged;
-}
-
-void DropdownList::changeRead()
-{
-	m_isChanged = false;
-}
-
-
-
 void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 {
 	TextButton::update(mousePos, event);
@@ -124,6 +113,7 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 			{
 				m_dropStatus = DropdownList::DropStatus::HIDDEN;
 				m_currentChoice = count;
+				m_isChanged = true;
 				this->setLabel(it->getLabel());
 			}
 			count++;
@@ -156,4 +146,14 @@ void DropdownList::render(sf::RenderTarget *target)
 			it->render(target);
 		}
 	}
+}
+
+const bool DropdownList::isChanged() const
+{
+	return m_isChanged;
+}
+
+void DropdownList::changeReaded()
+{
+	m_isChanged = false;
 }

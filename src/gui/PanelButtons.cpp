@@ -72,14 +72,15 @@ DropdownList* PanelButton::getFramesChoice()
 
 const bool PanelButton::isChanged() const
 {
+    //return m_imageDown->isChanged() || m_imageUp->isChanged() || m_animationChoice->isChanged();
     return m_imageDown->isChanged() || m_imageUp->isChanged() 
             || m_animationChoice->isChanged() || m_framesChoice->isChanged();
 }
 
-void PanelButton::changesRead()
+void PanelButton::changesReaded()
 {
-    m_imageUp -> changeRead();
-    m_imageDown -> changeRead();
-    m_animationChoice -> changeRead();
-    m_framesChoice -> changeRead();
+    m_imageUp -> changeReaded();
+    m_imageDown -> changeReaded();
+    m_animationChoice -> changeReaded();
+    m_framesChoice -> changeReaded();
 }

@@ -13,8 +13,8 @@ public:
 	void render(sf::RenderTarget *target) override;
 	void update(sf::Vector2i mousePos, sf::Event &event) override;
 	std::string getPath();
-	bool isChanged();
-	void changeRead();
+	const bool isChanged() const;
+	void changeReaded();
 
 private:
 	sf::Sprite m_spr;

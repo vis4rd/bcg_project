@@ -80,12 +80,12 @@ std::string ImageButton::getPath()
     return m_path;
 }
 
-bool ImageButton::isChanged()
+const bool ImageButton::isChanged() const
 {
     return m_isChanged;
 }
 
-void ImageButton::changeRead()
+void ImageButton::changeReaded()
 {
     m_isChanged = false;
 }

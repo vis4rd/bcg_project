@@ -31,14 +31,6 @@ public:
      * @brief Default destrucor 
      */
 	~AnimControlButton() = default;
-    
-     /**
-     * @brief Gets the information if an Animation is actvite 
-     *        (is paused or continue but not ended) currently.
-     * 
-     * @return  bool value of m_isAnimationActive
-     */
-	bool isAnimationActive() const;
 
      /**
      * @brief Reders instatntion of AnimControlButton on sf::RenderTarget.
@@ -55,19 +47,8 @@ public:
      */
 	void update(sf::Vector2i mousePos, sf::Event &event) override;
 
-     /**
-     * @brief Setting bool value of state of currnet/last animation 
-     *
-     * @param isActive The boolean information of state of animation  
-     */
-	static void setAnimationActive(bool isActive);
-
 protected:
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
-
-private:
-	static bool m_isAnimationActive;
-
 	
 };

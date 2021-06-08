@@ -28,7 +28,7 @@ void Settings::setCurrentAnim(unsigned short anim)
 	m_anim = anim;
 }
 
-Settings * Settings::getInstance()
+Settings* Settings::getInstance()
 {
 	if(setting == nullptr)
 	{

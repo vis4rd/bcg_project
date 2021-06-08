@@ -1,8 +1,5 @@
 #include "../../include/gui/AnimControlButton.h"
 
-bool AnimControlButton::m_isAnimationActive = true;
-
-
 AnimControlButton::AnimControlButton()
 :
 Button()
@@ -21,15 +18,6 @@ Button(pos, sf::Vector2f(40.f, 40.f) )
 	m_sprite.setPosition(pos);
 }
 
-bool AnimControlButton::isAnimationActive() const
-{
-	return m_isAnimationActive;
-}
-
-void AnimControlButton::setAnimationActive(bool is_Active)
-{
-	m_isAnimationActive = is_Active;
-}
 
 void AnimControlButton::render(sf::RenderTarget *target) 
 {
