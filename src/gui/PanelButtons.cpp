@@ -41,7 +41,28 @@ void PanelButton::update(sf::Vector2i mousePos, sf::Event &event)
     m_imageUp->update(mousePos, event);
     m_imageDown->update(mousePos, event);
     m_framesChoice->update(mousePos, event);
+    if(m_framesChoice->getDropStatus() == DropdownList::DropStatus::DROPPED)
+    {
+        m_animationChoice->lockButton();
+    }
+    
+    if(m_animationChoice->getState() == Button::state::LOCKED
+        && m_framesChoice->getDropStatus() != DropdownList::DropStatus::DROPPED)
+    {
+        m_animationChoice->unlockButton();
+    }
+
     m_animationChoice->update(mousePos, event);
+    if(m_animationChoice->getDropStatus() == DropdownList::DropStatus::DROPPED)
+    {
+        m_framesChoice->unlockButton();
+    }
+    
+    if(m_framesChoice->getState() == Button::state::LOCKED
+        && m_animationChoice->getDropStatus() != DropdownList::DropStatus::DROPPED)
+    {
+        m_framesChoice->unlockButton();
+    }
 }
 
 void PanelButton::render(sf::RenderTarget *target) 
