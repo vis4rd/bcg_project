@@ -77,6 +77,10 @@ public:
 	 */
 	void operator+=(std::unique_ptr<TextButton> new_choice);
 
+	void changeRead();
+
+	const bool isChanged() const;
+
 	/**
 	 * @brief Getter to the background of buttons in the dropdown.
 	 *
@@ -132,10 +136,6 @@ public:
 	 * @param target The target which the dropdown is rendered on.
 	 */
 	void render(sf::RenderTarget *target) override;
-
-	const bool isChanged() const;
-
-	void changeRead();
 
 private:
 	sf::RectangleShape m_background;

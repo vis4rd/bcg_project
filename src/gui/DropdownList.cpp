@@ -48,11 +48,11 @@ void DropdownList::addChoice(std::unique_ptr<TextButton> new_choice)
 	{
 		relative_pos = m_choices.back()->getPosition();//set to position of last element
 		relative_pos += sf::Vector2f(0.f, m_choices.back()->getSize().y);//shift y with height of last element
-		relative_pos += sf::Vector2f(0.f, 3.f);//shift y with 2.f space between choices
+		relative_pos += sf::Vector2f(0.f, 1.f);//shift y with 2.f space between choices
 	}
 
 	new_choice->setPosition(relative_pos);
-	new_choice->setSize(m_shape.getSize());
+	new_choice->setSize(sf::Vector2f(m_shape.getSize().x, m_shape.getSize().y / 1.4f));
 	new_choice->getShape().setOutlineThickness(0.f);
 	m_choices.push_back(std::move(new_choice));
 
@@ -60,7 +60,7 @@ void DropdownList::addChoice(std::unique_ptr<TextButton> new_choice)
 	m_background.setSize(
 		sf::Vector2f(
 			m_shape.getSize().x, 
-			m_choices.back()->getPosition().y - m_shape.getPosition().y
+			m_choices.back()->getPosition().y - m_background.getPosition().y
 		)
 	);
 }
@@ -73,6 +73,16 @@ void DropdownList::addChoice(const sf::String &label)
 void DropdownList::operator+=(std::unique_ptr<TextButton> new_choice)
 {
 	this->addChoice(std::move(new_choice));
+}
+
+void DropdownList::changeRead()
+{
+	m_isChanged = false;
+}
+
+const bool DropdownList::isChanged() const
+{
+	return m_isChanged;
 }
 
 const sf::RectangleShape &DropdownList::getBackground() const
@@ -148,12 +158,3 @@ void DropdownList::render(sf::RenderTarget *target)
 	}
 }
 
-const bool DropdownList::isChanged() const
-{
-	return m_isChanged;
-}
-
-void DropdownList::changeRead()
-{
-	m_isChanged = false;
-}
