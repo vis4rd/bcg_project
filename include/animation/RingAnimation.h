@@ -21,8 +21,11 @@ class RingAnimation : public ObjectAnimation
 	inline const em::Matrix4f getImage1Frame(const float &current_time) const override
 	{	
 		em::Matrix4f temp = m_image1Start;
-		temp.translate(sf::Vector3<float>(1150.f*cos(current_time/m_totalTime)*(1.14*current_time/m_totalTime),340.f*cos(current_time/m_totalTime)*(current_time/m_totalTime),0.f));
-		temp.scale(sf::Vector3<float>(1.f *(1 - current_time/m_totalTime), 1.f*(1 - current_time/m_totalTime), 1.f));
+		temp.translate(sf::Vector3f(
+			1150.f*cos(current_time/m_totalTime)*(1.14*current_time/m_totalTime),
+			340.f*cos(current_time/m_totalTime)*(current_time/m_totalTime),
+			((current_time < m_totalTime/2) ? -1.f : 1.f * (current_time/m_totalTime))));
+		temp.scale(sf::Vector3f(1.f *(1 - current_time/m_totalTime), 1.f*(1 - current_time/m_totalTime), 1.f));
 		return temp;
 	}
 

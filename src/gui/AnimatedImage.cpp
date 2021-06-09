@@ -5,7 +5,8 @@ AnimatedImage::AnimatedImage()
 m_initSize(sf::Vector2f()),
 m_initPosition(sf::Vector2f()),
 m_verticies(sf::VertexArray(sf::Quads, 4)),
-m_texture(nullptr)
+m_texture(nullptr),
+m_depth(0.f)
 {
 
 }
@@ -14,7 +15,8 @@ AnimatedImage::AnimatedImage(const sf::Vector3f &position, std::unique_ptr<sf::T
 :
 m_initPosition(toV2f(position)),
 m_verticies(sf::VertexArray(sf::Quads, 4)),
-m_texture(std::move(texture))
+m_texture(std::move(texture)),
+m_depth(0.f)
 {
 	if(independent_size != sf::Vector2f())
 	{
@@ -37,7 +39,8 @@ AnimatedImage::AnimatedImage(const AnimatedImage &copy)
 m_initSize(copy.m_initSize),
 m_initPosition(copy.m_initPosition),
 m_verticies(copy.m_verticies),
-m_texture(std::make_unique<sf::Texture>(*(copy.m_texture.get())))
+m_texture(std::make_unique<sf::Texture>(*(copy.m_texture.get()))),
+m_depth(copy.m_depth)
 {
 
 }
@@ -65,6 +68,11 @@ std::vector<unsigned char> AnimatedImage::getRGB() const
 	return result;
 }
 
+const float AnimatedImage::getDepth() const
+{
+	return m_depth;
+}
+
 void AnimatedImage::render(sf::RenderTarget *target)
 {
 	sf::RenderStates states(m_texture.get());
@@ -83,6 +91,8 @@ void AnimatedImage::setToInitPosition()
 	m_verticies[1].position.y = m_initPosition.y;
 	m_verticies[2].position.y = m_initPosition.y + m_initSize.y;
 	m_verticies[3].position.y = m_initPosition.y + m_initSize.y;
+
+	m_depth = 0.f;
 }
 
 const sf::Vector3f AnimatedImage::getVertexPosition(const int &index) const

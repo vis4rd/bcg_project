@@ -220,14 +220,25 @@ void Canvas::render(sf::RenderTarget *target)
 	shape.setFillColor(sf::Color(0, 155, 165));
 	m_plane.draw(shape);
 	//^^^
+	bool eI = false, sI = false;
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
 		if(m_endingImage)
 		{
-			m_endingImage->render(&m_plane);
+			eI = true;
 		}
 		if(m_startingImage)
 		{
+			sI = true;
+		}
+		if(m_startingImage->getDepth() > m_endingImage->getDepth())
+		{
+			m_startingImage->render(&m_plane);
+			m_endingImage->render(&m_plane);
+		}
+		else
+		{
+			m_endingImage->render(&m_plane);
 			m_startingImage->render(&m_plane);
 		}
 	}
