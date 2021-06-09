@@ -130,18 +130,21 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 		}
 	}
 
-	if(m_shape.getGlobalBounds().contains(mousePos.x, mousePos.y)
+	if(m_state != Button::state::LOCKED)
+	{
+		if(m_shape.getGlobalBounds().contains(mousePos.x, mousePos.y)
 		&& (event.type == sf::Event::MouseButtonReleased)
 		&& (event.mouseButton.button == sf::Mouse::Left))
-	{
-		if(m_dropStatus == DropdownList::DropStatus::HIDDEN)
-        {
-        	m_dropStatus = DropdownList::DropStatus::DROPPED;
-        }
-        else
-        {
-        	m_dropStatus = DropdownList::DropStatus::HIDDEN;
-        }
+		{
+			if(m_dropStatus == DropdownList::DropStatus::HIDDEN)
+	        {
+	        	m_dropStatus = DropdownList::DropStatus::DROPPED;
+	        }
+	        else
+	        {
+	        	m_dropStatus = DropdownList::DropStatus::HIDDEN;
+	        }
+		}
 	}
 }
 
