@@ -7,9 +7,10 @@ class Button: public Object
 public:
     enum state
     {
-    	IDLE = 0,
-    	HOVER = 1,
-    	ACTIVE = 2
+        LOCKED = 0,
+    	IDLE = 1,
+    	HOVER = 2,
+    	ACTIVE = 3
     };
 
     //constructors and destructors
@@ -25,6 +26,8 @@ public:
 
     //check and update methods
     bool isPressed() const;
+    void lockButton();
+    void unlockButton();
     void update(sf::Vector2i mousePos, sf::Event &event) override;
     void render(sf::RenderTarget *target) override;
 
