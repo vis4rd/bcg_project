@@ -14,11 +14,14 @@ public:
     void setPlayStatusON_OFF(const bool on = false);
     void setCursorPosition(float localY);
     void setTotalTime(const float totalTime);
+    void setFrames(const unsigned frames);
+    
     const float getCursorProgress() const; // <0, 1>
     const float getTotalTime() const;
     const float getCurrentTime() const;
     const bool isFinished() const;
     const bool getPlayStatus() const;
+    const unsigned getFrames() const;
 
     void update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime);
     void render(sf::RenderTarget *target);

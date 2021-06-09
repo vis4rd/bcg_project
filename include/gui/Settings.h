@@ -15,16 +15,19 @@ public:
 	std::string getPath1() const;
 	std::string getPath2() const;
 	unsigned short getCurrentAnim() const;
+	unsigned short getCurrentFrames() const;
 
 	void setPath1(const std::string &path1);
 	void setPath2(const std::string &path2);
 	void setCurrentAnim(unsigned short anim);
+	void setCurrentFrames(unsigned short frames);
 
 private:
 	Settings() = default;
 	std::string m_path1;
 	std::string m_path2;
 	unsigned short m_anim;
+	unsigned short m_frames;
 	static Settings* setting;
 
 };

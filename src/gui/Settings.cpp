@@ -14,6 +14,10 @@ unsigned short Settings::getCurrentAnim() const
 {
 	return m_anim;
 }
+unsigned short Settings::getCurrentFrames() const
+{
+	return m_frames;
+}
 
 void Settings::setPath1(const std::string &path1)
 {
@@ -26,6 +30,10 @@ void Settings::setPath2(const std::string &path2)
 void Settings::setCurrentAnim(unsigned short anim)
 {
 	m_anim = anim;
+}
+void Settings::setCurrentFrames(unsigned short frames)
+{
+	m_frames = frames;
 }
 
 Settings* Settings::getInstance()

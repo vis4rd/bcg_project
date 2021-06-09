@@ -32,11 +32,11 @@ m_currentTime(0.f)
     m_cursor.setOutlineColor( sf::Color(20,20,20) );
     m_cursor.setOutlineThickness(-1.f);
 
-    m_box.setPosition(pos);
-    m_box.setSize(size);
-    m_box.setFillColor(sf::Color::Black);
-    m_box.setOutlineColor(sf::Color(120,120,120));
-    m_box.setOutlineThickness(2.f);
+    m_box.setPosition(pos + sf::Vector2f(0.f, -1.f) );
+    m_box.setSize( size + sf::Vector2f(0.f, 3.f) );
+    m_box.setFillColor( sf::Color(120,120,120) );
+    m_box.setOutlineColor(sf::Color(120,120,120,0));
+    m_box.setOutlineThickness(9.f);
 
     m_covered.setPosition( pos + sf::Vector2f( -2.f, -2.f) );
     m_covered.setFillColor( sf::Color(60,220,60) );
@@ -109,6 +109,19 @@ const float Timeline::getCurrentTime() const
 {
     return m_currentTime;
 }
+
+const unsigned Timeline::getFrames() const
+{
+    return m_frameCount;
+}
+
+void Timeline::setFrames(const unsigned frames)
+{
+    m_frameCount = frames;
+}
+
+
+
 
 void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime)
 {   

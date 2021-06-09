@@ -76,8 +76,22 @@ void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float 
     {
     	m_control->pause();
     }
+
     m_next->update(mousePos, event);
+    // if( m_next->isPressed() )
+    // {
+    // 	m_timeline->skipNextFrame();
+    // 	m_control->pause();
+    // }
+
     m_prev->update(mousePos, event);
+    // if( m_prev->isPressed() )
+    // {
+    // 	m_timeline->skipPrevFrame();
+    // 	m_control->pause();
+    // }
+
+
     m_canvas->setCurrentAnimationTime(m_timeline->getCurrentTime());
 	m_canvas->update(mousePos, event);
 }
