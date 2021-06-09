@@ -6,6 +6,7 @@
 #include "../gui/Timeline.h"
 #include "../gui/PanelTimeline.h"
 #include "../gui/PanelButtons.h"
+
 #include "../animation/PixelAnimation.h"
 #include "../animation/ObjectAnimation.h"
 #include "../animation/DimmingAnimation.h"
@@ -13,6 +14,8 @@
 #include "../animation/ByBrightnessAnimation.h"
 #include "../animation/SlideAnimation.h"
 #include "../animation/ScaleAnimation.h"
+#include "../animation/RingAnimation.h"
+
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
 #include "../gui/Canvas.h"
