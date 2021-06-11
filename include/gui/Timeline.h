@@ -30,7 +30,7 @@ public:
     void render(sf::RenderTarget *target);
 
 private:
-    void setDeltaFrame(const unsigned short frames);
+    //void setDeltaFrame(const unsigned short frames);
     void setCurrentTime(const float currentTime);
 
 protected:

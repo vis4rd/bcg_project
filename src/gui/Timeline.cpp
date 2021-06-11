@@ -6,7 +6,6 @@ Button(),
 m_cursor(),
 m_box(),
 m_covered(),
-// m_body(nullptr),
 m_timelineLength(0.f),
 m_cursorSpeed(0.f),
 m_playStatus(false),
@@ -42,9 +41,7 @@ m_currentTime(0.f)
     m_covered.setFillColor( sf::Color(60,220,60) );
     m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
 
-    //this->setCursorSpeed();
     m_playStatus = false;
-    // m_body = new sf::VertexArray(sf::Quads);
     m_frameCount = framesPerSecond * m_totalTime;
     m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
 }
@@ -77,7 +74,7 @@ void Timeline::setPlayStatusON_OFF(const bool on)
 
 const bool Timeline::isFinished() const
 {
-    if ( m_currentTime >= m_totalTime )
+    if ( m_currentTime >= m_totalTime - 0.0002f) //-0.0002f is a correction because of IEEE754
     {
         return true;
     }
@@ -94,7 +91,6 @@ void Timeline::setTotalTime(const float totalTime)
         m_totalTime = totalTime;
         m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
     }
-    //this->setCursorSpeed();
 } 
 
 const float Timeline::getCursorProgress() const
@@ -179,55 +175,16 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
             this->setCurrentTime((m_cursor.getPosition() - this->getPosition()).x / m_timelineLength * m_totalTime);
         }
     }
-    // if(this->getPlayStatus()) //animation is being played
-    // {
-    //     m_currentTime += deltaTime;
-
-    //     if( m_currentTime >= m_totalTime )
-    //     {
-    //         m_currentTime = m_totalTime - 0.0001;
-    //     }
-
-    //     if(!this->isFinished()) //animation hasn't ended yet
-    //     {
-    //         //adjust cursor's position
-    //         this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
-    //         //color the path behind the cursor
-    //         m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
-    //     }
-    //     else //animation has ended
-    //     {
-    //         //set cursor to the end of the timeline
-    //         this->setCursorPosition(m_timelineLength);
-    //         //pause the play
-    //         this->pause();
-    //     }
-    // }
-
-    // if(this->m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
-    // {
-    //     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    //     {
-    //         this->pause();
-    //         this->setCursorPosition(mousePos.x - m_box.getPosition().x);
-    //         this->setCurrentTime((m_cursor.getPosition() - this->getPosition()).x / m_timelineLength * m_totalTime);
-    //     }
-    // }
 }
 
 void Timeline::render(sf::RenderTarget *target) 
 {
     target->draw(this->m_box);
-    // target->draw(*this->m_body);
     target->draw(this->m_covered);
     target->draw(this->m_cursor);
 }
 
 //private member functions
-/*void Timeline::setCursorSpeed() //redundant?
-{
-    m_cursorSpeed = (m_timelineLength) / m_totalTime;
-}*/
 
 void Timeline::setCurrentTime(const float currentTime)
 {

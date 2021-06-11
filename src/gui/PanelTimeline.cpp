@@ -86,7 +86,8 @@ void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float 
     }
     
     m_timeline->update(mousePos, event, deltaTime);
-    if(m_control->isPlay() && !m_timeline->getPlayStatus())//it is necessary in case user clicked on the timeline
+    if(m_control->isPlay() && (!m_timeline->getPlayStatus() || m_timeline->isFinished()))
+    //it is necessary in case user clicked on the timeline
     {
     	m_control->pause();
     }
@@ -97,7 +98,7 @@ void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float 
 
 void PanelTimeline::render(sf::RenderTarget *target)
 {
-	this->Panel::render(target);
+	Panel::render(target);
 	m_control->render(target);
    	m_next->render(target);
    	m_prev->render(target);
