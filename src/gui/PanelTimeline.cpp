@@ -21,7 +21,7 @@ Panel( sf::Vector2f( pos.x, pos.y + size.y*(9.f/10.f) ), sf::Vector2f( size.x, s
 	m_control = new StartStopControl( pos + sf::Vector2f(tempX,tempY) );
 	m_next = NextFrameControl::makeNextFrameButton( pos+sf::Vector2f(tempX+55.f, tempY + 3.f ) );
 	m_prev = NextFrameControl::makePreviousFrameButton( pos+sf::Vector2f(tempX-55.f, tempY + 3.f ) );
-	m_timeline = new Timeline( (pos+sf::Vector2f(size.x/16.f, tempY+65.f)) , sf::Vector2f( 14.f*size.x/16.f  , 1.f), 5.f);
+	m_timeline = new Timeline( (pos+sf::Vector2f(size.x/16.f, tempY+65.f)) , sf::Vector2f( 14.f*size.x/16.f  , 1.f) );
 	m_canvas = new Canvas(pos , sf::Vector2f(size.x, size.y * (7.f/8.f)) );
 }
 
@@ -70,27 +70,26 @@ void PanelTimeline::update(sf::Vector2i mousePos, sf::Event &event, const float 
 
     m_timeline->setPlayStatusON_OFF(m_control->isPlay());
     m_canvas->setAnimationPlayOn(m_control->isPlay());
+
+    m_next->update(mousePos, event);
+    if( m_next->isPressed() )
+    {
+    	m_timeline->skipNextFrame();
+    	m_control->pause();
+    }
+
+    m_prev->update(mousePos, event);
+    if( m_prev->isPressed() )
+    {
+    	m_timeline->skipPrevFrame();
+    	m_control->pause();
+    }
     
     m_timeline->update(mousePos, event, deltaTime);
     if(m_control->isPlay() && !m_timeline->getPlayStatus())//it is necessary in case user clicked on the timeline
     {
     	m_control->pause();
     }
-
-    m_next->update(mousePos, event);
-    // if( m_next->isPressed() )
-    // {
-    // 	m_timeline->skipNextFrame();
-    // 	m_control->pause();
-    // }
-
-    m_prev->update(mousePos, event);
-    // if( m_prev->isPressed() )
-    // {
-    // 	m_timeline->skipPrevFrame();
-    // 	m_control->pause();
-    // }
-
 
     m_canvas->setCurrentAnimationTime(m_timeline->getCurrentTime());
 	m_canvas->update(mousePos, event);

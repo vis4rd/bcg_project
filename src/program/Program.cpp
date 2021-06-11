@@ -21,13 +21,15 @@ Program::Program()
     m_timePanel->getCanvas()->setStartingImage("../res/images/example1.jpg");
     m_timePanel->getCanvas()->setEndingImage("../res/images/example2.jpg");
     m_timePanel->getCanvas()->setAnimation(std::make_unique<DimmingAnimation>());
-    m_timePanel->getTimeline()->setTotalTime(10.f);
+    m_timePanel->getTimeline()->setTotalTime(1.f);
+    m_timePanel->getTimeline()->setFrames(15);
     m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
 
     Settings* sets = Settings::getInstance();
     sets->setPath1("../res/images/example1.jpg");
     sets->setPath2("../res/images/example2.jpg");
     sets->setCurrentAnim(1u);
+    sets->setCurrentFrames(15);
 }
 
 Program::~Program()
@@ -120,17 +122,18 @@ void Program::updateSFMLEvents()
 
 void Program::update(sf::Vector2i mousePos, sf::Event &event)
 {    
+    Settings* sets = Settings::getInstance();
+
+
     if(m_window->isOpen())
     {
-        m_timePanel->update(mousePos, event, m_deltaTime);
+        m_timePanel->update(mousePos, event, m_deltaTime );
         m_buttonPanel->update(mousePos, event);
     }
     else//Applications end
     {
         this->endApp();
     }
-
-    Settings* sets = Settings::getInstance();
 
     if( m_buttonPanel->getImageUp()->isChanged() )
     {
