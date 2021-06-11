@@ -4,6 +4,7 @@
 #include "ImageButton.h"
 #include "DropdownList.h"
 #include "TextButton.h"
+#include "SaveButton.h"
 
 class PanelButton : public Panel
 {
@@ -18,6 +19,7 @@ public:
 
 	ImageButton* getImageUp();
 	ImageButton* getImageDown();
+	SaveButton* getSaveButton();
 
 	DropdownList* getAnimationChoice();
 	DropdownList* getFramesChoice();
@@ -28,6 +30,7 @@ public:
 protected:
 	ImageButton *m_imageUp;
 	ImageButton *m_imageDown;
+	SaveButton *m_saveButton;
 
 	DropdownList *m_animationChoice;
 	DropdownList *m_framesChoice;

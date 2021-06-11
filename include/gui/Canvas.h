@@ -23,6 +23,8 @@ public:
 	void setSize(const sf::Vector2f &new_size);
 	void setPosition(const sf::Vector2f &new_position);
 
+	sf::RenderTexture& getPlane();
+
 	void update(sf::Vector2i mousePos, sf::Event &event);
 	void render(sf::RenderTarget *target);
 

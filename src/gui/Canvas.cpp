@@ -183,6 +183,15 @@ void Canvas::setPosition(const sf::Vector2f &new_position)
 	m_planeBody.setPosition(new_position);
 }
 
+
+sf::RenderTexture& Canvas::getPlane()
+{
+	return m_plane;
+}
+
+
+
+
 void Canvas::update(sf::Vector2i mousePos, sf::Event &event)
 {
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)

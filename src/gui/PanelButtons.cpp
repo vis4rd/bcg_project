@@ -10,6 +10,7 @@ Panel(pos,size)
 {
     m_imageUp = new ImageButton(sf::Vector2f(pos.x + 10,pos.y + 10 ), sf::Vector2f(size.x - 20,size.y/4), 1);
     m_imageDown = new ImageButton(sf::Vector2f(pos.x + 10 , pos.y + 30 + size.y/4.f), sf::Vector2f(size.x - 20,size.y/4), 2);
+    m_saveButton = new SaveButton(sf::Vector2f(pos.x + size.x/2 -50.f, pos.y + size.y - 55.f ), sf::Vector2f(100.f, 50.f) );
 
     font = std::make_shared<sf::Font>();
     
@@ -34,6 +35,7 @@ PanelButton::~PanelButton()
     delete m_imageDown;
     delete m_animationChoice;
     delete m_framesChoice;
+    delete m_saveButton;
 }
 
 void PanelButton::update(sf::Vector2i mousePos, sf::Event &event)
@@ -41,6 +43,7 @@ void PanelButton::update(sf::Vector2i mousePos, sf::Event &event)
     m_imageUp->update(mousePos, event);
     m_imageDown->update(mousePos, event);
     m_framesChoice->update(mousePos, event);
+    m_saveButton->update(mousePos, event);
     if(m_framesChoice->getDropStatus() == DropdownList::DropStatus::DROPPED)
     {
         m_animationChoice->lockButton();
@@ -72,6 +75,7 @@ void PanelButton::render(sf::RenderTarget *target)
     m_imageDown->render(target);
     m_framesChoice->render(target);
     m_animationChoice->render(target);
+    m_saveButton->render(target);
 }
 
 ImageButton* PanelButton::getImageUp()
@@ -83,6 +87,13 @@ ImageButton* PanelButton::getImageDown()
 {
     return m_imageDown;
 }
+
+SaveButton* PanelButton::getSaveButton()
+{
+    return m_saveButton;
+}
+
+
 
 DropdownList* PanelButton::getAnimationChoice()
 {

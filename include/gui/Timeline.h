@@ -25,13 +25,13 @@ public:
     const bool isFinished() const;
     const bool getPlayStatus() const;
     const unsigned getFrames() const;
+    void setCurrentTime(const float currentTime);
 
     void update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime);
     void render(sf::RenderTarget *target);
 
 private:
     //void setDeltaFrame(const unsigned short frames);
-    void setCurrentTime(const float currentTime);
 
 protected:
     sf::CircleShape m_cursor;
