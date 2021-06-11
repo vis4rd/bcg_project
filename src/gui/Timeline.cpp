@@ -18,7 +18,7 @@ m_frameCount(0u)
     m_shape.setOutlineColor(sf::Color::White);
 }
 
-Timeline::Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime, const unsigned framesPerSecond)
+Timeline::Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime, const unsigned short framesPerSecond)
 :
 Button(pos,size),
 m_timelineLength(size.x - 10.f),
@@ -36,7 +36,7 @@ m_currentTime(0.f)
     m_box.setSize( size + sf::Vector2f(0.f, 3.f) );
     m_box.setFillColor( sf::Color(120,120,120) );
     m_box.setOutlineColor(sf::Color(120,120,120,0));
-    m_box.setOutlineThickness(9.f);
+    m_box.setOutlineThickness(15.f);
 
     m_covered.setPosition( pos + sf::Vector2f( -2.f, -2.f) );
     m_covered.setFillColor( sf::Color(60,220,60) );
@@ -46,6 +46,7 @@ m_currentTime(0.f)
     m_playStatus = false;
     // m_body = new sf::VertexArray(sf::Quads);
     m_frameCount = framesPerSecond * m_totalTime;
+    m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
 }
 
 const bool Timeline::getPlayStatus() const
@@ -91,6 +92,7 @@ void Timeline::setTotalTime(const float totalTime)
     if (totalTime > 0.0)
     {
         m_totalTime = totalTime;
+        m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
     }
     //this->setCursorSpeed();
 } 
@@ -103,6 +105,7 @@ const float Timeline::getCursorProgress() const
 const float Timeline::getTotalTime() const
 {
     return m_totalTime;
+
 }
 
 const float Timeline::getCurrentTime() const
@@ -115,13 +118,38 @@ const unsigned Timeline::getFrames() const
     return m_frameCount;
 }
 
-void Timeline::setFrames(const unsigned frames)
+void Timeline::setFrames(const unsigned short frames)
 {
     m_frameCount = frames;
+    m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
+}
+
+void Timeline::skipNextFrame()
+{
+    float toJump = 0.f;
+    while( toJump <= m_currentTime )
+    {
+        toJump += m_deltaFrame;
+    }
+    toJump >= m_totalTime ? toJump = m_totalTime - 0.0001 : 1 ;
+
+    this->setCurrentTime( toJump );
+    this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
 }
 
 
+void Timeline::skipPrevFrame()
+{
+    float toJump = m_totalTime;
+    while( toJump >= m_currentTime )
+    {
+        toJump -= m_deltaFrame;
+    }
+    toJump <= 0.f ? toJump = 0.f : 1 ;
 
+    this->setCurrentTime( toJump );
+    this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
+}
 
 void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime)
 {   

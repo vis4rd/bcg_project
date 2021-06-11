@@ -5,20 +5,23 @@ class Timeline: public Button
 {
 public:
     Timeline();
-    Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime, const unsigned framesPerSecond = 60);
+    Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime = 1.f, const unsigned short framesPerSecond = 60);
     ~Timeline() = default;
 
     void play();
     void pause();
 
     void setPlayStatusON_OFF(const bool on = false);
-    void setCursorPosition(float localY);
+    void setCursorPosition(float localX);
     void setTotalTime(const float totalTime);
-    void setFrames(const unsigned frames);
+    void setFrames(const unsigned short frames);
+    void skipNextFrame();
+    void skipPrevFrame();
     
     const float getCursorProgress() const; // <0, 1>
     const float getTotalTime() const;
     const float getCurrentTime() const;
+    const float getDeltaFrame() const;
     const bool isFinished() const;
     const bool getPlayStatus() const;
     const unsigned getFrames() const;
@@ -27,19 +30,19 @@ public:
     void render(sf::RenderTarget *target);
 
 private:
-    // void setCursorSpeed(); // redundant?
+    void setDeltaFrame(const unsigned short frames);
     void setCurrentTime(const float currentTime);
 
 protected:
     sf::CircleShape m_cursor;
     sf::RectangleShape m_box;
     sf::RectangleShape m_covered;
-    //sf::VertexArray *m_body; // redundant?
 
     float m_timelineLength;
     float m_cursorSpeed;
     bool m_playStatus;
     float m_totalTime;
     float m_currentTime;
-    unsigned m_frameCount;
+    float m_deltaFrame;
+    unsigned short m_frameCount;
 };
