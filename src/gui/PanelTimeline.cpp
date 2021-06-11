@@ -16,12 +16,12 @@ PanelTimeline::PanelTimeline(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
 Panel( sf::Vector2f( pos.x, pos.y + size.y*(9.f/10.f) ), sf::Vector2f( size.x, size.y/8.f) )
 {
-	float tempX = pos.y + size.x/(2.f);
 	float tempY = pos.y + size.y*(9.f/10.f);
-	m_control = new StartStopControl( pos + sf::Vector2f(tempX,tempY) );
-	m_next = NextFrameControl::makeNextFrameButton( pos+sf::Vector2f(tempX+55.f, tempY + 3.f ) );
-	m_prev = NextFrameControl::makePreviousFrameButton( pos+sf::Vector2f(tempX-55.f, tempY + 3.f ) );
-	m_timeline = new Timeline( (pos+sf::Vector2f(size.x/16.f, tempY+65.f)) , sf::Vector2f( 14.f*size.x/16.f  , 1.f) );
+	m_timeline = new Timeline( (pos+sf::Vector2f(size.x/16.f, tempY+55.f)) , sf::Vector2f( 14.f*size.x/16.f  , 1.f) );
+	
+	m_control = new StartStopControl( pos + sf::Vector2f( size.x/16.f + 14.f*size.x/32.f - 20.f, tempY) );
+	m_next = NextFrameControl::makeNextFrameButton( pos+sf::Vector2f( size.x/16.f + 14.f*size.x/32.f + 30.f, tempY+3) );
+	m_prev = NextFrameControl::makePreviousFrameButton( pos+sf::Vector2f( size.x/16.f + 14.f*size.x/32.f - 70.f, tempY+3) );
 	m_canvas = new Canvas(pos , sf::Vector2f(size.x, size.y * (7.f/8.f)) );
 }
 
