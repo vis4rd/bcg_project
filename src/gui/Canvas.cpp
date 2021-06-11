@@ -43,6 +43,7 @@ void Canvas::setAnimation(std::unique_ptr<ObjectAnimation> new_animation)
 	m_animType = Canvas::AnimationType::OBJ_ANIM;
 	this->clearAnimation();
 	m_objAnim = std::move(new_animation);
+
 	if(m_startingImage)
 	{
 		m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime));
@@ -61,12 +62,16 @@ void Canvas::setAnimation(std::unique_ptr<PixelAnimation> new_animation)
 
 	if(m_startingImage)
 	{
+		m_startingImage->transformUpdate();
 		m_pixelImageIn = std::make_unique<AnimatedImage>(*(m_startingImage.get()));
-		m_pixelImageOut = std::make_unique<AnimatedImage>(*(m_endingImage.get()));
-	
 		m_pixAnim->setPixels1(m_startingImage->getRGB());
-		m_pixAnim->setPixels2(m_endingImage->getRGB());
 		m_pixelImageIn->pixelUpdate(m_pixAnim->getTexture1Frame(m_currentAnimTime));
+	}
+	if(m_endingImage)
+	{
+		m_endingImage->transformUpdate();
+		m_pixelImageOut = std::make_unique<AnimatedImage>(*(m_endingImage.get()));
+		m_pixAnim->setPixels2(m_endingImage->getRGB());
 		m_pixelImageOut->pixelUpdate(m_pixAnim->getTexture2Frame(m_currentAnimTime));
 	}
 }
@@ -93,12 +98,10 @@ void Canvas::setStartingImage(const sf::String &directory_path)
 		if(m_pixAnim)
 		{
 			m_pixelImageIn->pixelUpdate(m_pixAnim->getPixels1());
-			m_pixelImageOut->pixelUpdate(m_pixAnim->getPixels2());
 		}
 		else
 		{
 			m_pixelImageIn->pixelUpdate();
-			m_pixelImageOut->pixelUpdate();
 		}
 	}
 }
@@ -120,16 +123,14 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 			m_endingImage->transformUpdate();
 		}
 	}
-	else if(m_animType == Canvas::AnimationType::PIX_ANIM)//
+	else if(m_animType == Canvas::AnimationType::PIX_ANIM)
 	{
 		if(m_pixAnim)
 		{
-			m_pixelImageIn->pixelUpdate(m_pixAnim->getPixels1());
 			m_pixelImageOut->pixelUpdate(m_pixAnim->getPixels2());
 		}
 		else
 		{
-			m_pixelImageIn->pixelUpdate();
 			m_pixelImageOut->pixelUpdate();
 		}
 	}
@@ -233,13 +234,25 @@ void Canvas::render(sf::RenderTarget *target)
 		}
 		if(m_startingImage->getDepth() > m_endingImage->getDepth())
 		{
-			m_startingImage->render(&m_plane);
-			m_endingImage->render(&m_plane);
+			if(sI)
+			{
+				m_startingImage->render(&m_plane);
+			}
+			if(eI)
+			{
+				m_endingImage->render(&m_plane);
+			}
 		}
 		else
 		{
-			m_endingImage->render(&m_plane);
-			m_startingImage->render(&m_plane);
+			if(eI)
+			{
+				m_endingImage->render(&m_plane);
+			}
+			if(sI)
+			{
+				m_startingImage->render(&m_plane);
+			}
 		}
 	}
 	else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImageIn && m_pixelImageOut)
