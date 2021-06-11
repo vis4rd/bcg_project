@@ -44,13 +44,17 @@ void Canvas::setAnimation(std::unique_ptr<ObjectAnimation> new_animation)
 	this->clearAnimation();
 	m_objAnim = std::move(new_animation);
 
+	em::Matrix4f perspective(	0.f, 0.f, 1.f, 0.f,
+								0.f, 0.f, -1.f, 0.f,
+								0.f, 0.f, -1.f, 0.f,
+								0.f, 0.f, -1.f, 0.f);
 	if(m_startingImage)
 	{
-		m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime));
+		m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime) * perspective);
 	}
 	if(m_endingImage)
 	{
-		m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime));
+		m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime) * perspective);
 	}
 }
 
@@ -232,7 +236,7 @@ void Canvas::render(sf::RenderTarget *target)
 		{
 			sI = true;
 		}
-		if(m_startingImage->getDepth() > m_endingImage->getDepth())
+		if(m_startingImage->getVertexDepth(0) > m_endingImage->getVertexDepth(0))
 		{
 			if(sI)
 			{

@@ -66,13 +66,24 @@ public:
 	std::vector<unsigned char> getRGB() const;
 
 	/**
-	 * @brief Getter to depth of the AnimatedImage
+	 * @brief Getter to array of depth of all image's verticies
 	 *
-	 * @return Floating point value, the higher it is, the "deeper" is the image
+	 * @return Array of Floating point values, the higher they are, the "deeper" is the vertex
 	 * 
 	 * AnimatedImages are rendered in order of most to least deep.
 	 */
-	const float getDepth() const;
+	const std::array<float, 4> &getDepths() const;
+
+	/**
+	 * @brief Getter to depth of a vertex under specific index
+	 *
+	 * @param index The index which indicated what vertex of the AnimatedImage is of interest
+	 *
+	 * @return The depth of the chosen vertex
+	 * 
+	 * Verticies' indices are set from 0 to 3 from top-left corner clockwise.
+	 */
+	const float &getVertexDepth(const unsigned index) const;
 
 	/**
 	 * @brief Update the transformation matrix of the AnimatedImage
@@ -108,7 +119,7 @@ private:
 	sf::Vector2f m_initPosition; ///> Position of the top-left corner of the texture set at definition
 	sf::VertexArray m_verticies; ///> Verticies which transformations are appleid to
 	std::unique_ptr<sf::Texture> m_texture; ///> Unique pointer to texture imprinted on verticies
-	float m_depth; ///> Depth of an image relevant to window's view
+	std::array<float, 4> m_depths; ///> Depth of an image relevant to window's view
 };
 
 inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
@@ -121,16 +132,19 @@ inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 
 		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(0));
 		m_verticies[0].position = toV2f(temp_pos);
-		m_depth = temp_pos.z;
+		m_depths[0] = temp_pos.z;
 
 		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(1));
 		m_verticies[1].position = toV2f(temp_pos);
+		m_depths[1] = temp_pos.z;
 
 		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(2));
 		m_verticies[2].position = toV2f(temp_pos);
+		m_depths[2] = temp_pos.z;
 
 		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(3));
 		m_verticies[3].position = toV2f(temp_pos);
+		m_depths[3] = temp_pos.z;
 	}
 }
 
