@@ -20,7 +20,8 @@ Panel(pos,size)
     m_animationChoice->addChoice("Slide Left to Right");
     m_animationChoice->addChoice("Scale from point");
     m_animationChoice->addChoice("Ring animation");
-
+    m_animationChoice->addChoice("Fly away animation");
+    
     m_framesChoice = new DropdownList(sf::Vector2f(pos.x + 20, pos.y + size.y/14 + size.y/2 +70), sf::Vector2f(size.x - 40, size.y/14), font, sf::String("60 fps"));
     m_framesChoice->addChoice("15 fps");
     m_framesChoice->addChoice("30 fps");

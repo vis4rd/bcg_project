@@ -72,6 +72,10 @@ void Program::setAnimationFromSettings(Settings* settings)
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<RingAnimation>() );
             break;}
+        case(7u):
+        {
+            m_timePanel->getCanvas()->setAnimation( std::make_unique<FlyAnimation>() );
+            break;}
     }
     //m_timePanel->getTimeline()->setTotalTime(10.f);
     m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
