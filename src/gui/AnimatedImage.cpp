@@ -6,7 +6,7 @@ m_initSize(sf::Vector2f()),
 m_initPosition(sf::Vector2f()),
 m_verticies(sf::VertexArray(sf::Quads, 4)),
 m_texture(nullptr),
-m_depth(0.f)
+m_depths({})
 {
 
 }
@@ -16,7 +16,7 @@ AnimatedImage::AnimatedImage(const sf::Vector3f &position, std::unique_ptr<sf::T
 m_initPosition(toV2f(position)),
 m_verticies(sf::VertexArray(sf::Quads, 4)),
 m_texture(std::move(texture)),
-m_depth(0.f)
+m_depths({})
 {
 	if(independent_size != sf::Vector2f())
 	{
@@ -39,10 +39,9 @@ AnimatedImage::AnimatedImage(const AnimatedImage &copy)
 m_initSize(copy.m_initSize),
 m_initPosition(copy.m_initPosition),
 m_verticies(copy.m_verticies),
-m_texture(std::make_unique<sf::Texture>(*(copy.m_texture.get()))),
-m_depth(copy.m_depth)
+m_texture(std::make_unique<sf::Texture>(*(copy.m_texture.get())))
 {
-
+	std::copy(copy.m_depths.begin(), copy.m_depths.end(), m_depths.begin());
 }
 
 const sf::Vector3f AnimatedImage::getPosition() const
@@ -68,9 +67,21 @@ std::vector<unsigned char> AnimatedImage::getRGB() const
 	return result;
 }
 
-const float AnimatedImage::getDepth() const
+const std::array<float, 4> &AnimatedImage::getDepths() const
 {
-	return m_depth;
+	return m_depths;
+}
+
+const float &AnimatedImage::getVertexDepth(const unsigned index) const
+{
+	if(index >= 4)
+	{
+		throw std::out_of_range("const float &AnimatedImage::getVertexDepth(const unsigned) const: Given index is of value " + std::to_string(index) + "while size of an array is 4.");
+	}
+	else
+	{
+		return m_depths[index];
+	}
 }
 
 void AnimatedImage::render(sf::RenderTarget *target)
@@ -92,7 +103,7 @@ void AnimatedImage::setToInitPosition()
 	m_verticies[2].position.y = m_initPosition.y + m_initSize.y;
 	m_verticies[3].position.y = m_initPosition.y + m_initSize.y;
 
-	m_depth = 0.f;
+	m_depths.fill(0.f);
 }
 
 const sf::Vector3f AnimatedImage::getVertexPosition(const int &index) const
@@ -101,7 +112,7 @@ const sf::Vector3f AnimatedImage::getVertexPosition(const int &index) const
 	sf::Vector3f result;
 	result.x = m_verticies[uindex].position.x;
 	result.y = m_verticies[uindex].position.y;
-	result.z = 0.f;
+	result.z = m_depths[0];
 	return result;
 }
 

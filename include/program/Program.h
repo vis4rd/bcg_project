@@ -15,6 +15,7 @@
 #include "../animation/SlideAnimation.h"
 #include "../animation/ScaleAnimation.h"
 #include "../animation/RingAnimation.h"
+#include "../animation/FlyAnimation.h"
 
 #include "../gui/AnimatedImage.h"
 #include "../gui/Object.h"
