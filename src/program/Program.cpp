@@ -98,17 +98,26 @@ void Program::updateDeltaTime()
    m_deltaTime = m_dtClock.restart().asSeconds();
 }
 
-void Program::saveSequence()
+void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
 {
     Settings* sets = Settings::getInstance();
     m_timePanel->getTimeline()->setCurrentTime(0.f);
 
     std::string name;
+    time_t now = time(0);
+    char* date = ctime(&now);
+    std::string dir = date;
+    std::filesystem::create_directory(dir);
+
     for (int i = 0; i < sets->getCurrentFrames(); ++i)
     {
-        name = "bitmap" + std::to_string(i+1);
-        m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile( name+".bmp" );
+        name = "bitmap";  
+        i+1 > 9 ?  name += std::to_string(i+1) : name += "0"+std::to_string(i+1);
+
+        m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile(dir+"/"+name+".bmp");
         m_timePanel->getTimeline()->skipNextFrame();
+
+        m_timePanel->update(mousePos,event,m_deltaTime);
         m_timePanel->getCanvas()->render(m_window);
     }
 }
@@ -181,7 +190,7 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
 
     if (m_buttonPanel->getSaveButton()->isPressed() )
     {
-        this->saveSequence();
+        this->saveSequence(mousePos, event);
     }
 }
 

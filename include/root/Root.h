@@ -15,6 +15,7 @@
 #include <functional>
 #include <numeric>
 #include <memory>
+#include <filesystem>
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>

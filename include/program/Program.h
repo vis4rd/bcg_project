@@ -37,7 +37,7 @@ public:
 	void updateDeltaTime();
 	void updateSFMLEvents();
 	void update(sf::Vector2i mousePos, sf::Event &event);
-	void saveSequence();
+	void saveSequence(sf::Vector2i mousePos, sf::Event &event);
 	void render();
 	void run();
 
