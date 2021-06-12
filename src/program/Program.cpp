@@ -106,10 +106,13 @@ void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
     std::string name;
     time_t now = time(0);
     char* date = ctime(&now);
-    std::string dir = date;
+    std::string dir(date);
+    std::replace( dir.begin(), dir.end(), ' ', '_');
+    std::replace( dir.begin(), dir.end(), ':', '-');
+    dir.pop_back();
     std::filesystem::create_directory(dir);
 
-    for (int i = 0; i < sets->getCurrentFrames(); ++i)
+    for (int i = 0; i <= sets->getCurrentFrames(); ++i)
     {
         name = "bitmap";  
         i+1 > 9 ?  name += std::to_string(i+1) : name += "0"+std::to_string(i+1);

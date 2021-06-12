@@ -54,6 +54,7 @@ list(APPEND SOURCES "${PROJECT_SOURCE_DIR}/dep/tinyfiledialogs/tinyfiledialogs.c
 if(SFML_FOUND)
 	add_executable(${PROGRAM_NAME} ${SOURCES} main.cpp)
 	target_link_libraries(${PROGRAM_NAME} PUBLIC sfml-system sfml-window sfml-graphics ${LIBS})
+	target_precompile_headers(${PROGRAM_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include/root/Root.h")
 endif()
 
 ###################################################################################################
