@@ -222,11 +222,6 @@ void Canvas::render(sf::RenderTarget *target)
 {
 	m_plane.clear();
 
-	//Delete this when Canvas' position is set for good
-	sf::RectangleShape shape(static_cast<sf::Vector2f>(m_plane.getSize()));
-	shape.setFillColor(sf::Color(0, 155, 165));
-	m_plane.draw(shape);
-	//^^^
 	bool eI = false, sI = false;
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
