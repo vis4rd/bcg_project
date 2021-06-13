@@ -7,7 +7,7 @@ class ImageButton : public Button
 public:
 
 	ImageButton();
-	ImageButton(const sf::Vector2f &pos, const sf::Vector2f &size, const int number);
+	ImageButton(const sf::Vector2f &pos, const sf::Vector2f &size);
 	ImageButton(const ImageButton &copy);
 	ImageButton(ImageButton &&source);
 	void render(sf::RenderTarget *target) override;

@@ -51,33 +51,43 @@ void Program::setAnimationFromSettings(Settings* settings)
         case(1u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<DimmingAnimation>() );
-            break;}
+            break;
+        }
         case(2u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<AlfaAnimation>() );
-            break;}
+            break;
+        }
         case(3u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<ByBrightnessAnimation>() );
-            break;}
+            break;
+        }
         case(4u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<SlideAnimation>() );
-            break;}
+            break;
+        }
         case(5u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<ScaleAnimation>() );
-            break;}
+            break;
+        }
         case(6u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<RingAnimation>() );
-            break;}
+            break;
+        }
         case(7u):
         {
             m_timePanel->getCanvas()->setAnimation( std::make_unique<FlyAnimation>() );
-            break;}
+            break;
+        }
+        default:
+        {
+            break;
+        }
     }
-    //m_timePanel->getTimeline()->setTotalTime(10.f);
     m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
     m_buttonPanel->getAnimationChoice()->changeRead();
 }
@@ -123,6 +133,7 @@ void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
         m_timePanel->update(mousePos,event,m_deltaTime);
         m_timePanel->getCanvas()->render(m_window);
     }
+    tinyfd_messageBox("Message", "The animation has been saved!", "ok", "info", 1);
 }
 
 
