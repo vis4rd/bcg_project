@@ -4,17 +4,17 @@ SaveButton::SaveButton()
 :Button() {}
 
 SaveButton::SaveButton(const sf::Vector2f &pos, const sf::Vector2f &size)
-    :Button(pos, size)
-    {
-        m_shape.setOutlineThickness(2);
-        m_shape.setOutlineColor( sf::Color::Black );
-        m_texture.loadFromFile("../res/images/save_icon.png");
-        m_spr.setTexture(m_texture);
-        m_spr.setPosition(m_shape.getPosition().x, m_shape.getPosition().y);
-        m_spr.setScale(static_cast<float>((m_shape.getSize().x) / (m_texture.getSize().x)), 
-                static_cast<float>((m_shape.getSize().y) / (m_texture .getSize().y) ));
-                
-    }
+:Button(pos, size)
+{
+    m_shape.setOutlineThickness(0.f);
+    m_shape.setOutlineColor( sf::Color::Black );
+    m_texture.loadFromFile("../res/images/save_icon.png");
+    m_spr.setTexture(m_texture);
+    m_spr.setPosition(m_shape.getPosition().x, m_shape.getPosition().y);
+    m_spr.setScale(static_cast<float>((m_shape.getSize().x) / (m_texture.getSize().x)), 
+            static_cast<float>((m_shape.getSize().y) / (m_texture .getSize().y) ));
+            
+}
 
 SaveButton::SaveButton(const SaveButton &copy)
 :
@@ -53,11 +53,11 @@ void SaveButton::update(sf::Vector2i mousePos, sf::Event &event)
         
         if(m_state == Button::state::IDLE)
         {
-            m_shape.setFillColor( sf::Color(30,30,30) );
+            m_shape.setFillColor( /*sf::Color(30,30,30)*/sf::Color::Transparent );
         }
         else if(m_state == Button::state::HOVER)
         {
-            m_shape.setFillColor( sf::Color(15,15,15) );
+            m_shape.setFillColor( sf::Color(255, 255, 255, 50) );
         }
         else
         {
