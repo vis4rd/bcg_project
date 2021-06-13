@@ -39,14 +39,14 @@ void ImageButton::update(sf::Vector2i mousePos, sf::Event &event)
 {
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_shape.getGlobalBounds().contains(mousePos.x, mousePos.y ))
     {
-        char const * lFilterPatterns[3] = { "*.png", "*.jpg","*.bmp"};
-        char const * selection = tinyfd_openFileDialog("Select file", NULL, 3, lFilterPatterns, NULL, 0 );
-        m_path = std::string(selection);
+        char const *file_extensions[3] = { "*.png", "*.jpg","*.bmp"};
+        char const *path = tinyfd_openFileDialog("Select file", NULL, 3, file_extensions, NULL, 0 );
 
-        if(selection != nullptr)
+        if(path != nullptr)
         {
+            m_path = std::string(path);
             m_isChanged = true;
-            m_texture.loadFromFile(std::string(selection));
+            m_texture.loadFromFile(m_path);
 
             m_spr.setTexture(m_texture, true);
             m_spr.setPosition(m_shape.getPosition().x, m_shape.getPosition().y);
