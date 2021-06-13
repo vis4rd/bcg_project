@@ -25,21 +25,19 @@ m_playStatus(false),
 m_totalTime(totalTime),
 m_currentTime(0.f)
 {
-    m_cursor = sf::CircleShape(6);
-    m_cursor.setFillColor(sf::Color(80,220,80));
-    m_cursor.setPosition(pos + sf::Vector2f(-5.f , - 7.f) ); 
-    m_cursor.setOutlineColor( sf::Color(20,20,20) );
-    m_cursor.setOutlineThickness(-1.f);
+    m_cursor = sf::CircleShape(size.y + 1.f);
+    m_cursor.setFillColor(sf::Color::White);
+    m_cursor.setPosition(pos - sf::Vector2f(0.f, m_cursor.getRadius() / 2.f)); 
+    m_cursor.setOutlineThickness(0.f);
 
-    m_box.setPosition(pos + sf::Vector2f(0.f, -1.f) );
-    m_box.setSize( size + sf::Vector2f(0.f, 3.f) );
+    m_box.setPosition(pos);
+    m_box.setSize(size);
     m_box.setFillColor( sf::Color(120,120,120) );
-    m_box.setOutlineColor(sf::Color(120,120,120,0));
-    m_box.setOutlineThickness(15.f);
+    m_box.setOutlineColor(sf::Color::Transparent);
 
-    m_covered.setPosition( pos + sf::Vector2f( -2.f, -2.f) );
-    m_covered.setFillColor( sf::Color(60,220,60) );
-    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
+    m_covered.setPosition(pos);
+    m_covered.setFillColor(sf::Color(60,220,60));
+    m_covered.setSize(sf::Vector2f(m_cursor.getPosition().x - m_covered.getPosition().x, size.y));
 
     m_playStatus = false;
     m_frameCount = framesPerSecond * m_totalTime;
@@ -63,8 +61,8 @@ void Timeline::pause()
 
 void Timeline::setCursorPosition(float localX)
 {
-    m_cursor.setPosition( this->getPosition() + sf::Vector2f(localX, -7.f) );
-    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x  , 4.f) );
+    m_cursor.setPosition(this->getPosition() + sf::Vector2f(localX, -m_cursor.getRadius() / 2.f) );
+    m_covered.setSize(sf::Vector2f(m_cursor.getPosition().x - m_covered.getPosition().x, this->getSize().y));
 }
 
 void Timeline::setPlayStatusON_OFF(const bool on)
@@ -171,7 +169,7 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
     //adjust cursor's position
     this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
     //color the path behind the cursor
-    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
+    m_covered.setSize(sf::Vector2f(m_cursor.getPosition().x - m_covered.getPosition().x, this->getSize().y));
 
     if(m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
     {

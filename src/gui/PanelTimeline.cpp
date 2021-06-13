@@ -6,23 +6,34 @@ Panel(),
 m_control(nullptr),
 m_next(nullptr),
 m_prev(nullptr),
-m_canvas(nullptr),
+m_canvas(new Canvas()),
 m_timeline(nullptr)
 {
-	m_canvas = new Canvas();
+	
 }
 
 PanelTimeline::PanelTimeline(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
-Panel( sf::Vector2f( pos.x, pos.y + size.y*(9.f/10.f) ), sf::Vector2f( size.x, size.y/8.f) )
+Panel( sf::Vector2f( pos.x, pos.y ), sf::Vector2f( size.x, size.y) )
 {
-	float tempY = pos.y + size.y*(9.f/10.f);
-	m_timeline = new Timeline( (pos+sf::Vector2f(size.x/16.f, tempY+55.f)) , sf::Vector2f( 14.f*size.x/16.f  , 1.f) );
+	m_canvas = new Canvas(	pos + sf::Vector2f(6.f, 6.f),
+					sf::Vector2f(size.x - 12.f, size.y * (17.f/20.f)));
+
+	m_control = new StartStopControl(sf::Vector2f(
+					pos.x + 6.f + ((size.x - 12.f) / 2.f) - 20.f,
+					pos.y + 6.f + (size.y * (17.f/20.f)) + 15.f));
 	
-	m_control = new StartStopControl( pos + sf::Vector2f( size.x/16.f + 14.f*size.x/32.f - 20.f, tempY) );
-	m_next = NextFrameControl::makeNextFrameButton( pos+sf::Vector2f( size.x/16.f + 14.f*size.x/32.f + 30.f, tempY+3) );
-	m_prev = NextFrameControl::makePreviousFrameButton( pos+sf::Vector2f( size.x/16.f + 14.f*size.x/32.f - 70.f, tempY+3) );
-	m_canvas = new Canvas(pos , sf::Vector2f(size.x, size.y * (7.f/8.f)) );
+	m_next = NextFrameControl::makeNextFrameButton(sf::Vector2f(
+					m_control->getPosition().x + m_control->getSize().x + 20.f,
+					m_control->getPosition().y) );
+	m_prev = NextFrameControl::makePreviousFrameButton( sf::Vector2f(
+					m_control->getPosition().x - m_control->getSize().x - 20.f,
+					m_control->getPosition().y) );
+
+	m_timeline = new Timeline(
+		sf::Vector2f(pos.x + (size.x / 2.f) - (size.x * (9.f/10.f) / 2.f),
+					m_control->getPosition().y + m_control->getSize().y + 15.f),
+		sf::Vector2f(size.x * (9.f/10.f), 5.f));
 }
 
 PanelTimeline::~PanelTimeline()

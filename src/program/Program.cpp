@@ -15,7 +15,7 @@ Program::Program()
     m_window->setVerticalSyncEnabled(vertical_sync_enabled);
     m_window->setKeyRepeatEnabled(false);
     
-    m_timePanel = new PanelTimeline(sf::Vector2f(10.f, 10.f), sf::Vector2f(960.f, 680.f) );
+    m_timePanel = new PanelTimeline(sf::Vector2f(10.f, 10.f), sf::Vector2f(960.f, 700.f) );
     m_buttonPanel = new PanelButton(sf::Vector2f(980.f, 10.f), sf::Vector2f(290.f, 700.f));
 
     m_timePanel->getCanvas()->setStartingImage("../res/images/example1.jpg");
