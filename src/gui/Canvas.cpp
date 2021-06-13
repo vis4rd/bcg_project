@@ -44,17 +44,13 @@ void Canvas::setAnimation(std::unique_ptr<ObjectAnimation> new_animation)
 	this->clearAnimation();
 	m_objAnim = std::move(new_animation);
 
-	em::Matrix4f perspective(	0.f, 0.f, 1.f, 0.f,
-								0.f, 0.f, -1.f, 0.f,
-								0.f, 0.f, -1.f, 0.f,
-								0.f, 0.f, -1.f, 0.f);
 	if(m_startingImage)
 	{
-		m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime) * perspective);
+		m_startingImage->transformUpdate(m_objAnim->getImage1Frame(m_currentAnimTime));
 	}
 	if(m_endingImage)
 	{
-		m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime) * perspective);
+		m_endingImage->transformUpdate(m_objAnim->getImage2Frame(m_currentAnimTime));
 	}
 }
 
@@ -142,7 +138,7 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 
 void Canvas::setCurrentAnimationTime(const float &current_time)
 {
-	if(current_time > 0.f)
+	if(current_time >= 0.f)
 	{
 		m_currentAnimTime = current_time;
 	}
@@ -192,9 +188,6 @@ sf::RenderTexture& Canvas::getPlane()
 {
 	return m_plane;
 }
-
-
-
 
 void Canvas::update(sf::Vector2i mousePos, sf::Event &event)
 {

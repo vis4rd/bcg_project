@@ -86,12 +86,26 @@ const bool Timeline::isFinished() const
 
 void Timeline::setTotalTime(const float totalTime)
 {
-    if (totalTime > 0.0)
+    if (totalTime > 0.f)
     {
         m_totalTime = totalTime;
         m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
     }
 } 
+
+void Timeline::setFrames(const unsigned short frames)
+{
+    m_frameCount = frames;
+    m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
+}
+
+void Timeline::setCurrentTime(const float currentTime)
+{
+    if(currentTime >= 0.f && currentTime < m_totalTime)
+    {
+        m_currentTime = currentTime;
+    }
+}
 
 const float Timeline::getCursorProgress() const
 {
@@ -101,7 +115,6 @@ const float Timeline::getCursorProgress() const
 const float Timeline::getTotalTime() const
 {
     return m_totalTime;
-
 }
 
 const float Timeline::getCurrentTime() const
@@ -112,12 +125,6 @@ const float Timeline::getCurrentTime() const
 const unsigned Timeline::getFrames() const
 {
     return m_frameCount;
-}
-
-void Timeline::setFrames(const unsigned short frames)
-{
-    m_frameCount = frames;
-    m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
 }
 
 void Timeline::skipNextFrame()
@@ -160,11 +167,11 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
         {
             m_currentTime = m_totalTime - 0.0001f;
         }
-        //adjust cursor's position
-        this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
-        //color the path behind the cursor
-        m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
     }
+    //adjust cursor's position
+    this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
+    //color the path behind the cursor
+    m_covered.setSize( sf::Vector2f( m_cursor.getPosition().x - m_covered.getPosition().x, 4.f) );
 
     if(m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
     {
@@ -182,14 +189,4 @@ void Timeline::render(sf::RenderTarget *target)
     target->draw(this->m_box);
     target->draw(this->m_covered);
     target->draw(this->m_cursor);
-}
-
-//private member functions
-
-void Timeline::setCurrentTime(const float currentTime)
-{
-    if(currentTime > 0.f && currentTime < m_totalTime)
-    {
-        m_currentTime = currentTime;
-    }
 }

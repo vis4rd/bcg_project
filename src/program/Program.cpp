@@ -127,12 +127,14 @@ void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
         name = "bitmap";  
         i+1 > 9 ?  name += std::to_string(i+1) : name += "0"+std::to_string(i+1);
 
-        m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile(dir+"/"+name+".bmp");
-        m_timePanel->getTimeline()->skipNextFrame();
-
         m_timePanel->update(mousePos,event,m_deltaTime);
         m_timePanel->getCanvas()->render(m_window);
+        m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile(dir+"/"+name+".bmp");
+        m_timePanel->getTimeline()->skipNextFrame();
     }
+    m_timePanel->getTimeline()->setCurrentTime(0.f);
+    m_timePanel->update(mousePos, event, m_deltaTime);
+    m_timePanel->render(m_window);
     tinyfd_messageBox("Message", "The animation has been saved!", "ok", "info", 1);
 }
 

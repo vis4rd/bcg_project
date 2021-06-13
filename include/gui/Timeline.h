@@ -15,6 +15,7 @@ public:
     void setCursorPosition(float localX);
     void setTotalTime(const float totalTime);
     void setFrames(const unsigned short frames);
+    void setCurrentTime(const float currentTime);
     void skipNextFrame();
     void skipPrevFrame();
     
@@ -25,7 +26,6 @@ public:
     const bool isFinished() const;
     const bool getPlayStatus() const;
     const unsigned getFrames() const;
-    void setCurrentTime(const float currentTime);
 
     void update(sf::Vector2i mousePos, sf::Event &event, const float &deltaTime);
     void render(sf::RenderTarget *target);
