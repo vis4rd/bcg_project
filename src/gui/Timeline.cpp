@@ -20,7 +20,7 @@ m_frameCount(0u)
 Timeline::Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime, const unsigned short framesPerSecond)
 :
 Button(pos,size),
-m_timelineLength(size.x - 10.f),
+m_timelineLength(size.x - size.y*2.f - 2.f),
 m_playStatus(false),
 m_totalTime(totalTime),
 m_currentTime(0.f)
@@ -61,6 +61,14 @@ void Timeline::pause()
 
 void Timeline::setCursorPosition(float localX)
 {
+    if(localX < 0.f)
+    {
+        localX = 0.f;
+    }
+    else if(localX > m_timelineLength)
+    {
+        localX = m_timelineLength;
+    }
     m_cursor.setPosition(this->getPosition() + sf::Vector2f(localX, -m_cursor.getRadius() / 2.f) );
     m_covered.setSize(sf::Vector2f(m_cursor.getPosition().x - m_covered.getPosition().x, this->getSize().y));
 }
@@ -173,12 +181,23 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
 
     if(m_box.getGlobalBounds().contains(sf::Vector2f(mousePos.x, mousePos.y)))
     {
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        if((event.type == sf::Event::MouseButtonPressed)
+        && (event.mouseButton.button == sf::Mouse::Left))
         {
+            m_state = Button::state::ACTIVE;
             this->pause();
-            this->setCursorPosition(mousePos.x - m_box.getPosition().x);
-            this->setCurrentTime((m_cursor.getPosition() - this->getPosition()).x / m_timelineLength * m_totalTime);
         }
+    }
+
+    if(m_state == Button::state::ACTIVE)
+    {
+        if((event.type == sf::Event::MouseButtonReleased)
+        && (event.mouseButton.button == sf::Mouse::Left))
+        {
+            m_state = Button::state::IDLE;
+        }
+        this->setCursorPosition(mousePos.x - m_box.getPosition().x);
+        this->setCurrentTime((m_cursor.getPosition() - this->getPosition()).x / m_timelineLength * m_totalTime);
     }
 }
 
