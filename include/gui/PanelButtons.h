@@ -13,10 +13,6 @@ class PanelButton : public Panel
 
 public:
 	/**
-	 * default constructor
-	 */
-	PanelButton();
-	/**
 	 * @brief      Constructor responsible for setting postions and sizes of two ImageButtons and two DropdownList
 	 * 			   also sets the options available for selection in DropdownLists
 	 * 

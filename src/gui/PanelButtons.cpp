@@ -1,8 +1,5 @@
 #include "../../include/gui/PanelButtons.h"
-
-PanelButton::PanelButton()
-:Panel()
-{}
+s
 
 PanelButton::PanelButton(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
