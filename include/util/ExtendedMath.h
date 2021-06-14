@@ -4,42 +4,242 @@
 
 namespace em
 {
+	/**
+	 * @brief Class realizing matrix operations
+	 *
+	 * @tparam T Type of values stored in the matrix
+	 */
 	template <typename T>
 	class Matrix4
 	{
 	public:
+		/**
+		 * Default constructor
+		 * 
+		 * By default, it is initialised with identity matrix.
+		 */
 		Matrix4();
+
+		/**
+		 * @brief Constructor setting particular elements of the matrix
+		 *
+		 * @param a00 Element of index i=0 j=0
+		 * @param a01 Element of index i=0 j=1
+		 * @param a02 Element of index i=0 j=2
+		 * @param a03 Element of index i=0 j=3
+		 * @param a10 Element of index i=1 j=0
+		 * @param a11 Element of index i=1 j=1
+		 * @param a12 Element of index i=1 j=2
+		 * @param a13 Element of index i=1 j=3
+		 * @param a20 Element of index i=2 j=0
+		 * @param a21 Element of index i=2 j=1
+		 * @param a22 Element of index i=2 j=2
+		 * @param a23 Element of index i=2 j=3
+		 * @param a30 Element of index i=3 j=0
+		 * @param a31 Element of index i=3 j=1
+		 * @param a32 Element of index i=3 j=2
+		 * @param a33 Element of index i=3 j=3
+		 */
 		explicit Matrix4(	T a00, T a01, T a02, T a03,
 							T a10, T a11, T a12, T a13,
 							T a20, T a21, T a22, T a23,
 							T a30, T a31, T a32, T a33 );
 
+		/**
+		 * @brief Copy constructor and type cast
+		 *
+		 * @param matrix The copied matrix of type U
+		 *
+		 * @tparam U Type of the copied matrix
+		 */
 		template <typename U>
 		explicit Matrix4(const Matrix4<U> &matrix);
 
+		/**
+		 * @brief Array index operator.
+		 *
+		 * @param index The index of the matrix
+		 *
+		 * @return The column / element of the matrix
+		 */
 		T *operator[](const unsigned &index);
+
+		/**
+		 * @brief Const array index operator
+		 *
+		 * @param index The index of the matrix
+		 *
+		 * @return The column / element of the matrix
+		 */
 		const T *operator[](const unsigned &index) const;
+
+		/**
+		 * @brief Negation operator
+		 *
+		 * @return Inverted matrix
+		 */
 		Matrix4<T> operator-() const;
+
+		/**
+		 * @brief Multiplication operator.
+		 *
+		 * @param right The right side of the operation
+		 *
+		 * @return The result of the multiplication
+		 */
 		Matrix4<T> operator*(const Matrix4<T> &right) const;
+
+		/**
+		 * @brief Addition operator.
+		 *
+		 * @param right The right side of the operation
+		 *
+		 * @return The result of the addition
+		 */
 		Matrix4<T> operator+(const Matrix4<T> &right) const;
+
+		/**
+		 * @brief Subtraction operator.
+		 *
+		 * @param right The right side of the operation
+		 *
+		 * @return The result of the subtraction
+		 */
 		Matrix4<T> operator-(const Matrix4<T> &right) const;
+
+		/**
+		 * @brief Multiplication assignment operator.
+		 *
+		 * @param right The right side of the multiplication assignment
+		 *
+		 * @return The result of the multiplication assignment
+		 */
 		Matrix4<T> &operator*=(const Matrix4<T> &right);
+
+		/**
+		 * @brief Addition assignment operator.
+		 *
+		 * @param right The right side of the addition assignment
+		 *
+		 * @return The result of the addition assignment
+		 */
 		Matrix4<T> &operator+=(const Matrix4<T> &right);
+
+		/**
+		 * @brief Subtraction assignment operator.
+		 *
+		 * @param right The right side of the subtraction assignment
+		 *
+		 * @return The result of the subtraction assignment
+		 */
 		Matrix4<T> &operator-=(const Matrix4<T> &right);
+
+		/**
+		 * @brief Inequality operator.
+		 *
+		 * @param right The right side of the inequality operator
+		 *
+		 * @return True if matrices are not the same, false otherwise
+		 */
 		const bool operator!=(const Matrix4<T> &right) const;
+
+		/**
+		 * @brief Equality operator.
+		 *
+		 * @param right The right side of the equality operator
+		 *
+		 * @return True if matrices are the same, false otherwise
+		 */
 		const bool operator==(const Matrix4<T> &right) const;
 
+		/**
+		 * @brief Multiplication operator for sf::Vector3<T>
+		 *
+		 * @param right The sf::Vector3<T> on the right side of the operator
+		 *
+		 * @return The result of the multiplication
+		 */
 		sf::Vector3<T> operator*(const sf::Vector3<T> &right) const;
 		// Matrix4<T> operator+(const sf::Vector3<T> &right) const;
 		// Matrix4<T> operator-(const sf::Vector3<T> &right) const;
 
+		/**
+		 * @brief Translation matrix operation
+		 *
+		 * @param translation The vector of translation
+		 *
+		 * @return Reference to itself after application of the translation.
+		 * 
+		 * Reference allows stacking operations one right after the other.
+		 */
 		Matrix4<T> &translate(const sf::Vector3<T> &translation);
+
+		/**
+		 * @brief Rotation in X axis matrix operation
+		 *
+		 * @param angle The angle of rotation
+		 *
+		 * @return Reference to itself after application of the rotation
+		 * 
+		 * Reference allows stacking operations one right after the other.
+		 */
 		Matrix4<T> &rotateX(const float &angle);
+
+		/**
+		 * @brief Rotation in Y axis matrix operation
+		 *
+		 * @param angle The angle of rotation
+		 *
+		 * @return Reference to itself after application of the rotation
+		 * 
+		 * Reference allows stacking operations one right after the other.
+		 */
 		Matrix4<T> &rotateY(const float &angle);
+
+		/**
+		 * @brief Rotation in Z axis matrix operation
+		 *
+		 * @param angle The angle of rotation
+		 *
+		 * @return Reference to itself after application of the rotation
+		 * 
+		 * Reference allows stacking operations one right after the other.
+		 */
 		Matrix4<T> &rotateZ(const float &angle);
+
+		/**
+		 * @brief Scaling matrix operation
+		 *
+		 * @param scale The scale in 3 dimensions (x, y, z)
+		 * 
+		 * Scale of value 1 keeps the original size.
+		 *
+		 * @return Reference to itself after application of scaling
+		 * 
+		 * Reference allows stacking operations one right after the other.
+		 */
 		Matrix4<T> &scale(const sf::Vector3<T> &scale);
+
+		/**
+		 * @brief Mirror matrix operation
+		 *
+		 * Give true as an argument if transformation should be mirrored in the selected axis.
+		 *
+		 * @param xAxis The X axis
+		 * @param yAxis The Y axis
+		 * @param zAxis The Z axis
+		 *
+		 * @return Reference to itself after application of mirroring
+		 * 
+		 * Reference allows stacking operations one right after the other.
+		 */
 		Matrix4<T> &mirror(const bool xAxis, const bool yAxis, const bool zAxis);
 
+		/**
+		 * @brief Conversion to sf::Vector3 representation of the position (or translation) in the matrix
+		 *
+		 * @return The position from the matrix
+		 */
 		const sf::Vector3<T> toPosition() const;
 		// void print(const std::string &prefix) const;
 
