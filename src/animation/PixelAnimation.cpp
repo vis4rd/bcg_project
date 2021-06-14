@@ -16,17 +16,7 @@ PixelAnimation::PixelAnimation(
 Animation(animation_length, animation_speed),
 m_pixels1(texture1_pixels),
 m_pixels2(texture2_pixels)
-{
-	std::cout << "Wektor 1: " << std::endl;
-	for(auto &it : m_pixels1)
-		std::cout << it << " ";
-	std::cout << std::endl << std::endl;
-
-	std::cout << "Wektor 2: " << std::endl;
-	for(auto &it : m_pixels2)
-		std::cout << it << " ";
-	std::cout << std::endl << std::endl;
-}
+{}
 
 PixelAnimation::PixelAnimation(
 	const float &animation_length,
