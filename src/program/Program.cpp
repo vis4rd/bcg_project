@@ -29,7 +29,7 @@ Program::Program()
     sets->setPath1("../res/images/example1.jpg");
     sets->setPath2("../res/images/example2.jpg");
     sets->setCurrentAnim(1u);
-    sets->setCurrentFrames(15);
+    sets->setCurrentFrames(1);
 }
 
 Program::~Program()
@@ -92,6 +92,71 @@ void Program::setAnimationFromSettings(Settings* settings)
     m_buttonPanel->getAnimationChoice()->changeRead();
 }
 
+void Program::setFramesFromSettings(Settings* settings)
+{
+    switch ( settings->getCurrentFrames() )
+    {
+         case(1u):
+        {
+            m_timePanel->getTimeline()->setFrames( 15u );
+            break;
+        }
+        case(2u):
+        {
+            m_timePanel->getTimeline()->setFrames( 30u );
+            break;
+        }
+        case(3u):
+        {
+            m_timePanel->getTimeline()->setFrames( 60u );
+            break;
+        }
+        case(4u):
+        {
+            m_timePanel->getTimeline()->setFrames( 120u );
+            break;
+        }
+
+        default:
+        {
+            char* input = tinyfd_inputBox ( "Frames Choice", "Frames amount?" , "10" );
+            if(input)
+            {
+                int frames = std::stoi(input);
+                if (frames > 500)
+                {
+                    m_timePanel->getTimeline()->setFrames( 500u );
+                    settings->setCurrentFrames( 500u );
+
+                }
+
+                else if(frames < 10)
+                {
+                    m_timePanel->getTimeline()->setFrames( 10u );
+                    settings->setCurrentFrames( 10u );
+                }
+
+                else
+                {
+                    m_timePanel->getTimeline()->setFrames( static_cast<short>(frames) );
+                    settings->setCurrentFrames( 10u );
+                }
+                break;
+            }
+            else
+            {
+                m_timePanel->getTimeline()->setFrames( 10u );
+                settings->setCurrentFrames( static_cast<short>(10u) );
+            }
+        }
+
+    }
+    m_timePanel->getCanvas()->setTotalAnimationTime( m_timePanel->getTimeline()->getTotalTime() );
+    m_buttonPanel->getFramesChoice()->changeRead();
+}
+
+
+
 void Program::requestUpdate()
 {
     requestedUpdate = true;
@@ -110,7 +175,6 @@ void Program::updateDeltaTime()
 
 void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
 {
-    Settings* sets = Settings::getInstance();
     m_timePanel->getTimeline()->setCurrentTime(0.f);
 
     std::string name;
@@ -122,16 +186,29 @@ void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
     dir.pop_back();
     std::filesystem::create_directory(dir);
 
-    for (int i = 0; i <= sets->getCurrentFrames(); ++i)
+    int amount = static_cast<int> (m_timePanel->getTimeline()->getFrames());
+    for (int i = 1; i <= amount; ++i)
     {
-        name = "bitmap";  
-        i+1 > 9 ?  name += std::to_string(i+1) : name += "0"+std::to_string(i+1);
+        name = "";  
+        if(i>99)
+        {
+            name += std::to_string(i); 
+        }
+        else if(i>9)
+        {
+            name += "0" + std::to_string(i);
+        }
+        else
+        {
+            name += "00" + std::to_string(i);
+        }
 
         m_timePanel->update(mousePos,event,m_deltaTime);
         m_timePanel->getCanvas()->render(m_window);
         m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile(dir+"/"+name+".bmp");
         m_timePanel->getTimeline()->skipNextFrame();
     }
+
     m_timePanel->getTimeline()->setCurrentTime(0.f);
     m_timePanel->update(mousePos, event, m_deltaTime);
     m_timePanel->render(m_window);
@@ -169,7 +246,6 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
 {    
     Settings* sets = Settings::getInstance();
 
-
     if(m_window->isOpen())
     {
         m_timePanel->update(mousePos, event, m_deltaTime );
@@ -202,6 +278,12 @@ void Program::update(sf::Vector2i mousePos, sf::Event &event)
     {
         sets->setCurrentAnim( m_buttonPanel->getAnimationChoice()->getCurrentChoice() );
         this->setAnimationFromSettings(sets);
+    }
+
+    if ( m_buttonPanel->getFramesChoice()->isChanged() )
+    {
+        sets->setCurrentFrames( m_buttonPanel->getFramesChoice()->getCurrentChoice() );
+        this->setFramesFromSettings(sets);
     }
 
     if (m_buttonPanel->getSaveButton()->isPressed() )

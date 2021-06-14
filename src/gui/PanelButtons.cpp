@@ -20,11 +20,12 @@ Panel(pos,size)
     m_animationChoice->addChoice("Ring Animation");
     m_animationChoice->addChoice("Fly Away Animation");
     
-    m_framesChoice = new DropdownList(sf::Vector2f(pos.x + 20, pos.y + size.y/14 + size.y/2 +70), sf::Vector2f(size.x - 40, size.y/14), font, sf::String("60 fps"));
+    m_framesChoice = new DropdownList(sf::Vector2f(pos.x + 20, pos.y + size.y/14 + size.y/2 +70), sf::Vector2f(size.x - 40, size.y/14), font, sf::String("15 frames"));
     m_framesChoice->addChoice("15 frames");
     m_framesChoice->addChoice("30 frames");
     m_framesChoice->addChoice("60 frames");
     m_framesChoice->addChoice("120 frames");
+    m_framesChoice->addChoice("Your Choice");
 }
 
 PanelButton::~PanelButton()

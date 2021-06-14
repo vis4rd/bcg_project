@@ -28,14 +28,6 @@ void Button::setState(const unsigned short new_state)
 //check and update methods
 bool Button::isPressed() const
 {
-    // if(m_state == Button::state::ACTIVE)
-    // {
-    //     return true;
-    // }
-    // else
-    // {
-    //     return false;
-    // }
     return (m_state == Button::state::ACTIVE);
 }
 

@@ -23,9 +23,10 @@ public:
 	PanelButton(const sf::Vector2f &pos, const sf::Vector2f &size);
 	/**
 	 * @brief      destructor deleting every allocated object
-	
+	*/
 	~PanelButton();
-	 /**
+	 
+	/**
      * @brief Class responsible for updating every individual object in PanelButton
      *
      * @param mousePos The current mouse position 

@@ -102,7 +102,7 @@ void Timeline::setTotalTime(const float totalTime)
 void Timeline::setFrames(const unsigned short frames)
 {
     m_frameCount = frames;
-    m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
+    m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount - 1);
 }
 
 void Timeline::setCurrentTime(const float currentTime)

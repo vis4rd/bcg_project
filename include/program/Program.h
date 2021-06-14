@@ -30,6 +30,7 @@ public:
 
 	void endApp();
 	void setAnimationFromSettings(Settings* settings);
+	void setFramesFromSettings(Settings* settings);
 	
 	static void requestUpdate();
 	static void expireRequestUpdate();
