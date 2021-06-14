@@ -1,6 +1,10 @@
 #include "../../include/gui/PanelButtons.h"
+<<<<<<< HEAD
 
 
+=======
+s
+>>>>>>> 5f005d6be7b52b0532e09f10b94828494b59828c
 
 PanelButton::PanelButton(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
