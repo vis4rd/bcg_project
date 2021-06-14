@@ -2,27 +2,63 @@
 
 #include "PixelAnimation.h"
 
+
+/**
+ * @brief      This class performs animation with alpha oppasity manipulation,
+ * 				brightness pixels of the secend images appers sooner,
+ * 				darkests ones after them 
+ */	
 class ByBrightnessAnimation : public PixelAnimation
 {
 	public:
 
+	/**
+	 * Default constructor
+	 */
 	ByBrightnessAnimation();
 	
+
+	/**
+	 * @brief      The constructor with settings of animation
+	 *
+	 * @param      animation_length  The animation length
+	 * @param      animation_speed   The animation speed
+	 * @param      texture1_pixels   The texture of start image
+	 * @param      texture2_pixels   The texture of end image
+	 */
 	explicit ByBrightnessAnimation(
 		const float &animation_length,
 		const float &animation_speed,
 		std::vector<unsigned char> texture1_pixels, 
 		std::vector<unsigned char> texture2_pixels);
 
+	/**
+	 * @brief      The constructor with settings of animation
+	 *
+	 * @param      animation_length  The animation length
+	 * @param      animation_speed   The animation speed
+	 * @param      texture1_pixels   The texture of start image
+	 * @param      texture2_pixels   The texture of end image
+	 */
 	explicit ByBrightnessAnimation(
 		const float &animation_length,
 		const float &animation_speed,
 		const sf::Texture &texture1,
 		const sf::Texture &texture2);
 
+	/**
+	 * @brief      Dectructor
+	 */
 	~ByBrightnessAnimation();
 
 
+	/**
+	 * @brief      Returns how texture of start image should look.
+	 *
+	 * @param      current_time  The current time
+	 *
+	 * @return     The first image look in specific time.
+	 */
 	inline const std::vector<unsigned char> getTexture1Frame(const float &current_time) const override
 	{
 		std::vector<unsigned char> temp = m_pixels2;
@@ -65,6 +101,13 @@ class ByBrightnessAnimation : public PixelAnimation
 	}
 
 
+	/**
+	 * @brief      Returns how texture of ending image should look.
+	 *
+	 * @param      current_time  The current time
+	 *
+	 * @return     The first image look in specific time.
+	 */
 	inline const std::vector<unsigned char> getTexture2Frame(const float &current_time) const override
 	{
 		return m_pixels2;

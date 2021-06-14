@@ -9,7 +9,6 @@
 class PanelTimeline : public Panel
 {
 public:
-	PanelTimeline();
 	PanelTimeline(const sf::Vector2f &pos, const sf::Vector2f &size);
 	~PanelTimeline();
 

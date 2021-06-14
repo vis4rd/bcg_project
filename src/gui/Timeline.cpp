@@ -17,7 +17,7 @@ m_frameCount(0u)
     m_shape.setOutlineColor(sf::Color::White);
 }
 
-Timeline::Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime, const unsigned short framesPerSecond)
+Timeline::Timeline(sf::Vector2f pos, sf::Vector2f size, const float totalTime, const unsigned short frames)
 :
 Button(pos,size),
 m_timelineLength(size.x - size.y*2.f - 2.f),
@@ -40,7 +40,7 @@ m_currentTime(0.f)
     m_covered.setSize(sf::Vector2f(m_cursor.getPosition().x - m_covered.getPosition().x, size.y));
 
     m_playStatus = false;
-    m_frameCount = framesPerSecond * m_totalTime;
+    m_frameCount = frames* m_totalTime;
     m_deltaFrame = m_totalTime/static_cast<float>(m_frameCount);
 }
 

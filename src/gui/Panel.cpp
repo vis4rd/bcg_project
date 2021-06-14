@@ -1,11 +1,6 @@
 #include "../../include/gui/Panel.h"
 
 
-Panel::Panel()
-:
-Object()
-{}
-
 Panel::Panel(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
 Object(pos, size)

@@ -2,13 +2,6 @@
 
 
 
-NextFrameControl::NextFrameControl()
-:
-AnimControlButton()
-{
-	m_texture.loadFromFile("../res/images/empty_button.png");
-} 
-
 
 
 NextFrameControl::NextFrameControl(const sf::Vector2f &pos)

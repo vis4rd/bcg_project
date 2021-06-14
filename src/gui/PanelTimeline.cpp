@@ -1,17 +1,5 @@
 #include "../../include/gui/PanelTimeline.h"
 
-PanelTimeline::PanelTimeline()
-:
-Panel(),
-m_control(nullptr),
-m_next(nullptr),
-m_prev(nullptr),
-m_canvas(new Canvas()),
-m_timeline(nullptr)
-{
-	
-}
-
 PanelTimeline::PanelTimeline(const sf::Vector2f &pos, const sf::Vector2f &size)
 :
 Panel( sf::Vector2f( pos.x, pos.y ), sf::Vector2f( size.x, size.y) )

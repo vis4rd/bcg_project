@@ -10,7 +10,6 @@ class PanelButton : public Panel
 {
 
 public:
-	PanelButton();
 	PanelButton(const sf::Vector2f &pos, const sf::Vector2f &size);
 	~PanelButton();
 
