@@ -58,6 +58,12 @@ class ByBrightnessAnimation : public PixelAnimation
 	 * @param      current_time  The current time
 	 *
 	 * @return     The first image look in specific time.
+	 * 
+	 * 
+	 * searching darkest and brightness pixel, (avrage of (r,g,b)) and after that:
+	 *  key = (1 - progres) * (brightness - darkest + 1) + darkest
+	 *  if pixel brightness > key then we hidding that one. 
+	 * 
 	 */
 	inline const std::vector<unsigned char> getTexture1Frame(const float &current_time) const override
 	{
@@ -107,6 +113,9 @@ class ByBrightnessAnimation : public PixelAnimation
 	 * @param      current_time  The current time
 	 *
 	 * @return     The first image look in specific time.
+	 * 
+	 * 
+	 * No changes - same image whole aniamtion time
 	 */
 	inline const std::vector<unsigned char> getTexture2Frame(const float &current_time) const override
 	{

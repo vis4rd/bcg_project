@@ -59,6 +59,8 @@ class AlfaAnimation : public PixelAnimation
 	 * @param      current_time  The current time
 	 *
 	 * @return     The first image look in specific time.
+	 * 
+	 * Reducing alpha value from orginal value to 0
 	 */
 	inline const std::vector<unsigned char> getTexture1Frame(const float &current_time) const override
 	{
@@ -78,6 +80,8 @@ class AlfaAnimation : public PixelAnimation
 	 * @param      current_time  The current time
 	 *
 	 * @return     The end image look in specific time.
+	 * 
+	 * Increasing alpha value from 0 to orginal value
 	 */
 	inline const std::vector<unsigned char> getTexture2Frame(const float &current_time) const override
 	{
