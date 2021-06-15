@@ -67,10 +67,21 @@ class ByBrightnessAnimation : public PixelAnimation
 	 */
 	inline const std::vector<unsigned char> getTexture1Frame(const float &current_time) const override
 	{
-		std::vector<unsigned char> temp = m_pixels2;
 		std::vector<unsigned char> out = m_pixels1;
+		std::vector<unsigned char> temp = m_pixels2;
 		unsigned char brightness = 0 , darkest = 255;
 		float key = (m_totalTime-current_time)/m_totalTime;
+
+		//making sure that vectors are equal in size
+		unsigned bigger = out.size() > temp.size() ? out.size() : temp.size();
+		if(bigger != temp.size())
+		{
+			temp.resize(bigger);
+		}
+		if(bigger != out.size())
+		{
+			out.resize(bigger);
+		}
 
 		// searching brightest pixel
 		for(unsigned i=0; i<temp.size(); i+=4)
@@ -79,9 +90,7 @@ class ByBrightnessAnimation : public PixelAnimation
 			{
 				brightness = (temp[i] + temp[i+1] + temp[i+2])/3;
 			}
-			
 		}
-
 		// searching darkest pixel
 		for(unsigned i=0; i<temp.size(); i+=4)
 		{
@@ -89,20 +98,16 @@ class ByBrightnessAnimation : public PixelAnimation
 			{
 				darkest = (temp[i] + temp[i+1] + temp[i+2])/3;
 			}
-		
 		}
 
 		key = ( key * (brightness - darkest + 1) + darkest ) ;
-
 		for(unsigned i=0; i<temp.size(); i+=4)
 		{
 			if(	 (temp[i] + temp[i+1] + temp[i+2])/3 >= static_cast<unsigned char>(key))
 			{
 				out[i+3] = 0;
 			}   	
-
-		}
-	
+		}	
 		return out;
 	}
 
