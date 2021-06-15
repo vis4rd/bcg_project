@@ -1,4 +1,5 @@
 #include "../../include/gui/TextButton.h"
+#include "../../res/fonts/TerminusTTF.h"
 
 TextButton::TextButton()
 :
@@ -27,7 +28,11 @@ m_label(sf::Text())
 	{
 		if(!m_font->loadFromFile("../res/fonts/Noir_regular.otf"))
 		{
-			throw std::runtime_error("TextButton: Could not load \"res/fonts/Noir_regular.otf\" font.");
+			//throw std::runtime_error("TextButton: Could not load \"res/fonts/Noir_regular.otf\" font.");
+			if(!m_font->loadFromMemory(font_data, font_data_size))
+			{
+				throw std::runtime_error("TextButton: Could not load \"res/fonts/TerminusTTF\" font.");
+			}
 		}
 	}
 
