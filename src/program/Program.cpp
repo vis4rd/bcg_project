@@ -10,13 +10,13 @@ Program::Program()
     unsigned fps_limit = 60;
     bool vertical_sync_enabled = 0;
 
-    m_window = new sf::RenderWindow(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
+    m_window = std::make_unique<sf::RenderWindow>(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
     m_window->setFramerateLimit(fps_limit);
     m_window->setVerticalSyncEnabled(vertical_sync_enabled);
     m_window->setKeyRepeatEnabled(false);
     
-    m_timePanel = new PanelTimeline(sf::Vector2f(10.f, 10.f), sf::Vector2f(960.f, 700.f) );
-    m_buttonPanel = new PanelButton(sf::Vector2f(980.f, 10.f), sf::Vector2f(290.f, 700.f));
+    m_timePanel = std::make_unique<PanelTimeline>(sf::Vector2f(10.f, 10.f), sf::Vector2f(960.f, 700.f) );
+    m_buttonPanel = std::make_unique<PanelButton>(sf::Vector2f(980.f, 10.f), sf::Vector2f(290.f, 700.f));
 
     m_timePanel->getCanvas()->setStartingImage("../res/images/example1.jpg");
     m_timePanel->getCanvas()->setEndingImage("../res/images/example2.jpg");
@@ -34,9 +34,7 @@ Program::Program()
 
 Program::~Program()
 {
-    delete m_window;
-    delete m_timePanel;
-    delete m_buttonPanel;
+
 }
 
 void Program::endApp()
@@ -204,14 +202,14 @@ void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
         }
 
         m_timePanel->update(mousePos,event,m_deltaTime);
-        m_timePanel->getCanvas()->render(m_window);
+        m_timePanel->getCanvas()->render(m_window.get());
         m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile(dir+"/"+name+".bmp");
         m_timePanel->getTimeline()->skipNextFrame();
     }
 
     m_timePanel->getTimeline()->setCurrentTime(0.f);
     m_timePanel->update(mousePos, event, m_deltaTime);
-    m_timePanel->render(m_window);
+    m_timePanel->render(m_window.get());
     tinyfd_messageBox("Message", "The animation has been saved!", "ok", "info", 1);
 }
 
@@ -296,8 +294,8 @@ void Program::render()
 {
    m_window->clear();
 
-   m_timePanel->render(m_window);
-   m_buttonPanel->render(m_window);
+   m_timePanel->render(m_window.get());
+   m_buttonPanel->render(m_window.get());
 
    m_window->display();
 }

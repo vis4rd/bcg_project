@@ -108,14 +108,14 @@ public:
 	void run();
 
 private:
-	sf::RenderWindow *m_window;///> Target which all object are rendered to
+	std::unique_ptr<sf::RenderWindow> m_window;///> Target which all object are rendered to
 	sf::Event m_event;///> Event handler
 
 	sf::Clock m_dtClock;///> Clock measuring delta time between frames
 	float m_deltaTime;///> Time between rendered frames
 
-	PanelTimeline *m_timePanel;///> Panel containing applications contents
-	PanelButton *m_buttonPanel;///> Panel containing applications settings
+	std::unique_ptr<PanelTimeline> m_timePanel;///> Panel containing applications contents
+	std::unique_ptr<PanelButton> m_buttonPanel;///> Panel containing applications settings
 
 	static bool requestedUpdate;///> Flag declaring whether window should be updated without event or not
 };
