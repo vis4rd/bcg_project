@@ -1,6 +1,6 @@
 #include "../../include/program/Program.h"
 
-bool Program::requestedUpdate = false;
+unsigned Program::updateRequestCount = 0u;
 
 Program::Program()
 {
@@ -8,7 +8,7 @@ Program::Program()
     sf::VideoMode window_bounds(1280, 720);
     window_bounds.bitsPerPixel = sf::VideoMode::getDesktopMode().bitsPerPixel;
     unsigned fps_limit = 60;
-    bool vertical_sync_enabled = 0;
+    bool vertical_sync_enabled = false;
 
     m_window = std::make_unique<sf::RenderWindow>(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
     m_window->setFramerateLimit(fps_limit);
@@ -157,12 +157,12 @@ void Program::setFramesFromSettings(Settings* settings)
 
 void Program::requestUpdate()
 {
-    requestedUpdate = true;
+    updateRequestCount++;
 }
 
 void Program::expireRequestUpdate()
 {
-    requestedUpdate = false;
+    updateRequestCount--;
 }
 
 void Program::updateDeltaTime()
@@ -233,7 +233,7 @@ void Program::updateSFMLEvents()
             }
         }//switch
     }
-    else if(requestedUpdate)
+    else if(updateRequestCount > 0u)
     {
         m_event = sf::Event();
         this->update(sf::Mouse::getPosition(*m_window), m_event);

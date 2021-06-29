@@ -117,5 +117,5 @@ private:
 	std::unique_ptr<PanelTimeline> m_timePanel;///> Panel containing applications contents
 	std::unique_ptr<PanelButton> m_buttonPanel;///> Panel containing applications settings
 
-	static bool requestedUpdate;///> Flag declaring whether window should be updated without event or not
+	static unsigned updateRequestCount;///> Flag declaring whether window should be updated without event or not
 };
