@@ -50,28 +50,28 @@ public:
      * @note Note that given font will not be deleted unless all shared_pointers
      *       are destroyed or reset().
      */
-    ~TextButton() =  default;
+    virtual ~TextButton() =  default;
 
     /**
      * @brief Gets the label's text string of the TextButton
      *
      * @return Const reference to sf::String object
      */
-    const sf::String &getLabel() const;
+    virtual const sf::String &getLabel() const;
 
     /**
      * @brief Gets an sf::Text object displaying TextButton's label
      *
      * @return Const reference to sf::Text object
      */
-    const sf::Text &getText() const;
+    virtual const sf::Text &getText() const;
 
     /**
      * @brief Sets the text string visible on the TextButton
      *
      * @param new_label Label's new text
      */
-    void setLabel(const sf::String &new_label);
+    virtual void setLabel(const sf::String &new_label);
 
     /**
      * @brief Sets the size of the TextButton
@@ -113,7 +113,7 @@ public:
      *
      * @param pixels The size of text characters in pixels
      */
-    void setFontSize(const unsigned int &pixels);
+    virtual void setFontSize(const unsigned int &pixels);
 
     /**
      * @brief Updates all contents of TextButton's instance

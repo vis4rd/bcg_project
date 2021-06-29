@@ -31,38 +31,38 @@ public:
     /**
      * @brief      Destructor
      */
-    ~Button() =  default;
+    virtual ~Button() =  default;
 
     /**
      * @brief      Gets the state of button.
      *
      * @return     The state.
      */
-    const unsigned short getState() const;
+    virtual const unsigned short getState() const;
 
     /**
      * @brief      Sets the state.
      *
      * @param      new_state  The state that will be set
      */
-    void setState(const unsigned short new_state);
+    virtual void setState(const unsigned short new_state);
 
     /**
      * @brief      Gets information if button is pressed.
      *
      * @return     True if pressed, False otherwise.
      */
-    bool isPressed() const;
+    virtual bool isPressed() const;
 
     /**
      * @brief      Locks the button.
      */
-    void lockButton();
+    virtual void lockButton();
     
     /**
      * @brief      Unlocks the button.
      */
-    void unlockButton();
+    virtual void unlockButton();
     
     /**
      * @brief      Updates state and look of button. 
