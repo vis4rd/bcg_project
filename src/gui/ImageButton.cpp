@@ -29,7 +29,7 @@ ImageButton::ImageButton(ImageButton &&source)
 Button(source)
 {}
 
-void ImageButton::render(sf::RenderTarget *target)
+void ImageButton::render(std::shared_ptr<sf::RenderTarget> target)
 {   
     target->draw(m_shape);
     target->draw(m_spr);

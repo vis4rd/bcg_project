@@ -19,7 +19,7 @@ Button(pos, sf::Vector2f(40.f, 40.f) )
 }
 
 
-void AnimControlButton::render(sf::RenderTarget *target) 
+void AnimControlButton::render(std::shared_ptr<sf::RenderTarget> target) 
 {
 	Button::render(target);
 	target->draw(this->m_sprite);

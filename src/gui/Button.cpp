@@ -74,7 +74,7 @@ void Button::update(sf::Vector2i mousePos, sf::Event &event)
     }
 }
 
-void Button::render(sf::RenderTarget *target)
+void Button::render(std::shared_ptr<sf::RenderTarget> target)
 {
     target->draw(m_shape);
 }

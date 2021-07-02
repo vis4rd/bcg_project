@@ -7,7 +7,6 @@ m_cursor(),
 m_box(),
 m_covered(),
 m_timelineLength(0.f),
-m_cursorSpeed(0.f),
 m_playStatus(false),
 m_totalTime(0.f),
 m_currentTime(0.f),
@@ -135,28 +134,34 @@ const unsigned Timeline::getFrames() const
 
 void Timeline::skipNextFrame()
 {
-    float toJump = 0.f;
-    while( toJump <= m_currentTime )
+    float to_jump = 0.f;
+    while( to_jump <= m_currentTime )
     {
-        toJump += m_deltaFrame;
+        to_jump += m_deltaFrame;
     }
-    toJump >= m_totalTime ? toJump = m_totalTime - 0.0001 : 1 ;
+    if(to_jump >= m_totalTime)
+    {
+        to_jump = m_totalTime - 0.0001;
+    }
 
-    this->setCurrentTime( toJump );
+    this->setCurrentTime( to_jump );
     this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
 }
 
 
 void Timeline::skipPrevFrame()
 {
-    float toJump = m_totalTime;
-    while( toJump >= m_currentTime )
+    float to_jump = m_totalTime;
+    while( to_jump >= m_currentTime )
     {
-        toJump -= m_deltaFrame;
+        to_jump -= m_deltaFrame;
     }
-    toJump <= 0.f ? toJump = 0.f : 1 ;
+    if(to_jump <= 0.f)
+    {
+        to_jump = 0.f;
+    }
 
-    this->setCurrentTime( toJump );
+    this->setCurrentTime( to_jump );
     this->setCursorPosition(m_currentTime/m_totalTime * (m_timelineLength));
 }
 
@@ -201,7 +206,7 @@ void Timeline::update(sf::Vector2i mousePos, sf::Event &event, const float &delt
     }
 }
 
-void Timeline::render(sf::RenderTarget *target) 
+void Timeline::render(std::shared_ptr<sf::RenderTarget> target) 
 {
     target->draw(this->m_box);
     target->draw(this->m_covered);

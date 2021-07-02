@@ -27,7 +27,7 @@ NextFrameControl* NextFrameControl::makePreviousFrameButton(const sf::Vector2f &
 }
 
 	
-void NextFrameControl::render(sf::RenderTarget *target)
+void NextFrameControl::render(std::shared_ptr<sf::RenderTarget> target)
 {
 	AnimControlButton::render(target);
 }
@@ -41,7 +41,8 @@ void NextFrameControl::update(sf::Vector2i mousePos, sf::Event &event)
 		m_state = Button::state::HOVER;
 		m_sprite.setColor( sf::Color(180,180,180) );
 
-		if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+		if( (event.type == sf::Event::MouseButtonReleased)
+		&& (event.mouseButton.button == sf::Mouse::Left) )
 		{
 			m_state = Button::state::ACTIVE;
 			m_sprite.setColor( sf::Color(250,250,250) );

@@ -33,6 +33,6 @@ class Panel : public Object
 	 *
 	 * @param      target  The target
 	 */
-	void render(sf::RenderTarget *target) override;
+	void render(std::shared_ptr<sf::RenderTarget> target) override;
 
 };

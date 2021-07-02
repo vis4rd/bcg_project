@@ -107,7 +107,7 @@ public:
 	 *
 	 * @param target Rendering target (ex. window)
 	 */
-	void render(sf::RenderTarget *target);
+	void render(std::shared_ptr<sf::RenderTarget> target);
 
 private:
 	void setToInitPosition();

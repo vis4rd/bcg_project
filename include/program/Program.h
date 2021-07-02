@@ -108,7 +108,7 @@ public:
 	void run();
 
 private:
-	std::unique_ptr<sf::RenderWindow> m_window;///> Target which all object are rendered to
+	std::shared_ptr<sf::RenderWindow> m_window;///> Target which all object are rendered to
 	sf::Event m_event;///> Event handler
 
 	sf::Clock m_dtClock;///> Clock measuring delta time between frames

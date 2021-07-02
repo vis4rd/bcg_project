@@ -148,7 +148,7 @@ void DropdownList::update(sf::Vector2i mousePos, sf::Event &event)
 	}
 }
 
-void DropdownList::render(sf::RenderTarget *target)
+void DropdownList::render(std::shared_ptr<sf::RenderTarget> target)
 {
 	TextButton::render(target);
 	if(m_dropStatus == DropdownList::DropStatus::DROPPED)

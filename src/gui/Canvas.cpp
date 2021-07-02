@@ -3,7 +3,7 @@
 
 Canvas::Canvas()
 :
-m_plane(),
+m_plane(std::make_shared<sf::RenderTexture>()),
 m_planeBody(sf::Sprite()),
 m_objAnim(nullptr),
 m_pixAnim(nullptr),
@@ -16,12 +16,12 @@ m_isAnimPlaying(false),
 m_currentAnimTime(0.f),
 m_totalAnimTime(0.f)
 {
-	m_plane.create(1.f, 1.f);
+	m_plane->create(1.f, 1.f);
 }
 
 Canvas::Canvas(const sf::Vector2f &position, const sf::Vector2f &size)
 :
-m_plane(),
+m_plane(std::make_shared<sf::RenderTexture>()),
 m_planeBody(sf::Sprite()),
 m_objAnim(nullptr),
 m_pixAnim(nullptr),
@@ -34,7 +34,7 @@ m_isAnimPlaying(false),
 m_currentAnimTime(0.f),
 m_totalAnimTime(0.f)
 {
-	m_plane.create(size.x, size.y);
+	m_plane->create(size.x, size.y);
 	m_planeBody.setPosition(position);
 }
 
@@ -81,7 +81,7 @@ void Canvas::setStartingImage(const sf::String &directory_path)
 	this->clearStartingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
-	m_startingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane.getSize()));
+	m_startingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane->getSize()));
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
 		if(m_objAnim)
@@ -111,7 +111,7 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 	this->clearEndingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
-	m_endingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane.getSize()));
+	m_endingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane->getSize()));
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
 		if(m_objAnim)
@@ -174,8 +174,8 @@ void Canvas::setAnimationPlayOn(const bool status)
 
 void Canvas::setSize(const sf::Vector2f &new_size)
 {
-	m_plane.clear();
-	m_plane.create(new_size.x, new_size.y);
+	m_plane->clear();
+	m_plane->create(new_size.x, new_size.y);
 }
 
 void Canvas::setPosition(const sf::Vector2f &new_position)
@@ -186,7 +186,7 @@ void Canvas::setPosition(const sf::Vector2f &new_position)
 
 sf::RenderTexture& Canvas::getPlane()
 {
-	return m_plane;
+	return *m_plane;
 }
 
 void Canvas::update(sf::Vector2i mousePos, sf::Event &event)
@@ -218,9 +218,9 @@ void Canvas::update(sf::Vector2i mousePos, sf::Event &event)
 	}
 }
 
-void Canvas::render(sf::RenderTarget *target)
+void Canvas::render(std::shared_ptr<sf::RenderTarget> target)
 {
-	m_plane.clear();
+	m_plane->clear();
 
 	bool eI = false, sI = false;
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
@@ -237,33 +237,33 @@ void Canvas::render(sf::RenderTarget *target)
 		{
 			if(sI)
 			{
-				m_startingImage->render(&m_plane);
+				m_startingImage->render(m_plane);
 			}
 			if(eI)
 			{
-				m_endingImage->render(&m_plane);
+				m_endingImage->render(m_plane);
 			}
 		}
 		else
 		{
 			if(eI)
 			{
-				m_endingImage->render(&m_plane);
+				m_endingImage->render(m_plane);
 			}
 			if(sI)
 			{
-				m_startingImage->render(&m_plane);
+				m_startingImage->render(m_plane);
 			}
 		}
 	}
 	else if(m_animType == Canvas::AnimationType::PIX_ANIM && m_pixelImageIn && m_pixelImageOut)
 	{
-		m_pixelImageOut->render(&m_plane);
-		m_pixelImageIn->render(&m_plane);
+		m_pixelImageOut->render(m_plane);
+		m_pixelImageIn->render(m_plane);
 	}
 
-	m_plane.display();
-	m_planeBody.setTexture(m_plane.getTexture(), true);
+	m_plane->display();
+	m_planeBody.setTexture(m_plane->getTexture(), true);
 	target->draw(m_planeBody);
 }
 

@@ -135,7 +135,7 @@ public:
 	 *
 	 * @param target The target which the dropdown is rendered on.
 	 */
-	void render(sf::RenderTarget *target) override;
+	void render(std::shared_ptr<sf::RenderTarget> target) override;
 
 private:
 	sf::RectangleShape m_background;

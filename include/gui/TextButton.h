@@ -128,7 +128,7 @@ public:
      *
      * @param target The target which the TextButton is rendered on.
      */
-    void render(sf::RenderTarget *target) override;
+    void render(std::shared_ptr<sf::RenderTarget> target) override;
 
 protected:
 	std::shared_ptr<sf::Font> m_font;

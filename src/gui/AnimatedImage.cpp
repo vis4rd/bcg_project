@@ -84,7 +84,7 @@ const float &AnimatedImage::getVertexDepth(const unsigned index) const
 	}
 }
 
-void AnimatedImage::render(sf::RenderTarget *target)
+void AnimatedImage::render(std::shared_ptr<sf::RenderTarget> target)
 {
 	sf::RenderStates states(m_texture.get());
 	target->draw(m_verticies, states);

@@ -120,7 +120,7 @@ void TextButton::update(sf::Vector2i mousePos, sf::Event &event)
 	Button::update(mousePos, event);
 }
 
-void TextButton::render(sf::RenderTarget *target)
+void TextButton::render(std::shared_ptr<sf::RenderTarget> target)
 {
 	Button::render(target);
 	if( (m_font != nullptr) &&

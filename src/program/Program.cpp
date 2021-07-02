@@ -10,7 +10,7 @@ Program::Program()
     unsigned fps_limit = 60;
     bool vertical_sync_enabled = false;
 
-    m_window = std::make_unique<sf::RenderWindow>(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
+    m_window = std::make_shared<sf::RenderWindow>(window_bounds, title, sf::Style::Close | sf::Style::Titlebar);
     m_window->setFramerateLimit(fps_limit);
     m_window->setVerticalSyncEnabled(vertical_sync_enabled);
     m_window->setKeyRepeatEnabled(false);
@@ -153,8 +153,6 @@ void Program::setFramesFromSettings(Settings* settings)
     m_buttonPanel->getFramesChoice()->changeRead();
 }
 
-
-
 void Program::requestUpdate()
 {
     updateRequestCount++;
@@ -202,14 +200,14 @@ void Program::saveSequence(sf::Vector2i mousePos, sf::Event &event)
         }
 
         m_timePanel->update(mousePos,event,m_deltaTime);
-        m_timePanel->getCanvas()->render(m_window.get());
+        m_timePanel->getCanvas()->render(m_window);
         m_timePanel->getCanvas()->getPlane().getTexture().copyToImage().saveToFile(dir+"/"+name+".bmp");
         m_timePanel->getTimeline()->skipNextFrame();
     }
 
     m_timePanel->getTimeline()->setCurrentTime(0.f);
     m_timePanel->update(mousePos, event, m_deltaTime);
-    m_timePanel->render(m_window.get());
+    m_timePanel->render(m_window);
     tinyfd_messageBox("Message", "The animation has been saved!", "ok", "info", 1);
 }
 
@@ -294,8 +292,8 @@ void Program::render()
 {
    m_window->clear();
 
-   m_timePanel->render(m_window.get());
-   m_buttonPanel->render(m_window.get());
+   m_timePanel->render(m_window);
+   m_buttonPanel->render(m_window);
 
    m_window->display();
 }

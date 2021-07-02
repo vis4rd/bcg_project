@@ -152,7 +152,7 @@ public:
      *
      * @param      target  The target
      */
-    void render(sf::RenderTarget *target);
+    void render(std::shared_ptr<sf::RenderTarget> target);
 
 
 protected:
@@ -161,7 +161,6 @@ protected:
     sf::RectangleShape m_covered;
 
     float m_timelineLength;
-    float m_cursorSpeed;
     bool m_playStatus;
     float m_totalTime;
     float m_currentTime;

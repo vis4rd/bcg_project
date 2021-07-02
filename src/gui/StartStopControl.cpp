@@ -62,7 +62,7 @@ void StartStopControl::update(sf::Vector2i mousePos, sf::Event &event)
 	}
 }
 
-void StartStopControl::render(sf::RenderTarget *target) 
+void StartStopControl::render(std::shared_ptr<sf::RenderTarget> target) 
 {
 	AnimControlButton::render(target);
 }

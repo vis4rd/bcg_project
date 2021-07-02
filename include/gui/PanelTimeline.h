@@ -25,7 +25,7 @@ public:
 	/**
 	 * @brief Destructor
 	 */
-	~PanelTimeline();
+	~PanelTimeline() = default;
 
 	/**
 	 * @brief Return information if animation is finished
@@ -39,35 +39,35 @@ public:
 	 *
 	 * @return The nextFrameButton.
 	 */
-	NextFrameControl* getNext();
+	std::shared_ptr<NextFrameControl> getNext();
 
 	/**
 	 * @brief Getter to the prev frame button
 	 *
 	 * @return The prevFrameButton.
 	 */
-	NextFrameControl* getPrev();
+	std::shared_ptr<NextFrameControl> getPrev();
 
 	/**
 	 * @brief Getter to the control Button.
 	 *
 	 * @return The control Button.
 	 */
-	StartStopControl* getControl();
+	std::shared_ptr<StartStopControl> getControl();
 	
 	/**
 	 * @brief Getter to the timeline.
 	 *
 	 * @return The timeline.
 	 */
-	Timeline* getTimeline();
+	std::shared_ptr<Timeline> getTimeline();
 	
 	/**
 	 * @brief Getter to the canvas.
 	 *
 	 * @return The canvas.
 	 */
-	Canvas* getCanvas();
+	std::shared_ptr<Canvas> getCanvas();
 
 	/**
 	 * @brief updating state and look of whole panel 
@@ -91,12 +91,12 @@ public:
 	 *
 	 * @param target The target
 	 */
-	void render(sf::RenderTarget *target) override;
+	void render(std::shared_ptr<sf::RenderTarget> target) override;
 
 protected:
-	StartStopControl* m_control;
-	NextFrameControl* m_next;
-	NextFrameControl* m_prev;
-	Canvas* m_canvas;
-	Timeline* m_timeline;
+	std::shared_ptr<StartStopControl> m_control;
+	std::shared_ptr<NextFrameControl> m_next;
+	std::shared_ptr<NextFrameControl> m_prev;
+	std::shared_ptr<Canvas> m_canvas;
+	std::shared_ptr<Timeline> m_timeline;
 }; 

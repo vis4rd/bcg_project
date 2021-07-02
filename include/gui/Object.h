@@ -77,7 +77,7 @@ public:
 	 *
 	 * @param target The target which shapes and objects are rendered to.
 	 */
-	virtual void render(sf::RenderTarget *target) = 0;
+	virtual void render(std::shared_ptr<sf::RenderTarget> target) = 0;
 
 	/**
 	 * @brief Pure virtual method updating contents of the deriving classes

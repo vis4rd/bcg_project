@@ -15,7 +15,7 @@ void Panel::update(sf::Vector2i mousePos, sf::Event &event)
 	return;
 } 
 
-void Panel::render(sf::RenderTarget *target) 
+void Panel::render(std::shared_ptr<sf::RenderTarget> target) 
 {
 	target->draw(m_shape);
 }

@@ -24,7 +24,7 @@ public:
 	/**
 	 * @brief      destructor deleting every allocated object
 	*/
-	~PanelButton();
+	~PanelButton() = default;
 	 
 	/**
      * @brief Class responsible for updating every individual object in PanelButton
@@ -38,7 +38,7 @@ public:
 	 *
 	 * @param target The target which the PanelButton is rendered on.
 	 */
-	void render(sf::RenderTarget *target) override;
+	void render(std::shared_ptr<sf::RenderTarget> target) override;
 	/**
 	 * @brief      Getter of the first image
 	 *
@@ -81,12 +81,12 @@ public:
 	void changesRead();
 
 protected:
-	ImageButton *m_imageUp; //new ImageButton handling first Image
-	ImageButton *m_imageDown; //new ImageButton handling second Image
-	SaveButton *m_saveButton; //new SaveButton handling saving every frame to file
+	std::unique_ptr<ImageButton> m_imageUp; //new ImageButton handling first Image
+	std::unique_ptr<ImageButton> m_imageDown; //new ImageButton handling second Image
+	std::unique_ptr<SaveButton> m_saveButton; //new SaveButton handling saving every frame to file
 
-	DropdownList *m_animationChoice;//new DropdownList handling selection of animation
-	DropdownList *m_framesChoice;//new DropdownList handling selection of quantity of frames
+	std::unique_ptr<DropdownList> m_animationChoice;//new DropdownList handling selection of animation
+	std::unique_ptr<DropdownList> m_framesChoice;//new DropdownList handling selection of quantity of frames
 	
 	std::shared_ptr<sf::Font> font;
 

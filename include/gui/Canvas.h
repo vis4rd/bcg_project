@@ -118,7 +118,7 @@ public:
 	 *
 	 * @param target The target which Canvas' object is rendered to
 	 */
-	void render(sf::RenderTarget *target);
+	void render(std::shared_ptr<sf::RenderTarget> target);
 
 	/**
 	 * @brief Getter to the total time given to the Canvas
@@ -134,7 +134,7 @@ private:
 	void clearStartingImage();///> Prepares Canvas for the change of starting image
 	void clearEndingImage();///> Prepares Canvas for the change of finishing image
 
-	sf::RenderTexture m_plane;///> Texture which everything is rendered to
+	std::shared_ptr<sf::RenderTexture> m_plane;///> Texture which everything is rendered to
 	sf::Sprite m_planeBody;///> Sprite to which the texture is applied to
 
 	std::unique_ptr<ObjectAnimation> m_objAnim;///> Pointer to ObjectAnimation derived object

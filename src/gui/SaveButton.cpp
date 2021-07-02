@@ -26,7 +26,7 @@ SaveButton::SaveButton(SaveButton &&source)
 Button(source)
 {}
 
-void SaveButton::render(sf::RenderTarget *target)
+void SaveButton::render(std::shared_ptr<sf::RenderTarget> target)
 {   
     target->draw(m_shape);
     target->draw(m_spr);
