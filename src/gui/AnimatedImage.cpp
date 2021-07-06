@@ -62,6 +62,11 @@ m_currentTexture(std::make_unique<sf::Texture>(*m_initialTexture))
 	m_verticies[3].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[3].x / std::abs(1.f + m_currentPosition[3].z/2.f));
 	m_verticies[3].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[3].y / std::abs(1.f + m_currentPosition[3].z/2.f));
 
+	m_verticies[0].texCoords = sf::Vector2f(0.f, 0.f);
+	m_verticies[1].texCoords = sf::Vector2f(m_initialTexture->getSize().x, 0.f);
+	m_verticies[2].texCoords = sf::Vector2f(m_initialTexture->getSize());
+	m_verticies[3].texCoords = sf::Vector2f(0.f, m_initialTexture->getSize().y);
+
 	/*std::cout << "ANIMATED IMAGE(" << std::endl;
 	std::cout << "top-left = "; pVev2(m_verticies[0].position); std::cout << std::endl;
 	std::cout << "top-right = "; pVev2(m_verticies[1].position); std::cout << std::endl;
