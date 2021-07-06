@@ -36,19 +36,6 @@ public:
 	explicit AnimatedImage(const AnimatedImage &copy);
 
 	/**
-	 * @brief Getter to the position of the AnimatedImage relative to window
-	 *
-	 * @return (x, y, z) position.
-	 * 
-	 * If there is not given any initial position while constructing the object,
-	 *   the returned position will be (0, 0, 0).
-	 * 
-	 * Usually z-coordinate will not be of much use, but in very
-	 *   rare cases, which SFML does not cover, it might come in handy.
-	 */
-	const sf::Vector3f getPosition() const;
-
-	/**
 	 * @brief Getter to the size of the texture in pixels
 	 *
 	 * @return The size of the texture
@@ -56,7 +43,7 @@ public:
 	 * If the texture is not given by constructor, the size returned here
 	 *   will be (0, 0).
 	 */
-	const sf::Vector2f &getSize() const;
+	sf::Vector2u getSize() const;
 
 	/**
 	 * @brief Get the vector of RGB values of the texture
@@ -72,7 +59,7 @@ public:
 	 * 
 	 * AnimatedImages are rendered in order of most to least deep.
 	 */
-	const std::array<float, 4> &getDepths() const;
+	std::array<float, 4> getDepths() const;
 
 	/**
 	 * @brief Getter to depth of a vertex under specific index
@@ -110,50 +97,67 @@ public:
 	void render(std::shared_ptr<sf::RenderTarget> target);
 
 private:
-	void setToInitPosition();
-	const sf::Vector3f getVertexPosition(const int &index) const;
+	//const sf::Vector3f getVertexPosition(const int &index) const;
 	const sf::Vector2f toV2f(const sf::Vector3f &origin) const;
 	const sf::Vector3f toV3f(const sf::Vector2f &origin) const;
 
-	sf::Vector2f m_initSize; ///> Size of the texture set at object definition
-	sf::Vector2f m_initPosition; ///> Position of the top-left corner of the texture set at definition
-	sf::VertexArray m_verticies; ///> Verticies which transformations are appleid to
-	std::unique_ptr<sf::Texture> m_texture; ///> Unique pointer to texture imprinted on verticies
-	std::array<float, 4> m_depths; ///> Depth of an image relevant to window's view
+	sf::VertexArray m_verticies; ///> Verticies defining AnimatedImage's shape
+	std::array<sf::Vector3f, 4> m_initialPosition; ///> 3-dimensional initial position in local coordinates
+	std::array<sf::Vector3f, 4> m_currentPosition; ///> 3-dimensional current position in local coordinates
+	std::unique_ptr<sf::Texture> m_initialTexture; ///> Unique pointer to texture imprinted on verticies
+	std::unique_ptr<sf::Texture> m_currentTexture; ///> Unique pointer to texture imprinted on verticies
+	sf::Vector2u m_canvasSize;
 };
 
 inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 {
-	this->setToInitPosition();
+	m_currentPosition[0] = m_initialPosition[0];
+	m_currentPosition[1] = m_initialPosition[1];
+	m_currentPosition[2] = m_initialPosition[2];
+	m_currentPosition[3] = m_initialPosition[3];
+
 	if(transform != em::Matrix4f())
 	{
-		em::Matrix4f current = em::Matrix4f().translate(toV3f(m_initPosition));
-		sf::Vector3f temp_pos;
+		em::Matrix4f initial = em::Matrix4f().translate(m_currentPosition[0]);
+		em::Matrix4f result = transform * initial;
+		m_currentPosition[0] = result.toPosition();
 
-		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(0));
-		m_verticies[0].position = toV2f(temp_pos);
-		m_depths[0] = temp_pos.z;
+		initial = em::Matrix4f().translate(m_currentPosition[1]);
+		result = transform * initial;
+		m_currentPosition[1] = result.toPosition();
 
-		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(1));
-		m_verticies[1].position = toV2f(temp_pos);
-		m_depths[1] = temp_pos.z;
+		initial = em::Matrix4f().translate(m_currentPosition[2]);
+		result = transform * initial;
+		m_currentPosition[2] = result.toPosition();
 
-		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(2));
-		m_verticies[2].position = toV2f(temp_pos);
-		m_depths[2] = temp_pos.z;
-
-		temp_pos = ((current * transform * (-current)) * this->getVertexPosition(3));
-		m_verticies[3].position = toV2f(temp_pos);
-		m_depths[3] = temp_pos.z;
+		initial = em::Matrix4f().translate(m_currentPosition[3]);
+		result = transform * initial;
+		m_currentPosition[3] = result.toPosition();
 	}
+
+	m_verticies[0].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[0].x / std::abs(1.f + m_currentPosition[0].z/2.f));
+	m_verticies[0].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[0].y / std::abs(1.f + m_currentPosition[0].z/2.f));
+	m_verticies[1].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[1].x / std::abs(1.f + m_currentPosition[1].z/2.f));
+	m_verticies[1].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[1].y / std::abs(1.f + m_currentPosition[1].z/2.f));
+	m_verticies[2].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[2].x / std::abs(1.f + m_currentPosition[2].z/2.f));
+	m_verticies[2].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[2].y / std::abs(1.f + m_currentPosition[2].z/2.f));
+	m_verticies[3].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[3].x / std::abs(1.f + m_currentPosition[3].z/2.f));
+	m_verticies[3].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[3].y / std::abs(1.f + m_currentPosition[3].z/2.f));
+
+	/*std::cout << "[0] (top-left) = (" << m_currentPosition[0].x << ", " << m_currentPosition[0].y << ", " << m_currentPosition[0].z << ")" << std::endl
+			<< "[1] (top-right) = (" << m_currentPosition[1].x << ", " << m_currentPosition[1].y << ", " << m_currentPosition[1].z << ")" << std::endl
+			<< "[2] (bottom-right) = (" << m_currentPosition[2].x << ", " << m_currentPosition[2].y << ", " << m_currentPosition[2].z << ")" << std::endl
+			<< "[3] (bottom-left) = (" << m_currentPosition[3].x << ", " << m_currentPosition[3].y << ", " << m_currentPosition[3].z << ")" << std::endl
+			<< std::endl;*/
 }
 
 inline void AnimatedImage::pixelUpdate(std::vector<unsigned char> pixels)
 {
-	if(m_texture && (pixels.size() > 0))
+	if(m_initialTexture && (pixels.size() > 0))
 	{
-		sf::Vector2u size = m_texture->getSize();
+		m_currentTexture = std::make_unique<sf::Texture>(*m_initialTexture);
+		sf::Vector2u size = m_currentTexture->getSize();
 		pixels.resize(size.x * size.y * 4);
-		m_texture->update(pixels.data(), size.x, size.y, 0.f, 0.f);
+		m_currentTexture->update(pixels.data(), size.x, size.y, 0.f, 0.f);
 	}
 }

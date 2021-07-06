@@ -81,7 +81,11 @@ void Canvas::setStartingImage(const sf::String &directory_path)
 	this->clearStartingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
-	m_startingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane->getSize()));
+	m_startingImage = std::make_unique<AnimatedImage>(
+			sf::Vector3f(m_plane->getSize().x/2.f, m_plane->getSize().y/2.f, 0.f),
+			std::move(tex),
+			static_cast<sf::Vector2f>(m_plane->getSize())
+			);
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
 		if(m_objAnim)
@@ -111,7 +115,11 @@ void Canvas::setEndingImage(const sf::String &directory_path)
 	this->clearEndingImage();
 	auto tex = std::make_unique<sf::Texture>();
 	tex->loadFromFile(directory_path);
-	m_endingImage = std::make_unique<AnimatedImage>(sf::Vector3f(), std::move(tex), static_cast<sf::Vector2f>(m_plane->getSize()));
+	m_endingImage = std::make_unique<AnimatedImage>(
+			sf::Vector3f(m_plane->getSize().x/2.f, m_plane->getSize().y/2.f, 0.f),
+			std::move(tex),
+			static_cast<sf::Vector2f>(m_plane->getSize())
+			);
 	if(m_animType == Canvas::AnimationType::OBJ_ANIM)
 	{
 		if(m_objAnim)
@@ -233,24 +241,32 @@ void Canvas::render(std::shared_ptr<sf::RenderTarget> target)
 		{
 			sI = true;
 		}
-		if(m_startingImage->getVertexDepth(0) > m_endingImage->getVertexDepth(0))
+		float depthSI = ( m_startingImage->getVertexDepth(0)
+						+ m_startingImage->getVertexDepth(1)
+						+ m_startingImage->getVertexDepth(2)
+						+ m_startingImage->getVertexDepth(3)) / 4.f;
+		float depthEI = ( m_endingImage->getVertexDepth(0)
+						+ m_endingImage->getVertexDepth(1)
+						+ m_endingImage->getVertexDepth(2)
+						+ m_endingImage->getVertexDepth(3)) / 4.f;
+		if(depthSI > depthEI)
 		{
-			if(sI)
+			if(sI && !(depthSI < 0.f))
 			{
 				m_startingImage->render(m_plane);
 			}
-			if(eI)
+			if(eI && !(depthEI < 0.f))
 			{
 				m_endingImage->render(m_plane);
 			}
 		}
 		else
 		{
-			if(eI)
+			if(eI && !(depthEI < 0.f))
 			{
 				m_endingImage->render(m_plane);
 			}
-			if(sI)
+			if(sI && !(depthSI < 0.f))
 			{
 				m_startingImage->render(m_plane);
 			}
