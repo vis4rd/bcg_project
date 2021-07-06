@@ -81,6 +81,11 @@ void Program::setAnimationFromSettings(Settings* settings)
             m_timePanel->getCanvas()->setAnimation( std::make_unique<FlyAnimation>() );
             break;
         }
+        case(8u):
+        {
+            m_timePanel->getCanvas()->setAnimation( std::make_unique<DebugAnimation>() );
+            break;
+        }
         default:
         {
             break;
