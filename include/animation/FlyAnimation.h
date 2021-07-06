@@ -47,14 +47,19 @@ class FlyAnimation : public ObjectAnimation
 		
 		if(current_time<=(m_totalTime/2))
 		{
-			temp.translate(sf::Vector3<float>(480.f*current_time/(m_totalTime/2.0f), 340.f*current_time/(m_totalTime/2.0f), -1.f * (current_time/m_totalTime)));
-			temp.scale(sf::Vector3f(1.f *(1 - current_time/(m_totalTime/2.0f)), 1.f*(1 - current_time/(m_totalTime/2.0f)), 1.f));
+			temp.translate(sf::Vector3f(
+				0.f,
+				0.f,
+				std::exp(13.f * (current_time/m_totalTime)) - 1.f));
+			/*temp.scale(sf::Vector3f(
+				(1 - current_time/(m_totalTime/2.f)),
+				(1 - current_time/(m_totalTime/2.f)),
+				1.f));*/
 		}
 		else
 		{
-			temp.scale(sf::Vector3<float>(0.f, 0.f, 0.f));
+			temp.scale(sf::Vector3f(0.f, 0.f, 0.f));
 		}
-		
 		return temp;
 	}
 	/**
@@ -68,21 +73,21 @@ class FlyAnimation : public ObjectAnimation
 	{
 		em::Matrix4f temp = m_image2Start;
 
-		if(current_time>m_totalTime/2)
+		if(current_time > m_totalTime/2.f)
 		{
-		temp.translate(sf::Vector3<float>(480.f-(480.f*2.f*(current_time-(m_totalTime/2))/(m_totalTime)), 340.f-(340.f*2.f*(current_time-(m_totalTime/2))/(m_totalTime)), -1.f * (current_time/m_totalTime)));
-		temp.scale(sf::Vector3<float>(1.f *2.f*(current_time-(m_totalTime/2))/(m_totalTime/1.f), 1.f*2.f*(current_time-(m_totalTime/2))/(m_totalTime/1.f), 1.f*current_time));
+			temp.translate(sf::Vector3f(
+				0.f,
+				0.f,
+				std::exp(13.f * (1.f - (current_time/m_totalTime))) - 1.f));
+		/*temp.scale(sf::Vector3f(
+			1.f *2.f*(current_time-(m_totalTime/2))/(m_totalTime/1.f),
+			2.f*(current_time-(m_totalTime/2))/(m_totalTime/1.f),
+			current_time));*/
 		}
-
 		else
 		{
-			temp.translate(sf::Vector3<float>(500.f, 500.f, 1.f));
-			temp.scale(sf::Vector3<float>(0.f, 0.f,0.f));
+			temp.scale(sf::Vector3f(0.f, 0.f, 0.f));
 		}
-		
 		return temp;
 	}
-
-	protected:
-
 };
