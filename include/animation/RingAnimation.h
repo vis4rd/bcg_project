@@ -48,7 +48,7 @@ class RingAnimation : public ObjectAnimation
 		temp.translate(sf::Vector3f(
 			1900.f * sin(M_PI * current_time/m_totalTime),
 			0.f,
-			10.f * current_time/m_totalTime));
+			1900.f * current_time/m_totalTime));
 		return temp;
 	}
 	/**
@@ -64,7 +64,7 @@ class RingAnimation : public ObjectAnimation
 		temp.translate(sf::Vector3f(
 			1900.f * -sin(M_PI * current_time/m_totalTime),
 			0.f,
-			10.f * (1.f - current_time/m_totalTime)));
+			1900.f * (1.f - current_time/m_totalTime)));
 		return temp;
 	}
 

@@ -50,7 +50,7 @@ class FlyAnimation : public ObjectAnimation
 			temp.translate(sf::Vector3f(
 				0.f,
 				0.f,
-				std::exp(13.f * (current_time/m_totalTime)) - 1.f));
+				std::exp(20.f * (current_time/m_totalTime)) - 1.f));
 			/*temp.scale(sf::Vector3f(
 				(1 - current_time/(m_totalTime/2.f)),
 				(1 - current_time/(m_totalTime/2.f)),

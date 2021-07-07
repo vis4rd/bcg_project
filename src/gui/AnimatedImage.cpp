@@ -29,38 +29,30 @@ m_currentTexture(std::make_unique<sf::Texture>(*m_initialTexture))
 {
 	if(independent_size != sf::Vector2f())
 	{
-		m_initialPosition[0] = this->toV3f(-independent_size/2.f); // top-left corner
-		m_initialPosition[2] = this->toV3f(independent_size/2.f); // bottom-right corner
-		m_initialPosition[1] = this->toV3f(sf::Vector2f(independent_size.x, -independent_size.y)/2.f); // top-right corner
-		m_initialPosition[3] = this->toV3f(sf::Vector2f(-independent_size.x, independent_size.y)/2.f); // bottom-left corner
 		m_canvasSize = static_cast<sf::Vector2u>(independent_size);
 	}
 	else
 	{
-		m_initialPosition[0] = this->toV3f(-static_cast<sf::Vector2f>(m_initialTexture->getSize())/2.f); // top-left corner
-		m_initialPosition[2] = this->toV3f(static_cast<sf::Vector2f>(m_initialTexture->getSize())/2.f); // bottom-right corner
-		m_initialPosition[1] = this->toV3f(sf::Vector2f(m_initialTexture->getSize().x, -m_initialTexture->getSize().y)/2.f); // top-right corner
-		m_initialPosition[3] = this->toV3f(sf::Vector2f(-m_initialTexture->getSize().x, m_initialTexture->getSize().y)/2.f); // bottom-left corner
 		m_canvasSize = m_initialTexture->getSize();
 	}
-	m_initialPosition[0].z = position.z;
-	m_initialPosition[1].z = position.z;
-	m_initialPosition[2].z = position.z;
-	m_initialPosition[3].z = position.z;
-
+	
+	m_initialPosition[0] = sf::Vector3f(-1.f, -1.f, 0.f); // top-left corner
+	m_initialPosition[1] = sf::Vector3f(1.f, -1.f, 0.f); // top-right corner
+	m_initialPosition[2] = sf::Vector3f(1.f, 1.f, 0.f); // bottom-right corner
+	m_initialPosition[3] = sf::Vector3f(-1.f, 1.f, 0.f); // bottom-left corner
 	m_currentPosition[0] = m_initialPosition[0];
 	m_currentPosition[1] = m_initialPosition[1];
 	m_currentPosition[2] = m_initialPosition[2];
 	m_currentPosition[3] = m_initialPosition[3];
 
-	m_verticies[0].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[0].x / std::abs(1.f + m_currentPosition[0].z/2.f));
-	m_verticies[0].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[0].y / std::abs(1.f + m_currentPosition[0].z/2.f));
-	m_verticies[1].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[1].x / std::abs(1.f + m_currentPosition[1].z/2.f));
-	m_verticies[1].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[1].y / std::abs(1.f + m_currentPosition[1].z/2.f));
-	m_verticies[2].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[2].x / std::abs(1.f + m_currentPosition[2].z/2.f));
-	m_verticies[2].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[2].y / std::abs(1.f + m_currentPosition[2].z/2.f));
-	m_verticies[3].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[3].x / std::abs(1.f + m_currentPosition[3].z/2.f));
-	m_verticies[3].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[3].y / std::abs(1.f + m_currentPosition[3].z/2.f));
+	m_verticies[0].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f)*m_currentPosition[0].x / std::abs(1.f + m_currentPosition[0].z/2.f));
+	m_verticies[0].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f)*m_currentPosition[0].y / std::abs(1.f + m_currentPosition[0].z/2.f));
+	m_verticies[1].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f)*m_currentPosition[1].x / std::abs(1.f + m_currentPosition[1].z/2.f));
+	m_verticies[1].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f)*m_currentPosition[1].y / std::abs(1.f + m_currentPosition[1].z/2.f));
+	m_verticies[2].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f)*m_currentPosition[2].x / std::abs(1.f + m_currentPosition[2].z/2.f));
+	m_verticies[2].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f)*m_currentPosition[2].y / std::abs(1.f + m_currentPosition[2].z/2.f));
+	m_verticies[3].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f)*m_currentPosition[3].x / std::abs(1.f + m_currentPosition[3].z/2.f));
+	m_verticies[3].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f)*m_currentPosition[3].y / std::abs(1.f + m_currentPosition[3].z/2.f));
 
 	m_verticies[0].texCoords = sf::Vector2f(0.f, 0.f);
 	m_verticies[1].texCoords = sf::Vector2f(m_initialTexture->getSize().x, 0.f);

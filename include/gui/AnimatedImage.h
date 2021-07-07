@@ -109,6 +109,28 @@ private:
 	sf::Vector2u m_canvasSize;
 };
 
+template <typename T>
+sf::Vector3<T> operator*(const sf::Vector3<T>& left, const sf::Vector2<T>& right)
+{
+	sf::Vector3<T> result(left.x * right.x, left.y * right.y, left.z);
+	return result;
+}
+
+template <typename T>
+sf::Vector3<T>& operator/=(sf::Vector3<T>& left, const sf::Vector3<T>& right)
+{
+	left.x /= right.x;
+	left.y /= right.y;
+	left.z /= right.z;
+	return left;
+}
+
+template <typename T>
+int signof(const T &target)
+{
+	return (T(0) < target) - (target < T(0));
+}
+
 inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 {
 	m_currentPosition[0] = m_initialPosition[0];
@@ -118,31 +140,27 @@ inline void AnimatedImage::transformUpdate(const em::Matrix4f &transform)
 
 	if(transform != em::Matrix4f())
 	{
-		em::Matrix4f initial = em::Matrix4f().translate(m_currentPosition[0]);
-		em::Matrix4f result = transform * initial;
-		m_currentPosition[0] = result.toPosition();
+		//transform
+		m_currentPosition[0] = transform * (m_currentPosition[0] * (sf::Vector2f(m_canvasSize)/2.f));
+		m_currentPosition[1] = transform * (m_currentPosition[1] * (sf::Vector2f(m_canvasSize)/2.f));
+		m_currentPosition[2] = transform * (m_currentPosition[2] * (sf::Vector2f(m_canvasSize)/2.f));
+		m_currentPosition[3] = transform * (m_currentPosition[3] * (sf::Vector2f(m_canvasSize)/2.f));
 
-		initial = em::Matrix4f().translate(m_currentPosition[1]);
-		result = transform * initial;
-		m_currentPosition[1] = result.toPosition();
-
-		initial = em::Matrix4f().translate(m_currentPosition[2]);
-		result = transform * initial;
-		m_currentPosition[2] = result.toPosition();
-
-		initial = em::Matrix4f().translate(m_currentPosition[3]);
-		result = transform * initial;
-		m_currentPosition[3] = result.toPosition();
+		//normalize
+		m_currentPosition[0] /= sf::Vector3f(m_canvasSize.x/2.f, m_canvasSize.y/2.f, 1.f);
+		m_currentPosition[1] /= sf::Vector3f(m_canvasSize.x/2.f, m_canvasSize.y/2.f, 1.f);
+		m_currentPosition[2] /= sf::Vector3f(m_canvasSize.x/2.f, m_canvasSize.y/2.f, 1.f);
+		m_currentPosition[3] /= sf::Vector3f(m_canvasSize.x/2.f, m_canvasSize.y/2.f, 1.f);
 	}
 
-	m_verticies[0].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[0].x / std::abs(1.f + m_currentPosition[0].z/2.f));
-	m_verticies[0].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[0].y / std::abs(1.f + m_currentPosition[0].z/2.f));
-	m_verticies[1].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[1].x / std::abs(1.f + m_currentPosition[1].z/2.f));
-	m_verticies[1].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[1].y / std::abs(1.f + m_currentPosition[1].z/2.f));
-	m_verticies[2].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[2].x / std::abs(1.f + m_currentPosition[2].z/2.f));
-	m_verticies[2].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[2].y / std::abs(1.f + m_currentPosition[2].z/2.f));
-	m_verticies[3].position.x = (m_canvasSize.x/2.f) + (m_currentPosition[3].x / std::abs(1.f + m_currentPosition[3].z/2.f));
-	m_verticies[3].position.y = (m_canvasSize.y/2.f) + (m_currentPosition[3].y / std::abs(1.f + m_currentPosition[3].z/2.f));
+	m_verticies[0].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f) * m_currentPosition[0].x / std::pow(std::abs(1.f + m_currentPosition[0].z/200.f), signof(m_currentPosition[0].z)));
+	m_verticies[0].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f) * m_currentPosition[0].y / std::pow(std::abs(1.f + m_currentPosition[0].z/200.f), signof(m_currentPosition[0].z)));
+	m_verticies[1].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f) * m_currentPosition[1].x / std::pow(std::abs(1.f + m_currentPosition[1].z/200.f), signof(m_currentPosition[1].z)));
+	m_verticies[1].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f) * m_currentPosition[1].y / std::pow(std::abs(1.f + m_currentPosition[1].z/200.f), signof(m_currentPosition[1].z)));
+	m_verticies[2].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f) * m_currentPosition[2].x / std::pow(std::abs(1.f + m_currentPosition[2].z/200.f), signof(m_currentPosition[2].z)));
+	m_verticies[2].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f) * m_currentPosition[2].y / std::pow(std::abs(1.f + m_currentPosition[2].z/200.f), signof(m_currentPosition[2].z)));
+	m_verticies[3].position.x = (m_canvasSize.x/2.f) + ((m_canvasSize.x/2.f) * m_currentPosition[3].x / std::pow(std::abs(1.f + m_currentPosition[3].z/200.f), signof(m_currentPosition[3].z)));
+	m_verticies[3].position.y = (m_canvasSize.y/2.f) + ((m_canvasSize.y/2.f) * m_currentPosition[3].y / std::pow(std::abs(1.f + m_currentPosition[3].z/200.f), signof(m_currentPosition[3].z)));
 
 	/*std::cout << "[0] (top-left) = (" << m_currentPosition[0].x << ", " << m_currentPosition[0].y << ", " << m_currentPosition[0].z << ")" << std::endl
 			<< "[1] (top-right) = (" << m_currentPosition[1].x << ", " << m_currentPosition[1].y << ", " << m_currentPosition[1].z << ")" << std::endl

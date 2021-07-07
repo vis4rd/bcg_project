@@ -26,15 +26,14 @@ public:
 
 	/////////////////////////
 	// Image position: 474, 297.5, 0
+	// Canvas size: 948, 595
 	/////////////////////////
 	
 
 	inline const em::Matrix4f getImage1Frame(const float &current_time) const override
 	{	
 		em::Matrix4f temp = m_image1Start;
-		temp.translate(sf::Vector3f(0.f, -297.5f, 0.f));
-		temp.rotateX(180.f * current_time / m_totalTime);
-		temp.translate(sf::Vector3f(0.f, 297.5f, 0.f));
+		temp.rotateZ(180.f * current_time / m_totalTime);
 		return temp;
 	}
 
