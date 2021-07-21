@@ -13,7 +13,7 @@ public:
 	 *
 	 * @return     The instance.
 	 */
-	static Settings * getInstance();
+	static Settings *getInstance();
 	
 	Settings(Settings& oth) = delete;
 	Settings(Settings&& oth) = delete;
